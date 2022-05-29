@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/28 18:15:14 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/05/29 13:36:12 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,27 @@ void print_linked_list(token_T *tokens)
 		printf("error\n");
 }
 
+int count_element(char *str, char c, int len)
+{
+	int	i;
+	int	counter;
+
+	i = 0;
+	counter = 0;
+	while(i < len)
+	{
+		if(str[i] == c)
+			counter++;
+		i++;
+	}
+	return counter;
+}
 token_T *handler(char *str)
 {
 	lexer_T *lexer;
 	token_T *token;
 	token_T *tmp;
-	
+
 	lexer = init_lexer(str);
 	token = lexer_get_next_token(lexer);
 	tmp = lexer_get_next_token(lexer);
