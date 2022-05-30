@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/29 13:36:12 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:00:36 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int count_element(char *str, char c, int len)
 	}
 	return counter;
 }
+
 token_T *handler(char *str)
 {
 	lexer_T *lexer;
@@ -80,8 +81,6 @@ token_T *handler(char *str)
 	{
 		ft_lstadd_back(&token, tmp);
 		tmp = lexer_get_next_token(lexer);
-		// if(!tmp)
-		// 	return (NULL);
 	}
 	free(lexer);
 	return (token);
@@ -106,22 +105,3 @@ int main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
-
-
-// lexer = init_lexer(
-	// 	"var name = \"john doe\";"
-	// 	"print(name);"
-	// );
-	// token = lexer_get_next_token(lexer);
-	// token = lexer_get_next_token(lexer);
-	// printf("TOKEN(%d, %s)", token->type ,token->value);
-	// while(token != NULL)
-	// {
-	// 	printf("TOKEN(%d, %s)", token->type ,token->value);
-	// 	token =  lexer_get_next_token(lexer);
-	// }
-	
-	// signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
-	// signal(SIGTSTP, SIG_IGN);
