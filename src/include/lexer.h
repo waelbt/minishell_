@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:13:56 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/28 14:48:09 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/02 20:22:59 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char* lexer_get_current_char_as_string(lexer_T* lexer);
 
 token_T	*lexer_get_next_token(lexer_T *lexer);
 
-token_T	*lexer_collect_string(lexer_T *lexer, int c);
+token_T	*lexer_collect_string(lexer_T *lexer, int type, int c);
 
 token_T *lexer_advance_with_token(lexer_T *lexer, token_T *token);
+
 #endif
