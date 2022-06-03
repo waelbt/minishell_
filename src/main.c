@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/29 17:00:36 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:07:11 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ token_T *handler(char *str)
 	tmp = lexer_get_next_token(lexer);
 	while(tmp != NULL)
 	{
+		if(tmp->type == TOKEN_ERROR)
+			break;
 		ft_lstadd_back(&token, tmp);
 		tmp = lexer_get_next_token(lexer);
 	}

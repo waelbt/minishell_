@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/02 20:47:13 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:02:50 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,18 @@ token_T	*lexer_get_next_token(lexer_T *lexer)
 		}
 		if(lexer->c == '<')
 		{
-			token = init_token(TOKEN_INPUT, lexer_get_current_char_as_string(lexer));
+			token = init_token(TOKEN_REDICRECTION, lexer_get_current_char_as_string(lexer));
 			lexer_advance(lexer);
 			return token;
 		}
 		if(lexer->c == '>')
 		{
-			token = init_token(TOKEN_OUTPUT, lexer_get_current_char_as_string(lexer));
+			token = init_token(TOKEN_REDICRECTION, lexer_get_current_char_as_string(lexer));
 			lexer_advance(lexer);
 			return token;
 		}
 		else
-		{
 			return lexer_collect_string(lexer, TOKEN_STRING, get_first(*lexer));
-		}
 	}
 	return (NULL);
 }

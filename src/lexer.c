@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:16:39 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/02 20:46:55 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:10:11 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,13 @@ int ft_counter(lexer_T lexer, int c)
 
 int get_index(lexer_T lexer, int c)
 {
-	int index;
-
-	index = 0;
 	while(lexer.c != '\0')
 	{
 		if(lexer.c == c)
-			return (index);
+			return (lexer.i);
 		lexer_advance(&lexer);
-		index++;
 	}
-	return index;
+	return (lexer.i);
 }
 
 int get_first(lexer_T lexer)
@@ -91,6 +87,33 @@ int get_first(lexer_T lexer)
 	}
 	return (0);
 }
+
+int get_quotes_index(lexer_T lexer, int c, int index)
+{
+	lexer.i = index;
+	lexer.c = lexer.contents[lexer.i];
+	lexer_advance(&lexer);
+	while (lexer.c != '\0')
+	{
+		if(lexer.c == c)
+		{
+			lexer_advance(&lexer);
+			//if(lexer.c == ) // single qouets case
+			if(lexer.c == c)
+				return (lexer.i - 1);
+			if(lexer.c == 32 || lexer.c == '\0')
+				return (lexer.i - 1);
+			while(lexer.c != 32 && lexer.c != '\0')
+			{
+				// printf("%c",lexer.c);
+				lexer_advance(&lexer);
+			}
+			return (lexer.i);
+		}
+		lexer_advance(&lexer);
+	}
+	return (0);
+}
 token_T	*lexer_collect_string(lexer_T *lexer, int type, int c)
 {
 	char	*value;
@@ -100,23 +123,22 @@ token_T	*lexer_collect_string(lexer_T *lexer, int type, int c)
 
 	value = ft_calloc(1, sizeof(char));
 	value[0] = '\0';
+	len = 0;
 	if (lexer->c == '\0')
 		return (NULL);
 	i[0] = get_index(*lexer, 32);
-	// len = ((i[0] < i[1]) * i[0]) + ((i[0] > i[1]) * i[1]);
 	if(c == 0)
-	{
 		len = get_index(*lexer, 32);
-	}
 	else
 	{
 		if(ft_counter(*lexer, c) % 2)
 			return (init_token(TOKEN_ERROR, value));
-		len = get_index(*lexer, c);
+		len = get_quotes_index(*lexer, c, get_index(*lexer, c)) + 1;
 	}
+	// printf(len);
 	while (lexer->i < len && lexer->c != '\0' && lexer->c != '|' && lexer->c != '<' && lexer->c != '>')
 	{
-		printf("%d %c\n",len,lexer->c);
+		// printf("%d %c\n",len,lexer->c);
 		s = lexer_get_current_char_as_string(lexer);
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
@@ -124,7 +146,9 @@ token_T	*lexer_collect_string(lexer_T *lexer, int type, int c)
 		free(s);
 		lexer_advance(lexer);
 	}
-	// lexer_advance(lexer);
+	//printf("%c\n", lexer->c);
+	//printf("1lexer->c: %c , lexer->i: %d\n", lexer->c, lexer->i);
+	//lexer_advance(lexer);
 	return (init_token(type, value));
 }
 
