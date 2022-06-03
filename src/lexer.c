@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:16:39 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/03 17:10:11 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/03 18:57:25 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,23 @@ int get_first(lexer_T lexer)
 
 int get_quotes_index(lexer_T lexer, int c, int index)
 {
+	int h;
 	lexer.i = index;
 	lexer.c = lexer.contents[lexer.i];
 	lexer_advance(&lexer);
+	h = (((c == 34) * 39) + ((c == 39) * 34));
 	while (lexer.c != '\0')
 	{
 		if(lexer.c == c)
 		{
 			lexer_advance(&lexer);
-			//if(lexer.c == ) // single qouets case
+			if(lexer.c == h)
+			{
+				if((ft_counter(lexer, h) % 2))
+					return (-1);
+				else
+					return (lexer.i - 1);
+			}
 			if(lexer.c == c)
 				return (lexer.i - 1);
 			if(lexer.c == 32 || lexer.c == '\0')
@@ -131,9 +139,11 @@ token_T	*lexer_collect_string(lexer_T *lexer, int type, int c)
 		len = get_index(*lexer, 32);
 	else
 	{
-		if(ft_counter(*lexer, c) % 2)
-			return (init_token(TOKEN_ERROR, value));
 		len = get_quotes_index(*lexer, c, get_index(*lexer, c)) + 1;
+		if(ft_counter(*lexer, c) % 2 || len <= 0)
+		{
+			return (init_token(TOKEN_ERROR, value));
+		}
 	}
 	// printf(len);
 	while (lexer->i < len && lexer->c != '\0' && lexer->c != '|' && lexer->c != '<' && lexer->c != '>')
