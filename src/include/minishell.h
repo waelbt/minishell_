@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/02 19:06:26 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/03 20:29:35 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,5 @@ char	*ft_strchr(char *s, int c);
 int		count_element(char *str, char c, int len);
 int		ft_strcmp(char *s1, char *s2);
 int		get_first(lexer_T lexer);
+char	*ft_strjoin(char *s1, char *s2);
 #endif

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:16:39 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/03 18:57:25 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/03 20:52:26 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,10 @@ token_T	*lexer_collect_string(lexer_T *lexer, int type, int c)
 		len = get_index(*lexer, 32);
 	else
 	{
+		// echo "<"
 		len = get_quotes_index(*lexer, c, get_index(*lexer, c)) + 1;
 		if(ft_counter(*lexer, c) % 2 || len <= 0)
-		{
 			return (init_token(TOKEN_ERROR, value));
-		}
 	}
 	// printf(len);
 	while (lexer->i < len && lexer->c != '\0' && lexer->c != '|' && lexer->c != '<' && lexer->c != '>')
@@ -156,9 +155,10 @@ token_T	*lexer_collect_string(lexer_T *lexer, int type, int c)
 		free(s);
 		lexer_advance(lexer);
 	}
+	printf("%c\n", lexer->c);
 	//printf("%c\n", lexer->c);
 	//printf("1lexer->c: %c , lexer->i: %d\n", lexer->c, lexer->i);
-	//lexer_advance(lexer);
+	// lexer_advance(lexer);
 	return (init_token(type, value));
 }
 

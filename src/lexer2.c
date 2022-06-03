@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/03 17:02:50 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/03 20:43:39 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	norm(lexer_T lexer, int c, int s)
 token_T	*lexer_get_next_token(lexer_T *lexer)
 {
 	token_T	*token;
+	token_T	*tmp;
+	char c;
 
 	while (lexer->c != '\0' && lexer->i < ft_strlen(lexer->contents))
 	{
@@ -63,16 +65,17 @@ token_T	*lexer_get_next_token(lexer_T *lexer)
 			lexer_advance(lexer);
 			return token;
 		}
-		if(lexer->c == '<')
+		if(lexer->c == '<' || lexer->c == '>')
 		{
+			c = lexer->c;
 			token = init_token(TOKEN_REDICRECTION, lexer_get_current_char_as_string(lexer));
 			lexer_advance(lexer);
-			return token;
-		}
-		if(lexer->c == '>')
-		{
-			token = init_token(TOKEN_REDICRECTION, lexer_get_current_char_as_string(lexer));
-			lexer_advance(lexer);
+			if(lexer->c == c)
+			{
+				tmp = init_token(TOKEN_REDICRECTION, lexer_get_current_char_as_string(lexer));
+				token->value = ft_strjoin(token->value, tmp->value);
+				lexer_advance(lexer);
+			}
 			return token;
 		}
 		else
