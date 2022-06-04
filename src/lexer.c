@@ -6,17 +6,17 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:16:39 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 18:48:43 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/04 20:27:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-lexer_T	*init_lexer(char *contents)
+t_lexer	*init_lexer(char *contents)
 {
-	lexer_T	*lexer;
+	t_lexer	*lexer;
 
-	lexer = ft_calloc(1, sizeof(lexer_T));
+	lexer = ft_calloc(1, sizeof(t_lexer));
 	if (!lexer)
 		return (NULL);
 	lexer->contents = contents;
@@ -25,7 +25,7 @@ lexer_T	*init_lexer(char *contents)
 	return (lexer);
 }
 
-void	lexer_advance(lexer_T	*lexer)
+void	lexer_advance(t_lexer	*lexer)
 {
 	if (lexer->c != '\0' && lexer->i < ft_strlen(lexer->contents))
 	{
@@ -34,13 +34,13 @@ void	lexer_advance(lexer_T	*lexer)
 	}
 }
 
-void	lexer_skip_whitespace(lexer_T	*lexer)
+void	lexer_skip_whitespace(t_lexer	*lexer)
 {
 	while (lexer->c == 32)
 		lexer_advance(lexer);
 }
 
-char	*lexer_get_current_char_as_string(lexer_T	*lexer)
+char	*lexer_get_current_char_as_string(t_lexer	*lexer)
 {
 	char	*str;
 
@@ -50,8 +50,7 @@ char	*lexer_get_current_char_as_string(lexer_T	*lexer)
 	return (str);
 }
 
-
-char *lexer_handle_quotes(lexer_T *lexer, int c)
+char *lexer_handle_quotes(t_lexer *lexer, int c)
 {
 	char	*value;
 	char	*s;
@@ -61,7 +60,6 @@ char *lexer_handle_quotes(lexer_T *lexer, int c)
 	while(lexer->c != '\0')
 	{
 		s = lexer_get_current_char_as_string(lexer);
-		// printf("%s\n",s);
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
 		ft_strcat(value, s);
@@ -82,13 +80,13 @@ char *lexer_handle_quotes(lexer_T *lexer, int c)
 		return (NULL);
 	return  (value);
 }
-token_T	*lexer_collect_string(lexer_T *lexer, int type)
+
+t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 {
 	char	*value;
 	char	*s;
 
 	value = ft_calloc(1, sizeof(char));
-	//&& lexer->c != '|' && lexer->c != '<' && lexer->c != '>'
 	if(lexer->c == '\0')
 		return (NULL);
 	while (lexer->c != 32 && lexer->c != '\0' && lexer->c != '<' && lexer->c != '>' && lexer->c != '|')
@@ -105,17 +103,5 @@ token_T	*lexer_collect_string(lexer_T *lexer, int type)
 		free(s);
 		lexer_advance(lexer);
 	}
-	return (init_token(type, value));
+	return (init_token(e_type, value));
 }
-
-
-// if (lexer->c == 32)
-// 			lexer_skip_whitespace(lexer);
-// 		if (lexer->c == 34)
-// 			return (lexer_collect_quotes(lexer, 34, 39));
-// 		if (lexer->c == 39)
-// 			return (lexer_collect_quotes(lexer, 39, 34));
-// 		// if (lexer->c == '$')
-// 		// 	return (lexer_collect_quotes(lexer, 39, '"'));
-// 		else
-// 			return (lexer_collect_string(lexer));

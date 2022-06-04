@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 18:43:20 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/04 20:26:11 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	norm(lexer_T lexer, int c, int s)
+int	norm(t_lexer lexer, int c, int s)
 {
 	if (!(lexer.contents[lexer.i + 1] == 32
 			|| lexer.contents[lexer.i + 1] == '\0'
@@ -21,10 +21,10 @@ int	norm(lexer_T lexer, int c, int s)
 	return (0);
 }
 
-token_T	*lexer_get_next_token(lexer_T *lexer)
+t_token	*lexer_get_next_token(t_lexer *lexer)
 {
-	token_T	*token;
-	token_T	*tmp;
+	t_token	*token;
+	t_token	*tmp;
 	char c;
 
 	while (lexer->c != '\0' && lexer->i < ft_strlen(lexer->contents))
@@ -55,7 +55,7 @@ token_T	*lexer_get_next_token(lexer_T *lexer)
 	return (NULL);
 }
 
-token_T	*lexer_advance_with_token(lexer_T *lexer, token_T *token)
+t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token)
 {
 	lexer_advance(lexer);
 	return (token);

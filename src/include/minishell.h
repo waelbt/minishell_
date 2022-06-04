@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/03 20:29:35 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/04 20:25:24 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	*ft_calloc(size_t count, size_t size);
 void	ft_bzero(void *s, size_t n);
 void	*ft_realloc(void *ptr, size_t size);
 char	*ft_strcat(char *dest, char *src);
-void	ft_lstadd_front(token_T **list, token_T *new);
-void	ft_lstadd_back(token_T **lst, token_T *new);
-void	ft_lstclear(token_T **lst, void (del)(void*));
-token_T	*ft_lstlast(token_T *lst);
-int		ft_lstsize(token_T *lst);
+void	ft_lstadd_front(t_token **list, t_token *new);
+void	ft_lstadd_back(t_token **lst, t_token *new);
+void	ft_lstclear(t_token **lst, void (del)(void*));
+t_token	*ft_lstlast(t_token *lst);
+int		ft_lstsize(t_token *lst);
 char	*ft_strchr(char *s, int c);
 int		count_element(char *str, char c, int len);
 int		ft_strcmp(char *s1, char *s2);
-int		get_first(lexer_T lexer);
+int		get_first(t_lexer lexer);
 char	*ft_strjoin(char *s1, char *s2);
 #endif

@@ -1,4 +1,4 @@
-int ft_counter(lexer_T lexer, int c)
+int ft_counter(t_lexer lexer, int c)
 {
 	int counter;
 
@@ -12,7 +12,7 @@ int ft_counter(lexer_T lexer, int c)
 	return counter;
 }
 
-int get_index(lexer_T lexer, int c)
+int get_index(t_lexer lexer, int c)
 {
 	while(lexer.c != '\0')
 	{
@@ -23,7 +23,7 @@ int get_index(lexer_T lexer, int c)
 	return (lexer.i);
 }
 
-int get_first(lexer_T lexer)
+int get_first(t_lexer lexer)
 {
 	while(lexer.c != '\0')
 	{
@@ -36,7 +36,7 @@ int get_first(lexer_T lexer)
 	return (0);
 }
 
-int get_quotes_index(lexer_T lexer, int c, int index)
+int get_quotes_index(t_lexer lexer, int c, int index)
 {
 	int h;
 	lexer.i = index;
@@ -71,7 +71,7 @@ int get_quotes_index(lexer_T lexer, int c, int index)
 	return (0);
 }
 
-// token_T	*lexer_collect_quotes(lexer_T *lexer, int c, int h)
+// t_token	*lexer_collect_quotes(t_lexer *lexer, int c, int h)
 // {
 // 	int		len;
 // 	char	*value;

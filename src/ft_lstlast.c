@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 01:48:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/27 11:49:33 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/04 20:24:06 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-token_T	*ft_lstlast(token_T *lst)
+t_token	*ft_lstlast(t_token *lst)
 {
 	if (!lst)
 		return (NULL);

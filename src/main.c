@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 18:47:59 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/04 20:25:24 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,24 @@
 // 	return (cmd);
 // }
 
-int check_tokens(token_T *token)
+int check_tokens(t_token *token)
 {
 	while(token)
 	{
-		if(token->type == TOKEN_ERROR)
+		if(token->e_type == TOKEN_ERROR)
 			return (0);
 		token = token->next;
 	}
 	return (1);
 }
 
-void print_linked_list(token_T *tokens)
+void print_linked_list(t_token *tokens)
 {
 	if(check_tokens(tokens))
 	{
 		while(tokens)
 		{
-			printf("TOKEN(%d,%s)\n", tokens->type ,tokens->value);
+			printf("TOKEN(%d,%s)\n", tokens->e_type ,tokens->value);
 			tokens = tokens->next;
 		}
 	}
@@ -68,19 +68,17 @@ int count_element(char *str, char c, int len)
 	return counter;
 }
 
-token_T *handler(char *str)
+t_token *handler(char *str)
 {
-	lexer_T *lexer;
-	token_T *token;
-	token_T *tmp;
+	t_lexer *lexer;
+	t_token *token;
+	t_token *tmp;
 
 	lexer = init_lexer(str);
 	token = lexer_get_next_token(lexer);
 	tmp = lexer_get_next_token(lexer);
 	while(tmp != NULL)
 	{
-		if(tmp->type == TOKEN_ERROR)
-			break;
 		ft_lstadd_back(&token, tmp);
 		tmp = lexer_get_next_token(lexer);
 	}
@@ -91,7 +89,7 @@ token_T *handler(char *str)
 int main(int argc, char **argv, char **envp)
 {
 	char	*str;
-	token_T *token;
+	t_token *token;
 	(void) envp;
 
 	if(argc == 1)

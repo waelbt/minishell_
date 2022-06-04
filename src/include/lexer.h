@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:13:56 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 18:06:44 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/04 20:25:24 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ typedef struct LEXER_STRUCT
 	char			c;
 	unsigned int	i;
 	char			*contents;
-} lexer_T;
+} t_lexer;
 
-lexer_T* init_lexer(char* contents);
+t_lexer* init_lexer(char* contents);
 
-void lexer_advance(lexer_T* lexer);
+void lexer_advance(t_lexer* lexer);
 
-void lexer_skip_whitespace(lexer_T* lexer);
+void lexer_skip_whitespace(t_lexer* lexer);
 
-char* lexer_get_current_char_as_string(lexer_T* lexer);
+char* lexer_get_current_char_as_string(t_lexer* lexer);
 
-token_T	*lexer_get_next_token(lexer_T *lexer);
+t_token	*lexer_get_next_token(t_lexer *lexer);
 
-token_T	*lexer_collect_string(lexer_T *lexer, int type);
+t_token	*lexer_collect_string(t_lexer *lexer, int type);
 
-token_T *lexer_advance_with_token(lexer_T *lexer, token_T *token);
+t_token *lexer_advance_with_token(t_lexer *lexer, t_token *token);
 
 #endif
