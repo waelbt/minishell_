@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 20:54:25 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/04 21:51:02 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	norm(t_lexer lexer, int c, int s)
 	return (0);
 }
 
-t_token *get_redirection(t_lexer *lexer) 
+t_token	*get_redirection(t_lexer *lexer)
 {
 	char		c;
 	t_token		*tmp;
@@ -57,31 +57,11 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 			return (token);
 		}
 		else if (lexer->c == '<' || lexer->c == '>')
-		{
 			return (get_redirection(lexer));
-		/*	c = lexer->c;
-			token = init_token(TOKEN_REDICRECTION,
-					lexer_get_current_char_as_string(lexer));
-			lexer_advance (lexer);
-			if (lexer->c == c)
-			{
-				tmp = init_token(TOKEN_REDICRECTION,
-						lexer_get_current_char_as_string(lexer));
-				token->value = ft_strjoin(token->value, tmp->value);
-				lexer_advance(lexer);
-			}
-			return (token);
-	*/	}
 		else
 			return (lexer_collect_string(lexer, TOKEN_STRING));
 	}
 	return (NULL);
-}
-
-t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token)
-{
-	lexer_advance(lexer);
-	return (token);
 }
 
 t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
@@ -100,7 +80,7 @@ t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 		else
 			s = lexer_get_current_char_as_string(lexer);
 		if (!s)
-			return init_token(TOKEN_ERROR, value);
+			return (init_token(TOKEN_ERROR, value));
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
 		ft_strcat(value, s);
@@ -110,7 +90,7 @@ t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 	return (init_token(e_type, value));
 }
 
-int closed_qoutes(t_lexer *lexer, char c, int *bool)
+int	closed_qoutes(t_lexer *lexer, char c, int *bool)
 {
 	if (lexer->c == c)
 	{
