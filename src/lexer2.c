@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 20:26:11 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/04 20:38:23 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,45 @@ t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token)
 {
 	lexer_advance(lexer);
 	return (token);
+}
+
+t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
+{
+	char	*value;
+	char	*s;
+
+	value = ft_calloc(1, sizeof(char));
+	if (lexer->c == '\0')
+		return (NULL);
+	while (lexer->c != 32 && lexer->c != '\0'
+		&& lexer->c != '<' && lexer->c != '>' && lexer->c != '|')
+	{		
+		if (lexer->c == 34)
+			s = lexer_handle_quotes(lexer, 34);
+		else
+			s = lexer_get_current_char_as_string(lexer);
+		if (!s)
+			return init_token(TOKEN_ERROR, value);
+		value = ft_realloc(value, (ft_strlen(value)
+					+ ft_strlen(s) + 1) * sizeof(char));
+		ft_strcat(value, s);
+		free(s);
+		lexer_advance(lexer);
+	}
+	return (init_token(e_type, value));
+}
+
+int closed_qoutes(t_lexer *lexer, char c, int *bool)
+{
+	if (lexer->c == c)
+	{
+		if (!(*bool))
+			*bool = 1;
+		else
+		{
+			*bool = 0;
+			return (0);
+		}
+	}
+	return (1);
 }
