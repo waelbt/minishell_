@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 21:51:02 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/06 09:01:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 		else
 			return (lexer_collect_string(lexer, TOKEN_STRING));
 	}
-	return (NULL);
+	return (init_token(TOKEN_EOF, ""));
 }
 
 t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
@@ -71,7 +71,7 @@ t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 
 	value = ft_calloc(1, sizeof(char));
 	if (lexer->c == '\0')
-		return (NULL);
+		return (init_token(TOKEN_EOF, value));
 	while (lexer->c != 32 && lexer->c != '\0'
 		&& lexer->c != '<' && lexer->c != '>' && lexer->c != '|')
 	{		

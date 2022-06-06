@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 20:25:24 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/06 09:02:18 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void print_linked_list(t_token *tokens)
 {
 	if(check_tokens(tokens))
 	{
-		while(tokens)
+		while(tokens && tokens->e_type != TOKEN_EOF)
 		{
 			printf("TOKEN(%d,%s)\n", tokens->e_type ,tokens->value);
 			tokens = tokens->next;
@@ -77,7 +77,7 @@ t_token *handler(char *str)
 	lexer = init_lexer(str);
 	token = lexer_get_next_token(lexer);
 	tmp = lexer_get_next_token(lexer);
-	while(tmp != NULL)
+	while(tmp->e_type != TOKEN_EOF && token)
 	{
 		ft_lstadd_back(&token, tmp);
 		tmp = lexer_get_next_token(lexer);
