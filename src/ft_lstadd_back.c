@@ -6,15 +6,15 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 01:49:12 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 20:24:06 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 10:32:23 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void	ft_lstadd_back(t_token **lst, t_token *new)
+void	ft_lstadd_back(t_node **lst, t_node *new)
 {
-	t_token	*tmp;
+	t_node	*tmp;
 
 	tmp = *lst;
 	if (!(*lst))

@@ -6,16 +6,16 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 01:47:30 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 20:24:06 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 10:32:43 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	ft_lstsize(t_token *lst)
+int	ft_lstsize(t_node *lst)
 {
 	int		i;
-	t_token	*tmp;
+	t_node	*tmp;
 
 	i = 0;
 	tmp = lst;
