@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:41:21 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 10:33:26 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 10:48:49 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct TOKEN_STRUCT
 		TOKEN_STRING,
 		TOKEN_PIPE,
 		TOKEN_REDICRECTION,
-		TOKEN_ERROR,
 		TOKEN_EOF,
 	} e_type;
 	char				*value;

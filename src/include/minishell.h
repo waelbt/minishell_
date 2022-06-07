@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 10:46:58 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 10:49:02 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,18 @@ typedef struct redirection
 	char	*file;
 }	t_redirec;
 
+typedef struct s_node
+{
+	void			*content;
+	struct s_list	*next;
+}	t_node;
+
 
 typedef struct cmd
 {
 	t_node		*args;
 	t_node		*redrec;
 }	t_cmd;
-
-typedef struct s_node
-{
-	void			*content;
-	struct s_list	*next;
-}	t_node;
 
 
 int		ft_strlen(char *str);
