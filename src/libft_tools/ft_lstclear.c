@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 10:21:36 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 12:34:23 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:56:12 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_lstclear(t_node **lst, void (del)(void*))
 	while (*lst)
 	{
 		tmp = tmp->next;
-		// ft_lstdelone(*lst, del);
+		ft_lstdelone(*lst, del);
 		*lst = tmp;
 	}
 }

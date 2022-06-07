@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 11:35:52 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:44:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,19 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 		else
 			return (lexer_collect_string(lexer, TOKEN_STRING));
 	}
-	return (init_token(TOKEN_EOF, ""));
+	return (init_token(TOKEN_EOF, ft_strdup("")));
 }
 
+
+char *string_handler(t_lexer *lexer)
+{
+	if (lexer->c == 34)
+		return (lexer_handle_quotes(lexer, 34));
+	else if (lexer->c == 39)
+		return (lexer_handle_quotes(lexer, 39));
+	else
+		return (lexer_get_current_char_as_string(lexer));
+}
 t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 {
 	char	*value;
@@ -65,13 +75,13 @@ t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 		return (init_token(TOKEN_EOF, value));
 	while (lexer->c != 32 && lexer->c != '\0'
 		&& lexer->c != '<' && lexer->c != '>' && lexer->c != '|')
-	{		
-		if (lexer->c == 34)
-			s = lexer_handle_quotes(lexer, 34);
-		else
-			s = lexer_get_current_char_as_string(lexer);
+	{
+		s = string_handler(lexer);
 		if (!s)
+		{
+			printf("'Error: [$parse:lexerr] Lexer Error: Unclosed qoutes'\n");
 			return (init_token(TOKEN_ERROR, value));
+		}
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
 		ft_strcat(value, s);

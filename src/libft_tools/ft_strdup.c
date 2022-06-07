@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 01:47:43 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 16:50:32 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/11/06 16:03:30 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 18:46:26 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_node	*ft_lstnew(void *content)
+char	*ft_strdup(const char *s1)
 {
-	t_node	*new;
+	int		i;
+	int		j;
+	char	*ptr;
 
-	new = malloc(sizeof(t_node));
-	if (!new || !content)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	i = ft_strlen((char *)s1);
+	j = 0;
+	ptr = (char *) malloc((i + 1) * sizeof(char));
+	if (!ptr)
+		return (0);
+	while (j < i)
+	{
+		*(ptr + j) = *(s1 + j);
+		j++;
+	}
+	*(ptr + j) = '\0';
+	return (ptr);
 }
-
-/*
-#include <stdio.h>
-int main(void)
-{
-	t_list *tmp;
-
-	tmp = ft_lstnew((int *) 5);
-	printf("%d",tmp->content);
-}
-*/

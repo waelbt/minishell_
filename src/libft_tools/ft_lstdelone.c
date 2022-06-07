@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 01:47:43 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 16:50:32 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/11/19 01:48:43 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 19:09:04 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_node	*ft_lstnew(void *content)
+void	ft_lstdelone(t_node *lst, void (*del)(void *))
 {
-	t_node	*new;
-
-	new = malloc(sizeof(t_node));
-	if (!new || !content)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	if (lst)
+	{
+		del(lst->content);
+		free(lst);
+	}
 }
-
-/*
-#include <stdio.h>
-int main(void)
-{
-	t_list *tmp;
-
-	tmp = ft_lstnew((int *) 5);
-	printf("%d",tmp->content);
-}
-*/

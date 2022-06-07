@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 15:02:52 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:58:46 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_redirec  *init_redirection(char *str, t_lexer *lexer)
 	}
 	else
 	{
-		printf("parse error near `%c'\n",token->value[0]);
+		printf("parse error 'missing redirection file'\n");
 		redrec->e_rtype = ERROR;
 	}
 	return (redrec);
@@ -74,6 +74,8 @@ t_cmd	*init_cmd(t_lexer *lexer, t_token *token)
 		return (NULL);
 	while (token && token->e_type != TOKEN_EOF && token->e_type != TOKEN_PIPE)
 	{
+		if(token->e_type == TOKEN_ERROR)
+			return (NULL);
 		if (token->e_type == TOKEN_STRING)
 		{
 			cmd->args = ft_lstnew((void *) init_arg(token->value));
@@ -82,6 +84,8 @@ t_cmd	*init_cmd(t_lexer *lexer, t_token *token)
 		else if (token->e_type == TOKEN_REDICRECTION)
 		{
 			cmd->redrec = ft_lstnew((void *) init_redirection(token->value, lexer));
+			if(((t_redirec *)cmd->redrec->content)->e_rtype == ERROR)
+				return (NULL);
 			ft_lstadd_back(&tmp1 ,cmd->redrec);
 		}
 		token = lexer_get_next_token(lexer);

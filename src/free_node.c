@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   free_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 01:47:43 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 16:50:32 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/06/07 17:02:54 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 19:30:15 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "include/minishell.h"
 
-t_node	*ft_lstnew(void *content)
+void free_args(t_args *args)
 {
-	t_node	*new;
-
-	new = malloc(sizeof(t_node));
-	if (!new || !content)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	free(args->value);
 }
 
-/*
-#include <stdio.h>
-int main(void)
+void free_redrection(t_redirec *redrec)
 {
-	t_list *tmp;
-
-	tmp = ft_lstnew((int *) 5);
-	printf("%d",tmp->content);
+	free(redrec->file);
 }
-*/
+
+void free_node(t_cmd *cmd)
+{
+	ft_lstclear(&cmd->args, (void *)free_args);
+	ft_lstclear(&cmd->redrec, (void *)free_redrection);
+}

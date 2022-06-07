@@ -12,6 +12,7 @@ RM		= 	rm -f
 
 
 all :	$(exec)
+	make clean
 
 $(exec)	: $(objects)
 	$(CC) $(objects) $(flags) -o $(exec)
