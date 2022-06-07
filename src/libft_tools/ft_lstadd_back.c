@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/16 14:22:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/28 15:00:18 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/11/19 01:49:12 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:17 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-char	*ft_strcat(char *dest, char *src)
+void	ft_lstadd_back(t_node **lst, t_node *new)
 {
-	int	i;
-	int	j;
+	t_node	*tmp;
 
-	i = 0;
-	j = 0;
-	while (dest[i] != '\0')
+	tmp = *lst;
+	if (!(*lst))
 	{
-		i++;
+		(*lst) = new;
+		return ;
 	}
-	while (src[j] != '\0')
-	{
-		dest[i] = src[j];
-		j++;
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
 }

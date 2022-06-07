@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 01:48:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 10:32:38 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/06/07 10:21:36 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:23 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-t_node	*ft_lstlast(t_node *lst)
+void	ft_lstclear(t_node **lst, void (del)(void*))
 {
-	if (!lst)
-		return (NULL);
-	while (lst->next)
+	t_node	*tmp;
+
+	if (!*lst)
+		return ;
+	tmp = *lst;
+	while (*lst)
 	{
-		lst = lst->next;
+		tmp = tmp->next;
+		// ft_lstdelone(*lst, del);
+		*lst = tmp;
 	}
-	return (lst);
 }

@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 01:47:30 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 10:32:43 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/11/06 15:03:22 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:14 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-int	ft_lstsize(t_node *lst)
+void	*ft_calloc(size_t count, size_t size)
 {
-	int		i;
-	t_node	*tmp;
+	void	*ptr;
 
-	i = 0;
-	tmp = lst;
-	while (tmp != NULL)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return (i);
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (0);
+	ft_bzero(ptr, count * size);
+	return (ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 10:49:02 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:18:45 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct redirection
 typedef struct s_node
 {
 	void			*content;
-	struct s_list	*next;
+	struct s_node	*next;
 }	t_node;
 
 
@@ -68,9 +68,12 @@ void	ft_lstclear(t_node **lst, void (del)(void*));
 t_node	*ft_lstlast(t_node *lst);
 int		ft_lstsize(t_node *lst);
 char	*ft_strchr(char *s, int c);
-int		count_element(char *str, char c, int len);
 int		ft_strcmp(char *s1, char *s2);
-int		get_first(t_lexer lexer);
 char	*ft_strjoin(char *s1, char *s2);
 int		closed_qoutes(t_lexer *lexer, char c, int *bool);
+void	error_handler(char *str);
+t_node	*ft_lstnew(void *content);
+t_cmd	*init_cmd(t_lexer *lexer, t_token *token);
+t_redirec  *init_redirection(char *str, t_lexer *lexer);
+t_args  *init_arg(char *str);
 #endif

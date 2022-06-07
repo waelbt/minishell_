@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/06 15:03:22 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/26 15:08:20 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/11/05 16:07:27 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:34 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-void	*ft_calloc(size_t count, size_t size)
+char	*ft_strchr(char *s, int c)
 {
-	void	*ptr;
+	size_t		i;
+	char		*p;
 
-	ptr = malloc(count * size);
-	if (!ptr)
-		return (0);
-	ft_bzero(ptr, count * size);
-	return (ptr);
+	i = 0;
+	p = (char *) s;
+	while (i <= ft_strlen(s))
+	{
+		if (*(p + i) == (char )c)
+			return (p + i);
+		i++;
+	}
+	return (0);
 }
+/*
+#include <stdio.h>
+#include <string.h>
+int main(void)
+{
+	char s[] = "tripouille";
+	printf("%s \n",ft_strchr(s, 't' + 256));
+	printf("%s",strchr(s, 't' + 256));
+}
+*/

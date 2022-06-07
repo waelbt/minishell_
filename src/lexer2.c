@@ -6,20 +6,11 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/06 09:01:30 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:35:52 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-int	norm(t_lexer lexer, int c, int s)
-{
-	if (!(lexer.contents[lexer.i + 1] == 32
-			|| lexer.contents[lexer.i + 1] == '\0'
-			|| lexer.contents[lexer.i + 1] == s))
-		return (1);
-	return (0);
-}
 
 t_token	*get_redirection(t_lexer *lexer)
 {

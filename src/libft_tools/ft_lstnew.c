@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 01:49:12 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 10:32:23 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/11/19 01:47:43 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 15:17:15 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-void	ft_lstadd_back(t_node **lst, t_node *new)
+t_node	*ft_lstnew(void *content)
 {
-	t_node	*tmp;
+	t_node	*new;
 
-	tmp = *lst;
-	if (!(*lst))
-	{
-		(*lst) = new;
-		return ;
-	}
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
+	new = malloc(sizeof(t_node));
+	if (!new)
+		return (0);
+	new->content = content;
+	new->next = NULL;
+	return (new);
 }
+
+/*
+#include <stdio.h>
+int main(void)
+{
+	t_list *tmp;
+
+	tmp = ft_lstnew((int *) 5);
+	printf("%d",tmp->content);
+}
+*/

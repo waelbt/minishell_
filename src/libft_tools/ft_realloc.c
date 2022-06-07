@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 10:38:22 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/26 15:08:18 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/05/26 16:52:55 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+void	*ft_realloc(void *ptr, size_t size)
 {
-	char	*ptr;
+	int				i;
+	unsigned char	*p;
+	unsigned char	*s;
 
-	ptr = (char *) s;
-	while (n-- > 0)
+	i = 0;
+	p = (unsigned char *) ptr;
+	s = calloc(size, sizeof(void));
+	while (p[i])
 	{
-		*(ptr++) = 0;
+		s[i] = p[i];
+		i++;
 	}
+	while (i < size)
+		s[i++] = '\0';
+	free(ptr);
+	return ((void *) s);
 }

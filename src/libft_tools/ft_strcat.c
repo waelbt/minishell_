@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/05 16:07:27 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/28 15:00:44 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/08/16 14:22:50 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:32 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-char	*ft_strchr(char *s, int c)
+char	*ft_strcat(char *dest, char *src)
 {
-	size_t		i;
-	char		*p;
+	int	i;
+	int	j;
 
 	i = 0;
-	p = (char *) s;
-	while (i <= ft_strlen(s))
+	j = 0;
+	while (dest[i] != '\0')
 	{
-		if (*(p + i) == (char )c)
-			return (p + i);
 		i++;
 	}
-	return (0);
+	while (src[j] != '\0')
+	{
+		dest[i] = src[j];
+		j++;
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
-/*
-#include <stdio.h>
-#include <string.h>
-int main(void)
-{
-	char s[] = "tripouille";
-	printf("%s \n",ft_strchr(s, 't' + 256));
-	printf("%s",strchr(s, 't' + 256));
-}
-*/

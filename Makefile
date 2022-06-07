@@ -1,6 +1,6 @@
 exec	=	minishell
 
-sources =	$(wildcard src/*.c)
+sources =	$(wildcard src/*.c) $(wildcard src/libft_tools/*.c)
 
 objects =	$(sources:.c=.o)
 
@@ -21,6 +21,7 @@ $(exec)	: $(objects)
 
 clean	:
 	$(RM) src/*.o
+	$(RM) src/libft_tools/*.o
 
 fclean : clean
 	$(RM) $(exec)

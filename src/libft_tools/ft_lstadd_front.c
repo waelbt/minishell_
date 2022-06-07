@@ -6,11 +6,11 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 01:49:04 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 10:32:26 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:34:20 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 void	ft_lstadd_front(t_node **list, t_node *new)
 {
