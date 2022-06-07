@@ -6,45 +6,30 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/06 09:02:18 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 10:20:57 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-// void   (*SIGINT_handler)(int);
-// cmd_T	*init_cmd(token_T *token)
-// {
-// 	cmd_T *cmd;
-
-// 	cmd = ft_calloc(1, sizeof(cmd_T));
-// 	if (!cmd)
-// 		return (NULL);
-// 	cmd->id = 0;
-// 	cmd->token = token;
-// 	cmd->previous = NULL;
-// 	cmd->next = NULL;
-// 	return (cmd);
-// }
-
-int check_tokens(t_token *token)
+int	check_tokens(t_token *token)
 {
-	while(token)
+	while (token)
 	{
-		if(token->e_type == TOKEN_ERROR)
+		if (token->e_type == TOKEN_ERROR)
 			return (0);
 		token = token->next;
 	}
 	return (1);
 }
 
-void print_linked_list(t_token *tokens)
+void	print_linked_list(t_token *tokens)
 {
-	if(check_tokens(tokens))
+	if (check_tokens(tokens))
 	{
-		while(tokens && tokens->e_type != TOKEN_EOF)
+		while (tokens && tokens->e_type != TOKEN_EOF)
 		{
-			printf("TOKEN(%d,%s)\n", tokens->e_type ,tokens->value);
+			printf("TOKEN(%d,%s)\n", tokens->e_type, tokens->value);
 			tokens = tokens->next;
 		}
 	}
@@ -52,32 +37,32 @@ void print_linked_list(t_token *tokens)
 		printf("error\n");
 }
 
-int count_element(char *str, char c, int len)
+int	count_element(char *str, char c, int len)
 {
 	int	i;
 	int	counter;
 
 	i = 0;
 	counter = 0;
-	while(i < len)
+	while (i < len)
 	{
-		if(str[i] == c)
+		if (str[i] == c)
 			counter++;
 		i++;
 	}
-	return counter;
+	return (counter);
 }
 
-t_token *handler(char *str)
+t_token	*handler(char *str)
 {
-	t_lexer *lexer;
-	t_token *token;
-	t_token *tmp;
+	t_lexer	*lexer;
+	t_token	*token;
+	t_token	*tmp;
 
 	lexer = init_lexer(str);
 	token = lexer_get_next_token(lexer);
 	tmp = lexer_get_next_token(lexer);
-	while(tmp->e_type != TOKEN_EOF && token)
+	while (tmp->e_type != TOKEN_EOF && token)
 	{
 		ft_lstadd_back(&token, tmp);
 		tmp = lexer_get_next_token(lexer);
@@ -86,15 +71,15 @@ t_token *handler(char *str)
 	return (token);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
-	t_token *token;
-	(void) envp;
+	t_token	*token;
 
-	if(argc == 1)
+	(void) envp;
+	if (argc == 1)
 	{
-		while(1)
+		while (1)
 		{
 			str = readline("\033[0;35mminishell$ \033[0;37m");
 			add_history (str);
