@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/08 11:30:42 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:13:41 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_cmd	*init_cmd(t_lexer *lexer, t_token **token)
 		else if ((*token)->e_type == TOKEN_REDICRECTION)
 		{
 			cmd->redrec = ft_lstnew((void *) init_redirection(ft_strdup((const char *)(*token)->value), lexer));
+			system("leaks minishell"); /*hena kayn leak*/
 			if(((t_redirec *)cmd->redrec->content)->e_rtype == ERROR)
 				return (NULL);
 			ft_lstadd_back(&tmp1 ,cmd->redrec);
