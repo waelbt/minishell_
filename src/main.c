@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 19:26:10 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:18:17 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_node	*handler(char *str)
 {
 	t_lexer *lexer;
 	t_token *token;
-	t_node	*node;
+	t_node	*node = NULL;
 	t_node	*tmp;
 	
 	tmp = NULL;
@@ -31,7 +31,8 @@ t_node	*handler(char *str)
 			free(token);
 			return (NULL);
 		}
-		node = ft_lstnew((void *)init_cmd(lexer, token));
+		//printf("%p \n", node);
+		node = ft_lstnew((void *) init_cmd(lexer, &token));
 		if(!node)
 		{
 			free(token->value);
@@ -40,7 +41,7 @@ t_node	*handler(char *str)
 			return (NULL);
 		}
 		ft_lstadd_back(&tmp, node);
-		//free(token->value);
+		free(token->value);
 		free(token);
 		token = lexer_get_next_token(lexer);
 	}
@@ -59,7 +60,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_node	*cmd;
-
+	// int counter = 0;
 	(void) envp;
 
 	if (argc == 1)
@@ -69,7 +70,11 @@ int	main(int argc, char **argv, char **envp)
 			str = readline("\033[0;35mminishell$ \033[0;37m");
 			add_history (str);
 			cmd = handler(str);
-			ft_lstclear(&cmd, (void *)free_node);
+			free_node(&cmd);
+			// if(counter == 1)
+			// 	while(1);
+			// counter++;
+			// printf("%p\n", cmd);
 			free(str);
 		}
 	}

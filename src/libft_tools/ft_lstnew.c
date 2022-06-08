@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 01:47:43 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 16:50:32 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/06/08 09:30:26 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/08 11:10:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,13 @@ t_node	*ft_lstnew(void *content)
 {
 	t_node	*new;
 
+	if (!content)
+		return (NULL);
+	//system("leaks minishell");
 	new = malloc(sizeof(t_node));
-	if (!new || !content)
+	if (!new)
 		return (NULL);
 	new->content = content;
 	new->next = NULL;
 	return (new);
 }
-
-/*
-#include <stdio.h>
-int main(void)
-{
-	t_list *tmp;
-
-	tmp = ft_lstnew((int *) 5);
-	printf("%d",tmp->content);
-}
-*/

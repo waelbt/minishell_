@@ -6,24 +6,68 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:02:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 19:30:15 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:30:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void free_args(t_args *args)
+void dda(t_node **head)
 {
-	free(args->value);
+	t_node *temporary = *head;
+	t_args *tmp;
+	t_node *s;
+	int i;
+
+	i = 0;
+    while(temporary != NULL)
+    {
+		tmp = (t_args *) temporary->content;
+		s = temporary;
+        free(tmp->value);
+		free(tmp);
+        temporary = temporary->next;
+		free(s);
+    }
 }
 
-void free_redrection(t_redirec *redrec)
+void fed(t_node **head)
 {
-	free(redrec->file);
+	t_node *temporary = *head;
+	t_redirec *tmp;
+	t_node *s;
+	int i;
+
+	i = 0;
+    while(temporary != NULL)
+    {
+		tmp = (t_redirec *) temporary->content;
+		s = temporary;
+		free(tmp->file);
+		free(tmp);
+        temporary = temporary->next;
+		free(s);
+    }
 }
 
-void free_node(t_cmd *cmd)
+void free_node(t_node **head)
 {
-	ft_lstclear(&cmd->args, (void *)free_args);
-	ft_lstclear(&cmd->redrec, (void *)free_redrection);
+	t_node *temporary = *head;
+	t_cmd *cmd;
+	int i;
+	t_node *s;
+
+    i = 0;
+	while(temporary != NULL)
+   	{
+		//printf("cmd number :%d\n", i++);
+		cmd = (t_cmd *)temporary->content;
+		s = temporary;
+		dda(&cmd->args);
+		fed(&cmd->redrec);
+		free(cmd);
+        temporary = temporary->next;
+		free(s);
+		//system("leaks minishell");
+    }
 }
