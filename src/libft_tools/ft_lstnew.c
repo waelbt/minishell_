@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 01:48:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 20:24:06 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/06/08 09:30:26 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/08 11:10:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-t_token	*ft_lstlast(t_token *lst)
+t_node	*ft_lstnew(void *content)
 {
-	if (!lst)
+	t_node	*new;
+
+	if (!content)
 		return (NULL);
-	while (lst->next)
-	{
-		lst = lst->next;
-	}
-	return (lst);
+	//system("leaks minishell");
+	new = malloc(sizeof(t_node));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
 }

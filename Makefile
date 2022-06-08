@@ -1,10 +1,10 @@
 exec	=	minishell
 
-sources =	$(wildcard src/*.c)
+sources =	$(wildcard src/*.c) $(wildcard src/libft_tools/*.c)
 
 objects =	$(sources:.c=.o)
 
-flags	= 	-Wall -Wextra -Werror -lreadline -g
+flags	= 	-Wall -Wextra -Werror -lreadline
 
 CC		=	gcc
 
@@ -12,6 +12,7 @@ RM		= 	rm -f
 
 
 all :	$(exec)
+	make clean
 
 $(exec)	: $(objects)
 	$(CC) $(objects) $(flags) -o $(exec)
@@ -21,6 +22,7 @@ $(exec)	: $(objects)
 
 clean	:
 	$(RM) src/*.o
+	$(RM) src/libft_tools/*.o
 
 fclean : clean
 	$(RM) $(exec)

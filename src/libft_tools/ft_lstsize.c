@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/05 16:07:27 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/28 15:00:44 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/11/19 01:47:30 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:28 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-char	*ft_strchr(char *s, int c)
+int	ft_lstsize(t_node *lst)
 {
-	size_t		i;
-	char		*p;
+	int		i;
+	t_node	*tmp;
 
 	i = 0;
-	p = (char *) s;
-	while (i <= ft_strlen(s))
+	tmp = lst;
+	while (tmp != NULL)
 	{
-		if (*(p + i) == (char )c)
-			return (p + i);
 		i++;
+		tmp = tmp->next;
 	}
-	return (0);
+	return (i);
 }
-/*
-#include <stdio.h>
-#include <string.h>
-int main(void)
-{
-	char s[] = "tripouille";
-	printf("%s \n",ft_strchr(s, 't' + 256));
-	printf("%s",strchr(s, 't' + 256));
-}
-*/

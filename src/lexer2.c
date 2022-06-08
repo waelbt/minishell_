@@ -3,28 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   lexer2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 20:54:25 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/08 13:04:15 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	norm(t_lexer lexer, int c, int s)
-{
-	if (!(lexer.contents[lexer.i + 1] == 32
-			|| lexer.contents[lexer.i + 1] == '\0'
-			|| lexer.contents[lexer.i + 1] == s))
-		return (1);
-	return (0);
-}
-
-t_token *get_redirection(t_lexer *lexer) 
+t_token	*get_redirection(t_lexer *lexer)
 {
 	char		c;
-	t_token		*tmp;
+	char		*tmp;
 	t_token		*token;
 
 	c = lexer->c;
@@ -33,9 +24,8 @@ t_token *get_redirection(t_lexer *lexer)
 	lexer_advance (lexer);
 	if (lexer->c == c)
 	{
-		tmp = init_token(TOKEN_REDICRECTION,
-				lexer_get_current_char_as_string(lexer));
-		token->value = ft_strjoin(token->value, tmp->value);
+		tmp = lexer_get_current_char_as_string(lexer);
+		token->value = ft_strjoin(token->value, tmp);
 		lexer_advance(lexer);
 		free(tmp);
 	}
@@ -57,33 +47,23 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 			return (token);
 		}
 		else if (lexer->c == '<' || lexer->c == '>')
-		{
 			return (get_redirection(lexer));
-		/*	c = lexer->c;
-			token = init_token(TOKEN_REDICRECTION,
-					lexer_get_current_char_as_string(lexer));
-			lexer_advance (lexer);
-			if (lexer->c == c)
-			{
-				tmp = init_token(TOKEN_REDICRECTION,
-						lexer_get_current_char_as_string(lexer));
-				token->value = ft_strjoin(token->value, tmp->value);
-				lexer_advance(lexer);
-			}
-			return (token);
-	*/	}
 		else
 			return (lexer_collect_string(lexer, TOKEN_STRING));
 	}
-	return (NULL);
+	return (init_token(TOKEN_EOF, ft_strdup("")));
 }
 
-t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token)
+
+char *string_handler(t_lexer *lexer)
 {
-	lexer_advance(lexer);
-	return (token);
+	if (lexer->c == 34)
+		return (lexer_handle_quotes(lexer, 34));
+	else if (lexer->c == 39)
+		return (lexer_handle_quotes(lexer, 39));
+	else
+		return (lexer_get_current_char_as_string(lexer));
 }
-
 t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 {
 	char	*value;
@@ -91,16 +71,16 @@ t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 
 	value = ft_calloc(1, sizeof(char));
 	if (lexer->c == '\0')
-		return (NULL);
+		return (init_token(TOKEN_EOF, value));
 	while (lexer->c != 32 && lexer->c != '\0'
 		&& lexer->c != '<' && lexer->c != '>' && lexer->c != '|')
-	{		
-		if (lexer->c == 34)
-			s = lexer_handle_quotes(lexer, 34);
-		else
-			s = lexer_get_current_char_as_string(lexer);
+	{
+		s = string_handler(lexer);
 		if (!s)
-			return init_token(TOKEN_ERROR, value);
+		{
+			printf("'Error: [$parse:lexerr] Lexer Error: Unclosed qoutes'\n");
+			return (init_token(TOKEN_ERROR, value));
+		}
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
 		ft_strcat(value, s);
@@ -110,7 +90,7 @@ t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 	return (init_token(e_type, value));
 }
 
-int closed_qoutes(t_lexer *lexer, char c, int *bool)
+int	closed_qoutes(t_lexer *lexer, char c, int *bool)
 {
 	if (lexer->c == c)
 	{

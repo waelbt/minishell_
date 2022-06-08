@@ -6,100 +6,75 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 20:25:24 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:18:17 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-// void   (*SIGINT_handler)(int);
-// cmd_T	*init_cmd(token_T *token)
-// {
-// 	cmd_T *cmd;
-
-// 	cmd = ft_calloc(1, sizeof(cmd_T));
-// 	if (!cmd)
-// 		return (NULL);
-// 	cmd->id = 0;
-// 	cmd->token = token;
-// 	cmd->previous = NULL;
-// 	cmd->next = NULL;
-// 	return (cmd);
-// }
-
-int check_tokens(t_token *token)
-{
-	while(token)
-	{
-		if(token->e_type == TOKEN_ERROR)
-			return (0);
-		token = token->next;
-	}
-	return (1);
-}
-
-void print_linked_list(t_token *tokens)
-{
-	if(check_tokens(tokens))
-	{
-		while(tokens)
-		{
-			printf("TOKEN(%d,%s)\n", tokens->e_type ,tokens->value);
-			tokens = tokens->next;
-		}
-	}
-	else
-		printf("error\n");
-}
-
-int count_element(char *str, char c, int len)
-{
-	int	i;
-	int	counter;
-
-	i = 0;
-	counter = 0;
-	while(i < len)
-	{
-		if(str[i] == c)
-			counter++;
-		i++;
-	}
-	return counter;
-}
-
-t_token *handler(char *str)
+t_node	*handler(char *str)
 {
 	t_lexer *lexer;
 	t_token *token;
-	t_token *tmp;
-
+	t_node	*node = NULL;
+	t_node	*tmp;
+	
+	tmp = NULL;
 	lexer = init_lexer(str);
 	token = lexer_get_next_token(lexer);
-	tmp = lexer_get_next_token(lexer);
-	while(tmp != NULL)
+	while (token->e_type != TOKEN_EOF)
 	{
-		ft_lstadd_back(&token, tmp);
-		tmp = lexer_get_next_token(lexer);
+		if(token->e_type == TOKEN_ERROR)
+		{
+			free(lexer);
+			free(token->value);
+			free(token);
+			return (NULL);
+		}
+		//printf("%p \n", node);
+		node = ft_lstnew((void *) init_cmd(lexer, &token));
+		if(!node)
+		{
+			free(token->value);
+			free(token);
+			free(lexer);
+			return (NULL);
+		}
+		ft_lstadd_back(&tmp, node);
+		free(token->value);
+		free(token);
+		token = lexer_get_next_token(lexer);
 	}
+	// free(token);
+	node = tmp;
+	printf_node(node);
+	free(token->value);
 	free(lexer);
-	return (token);
+	free(token);
+	return (node);
 }
 
-int main(int argc, char **argv, char **envp)
+
+//pipe handling nsito
+int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
-	t_token *token;
+	t_node	*cmd;
+	// int counter = 0;
 	(void) envp;
 
-	if(argc == 1)
+	if (argc == 1)
 	{
-		while(1)
+		while (1)
 		{
 			str = readline("\033[0;35mminishell$ \033[0;37m");
 			add_history (str);
-			token = handler(str);
-			print_linked_list(token);
+			cmd = handler(str);
+			free_node(&cmd);
+			// if(counter == 1)
+			// 	while(1);
+			// counter++;
+			// printf("%p\n", cmd);
 			free(str);
 		}
 	}

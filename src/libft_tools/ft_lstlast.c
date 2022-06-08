@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 16:52:55 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/27 21:24:53 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/11/19 01:48:23 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:26 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-void *ft_realloc(void *ptr, size_t size)
+t_node	*ft_lstlast(t_node *lst)
 {
-	int				i;
-	unsigned char	*p;
-	unsigned char	*s;
-
-	i = 0;
-	p = (unsigned char *) ptr;
-	s = calloc(size, sizeof(void));
-	while(p[i])
+	if (!lst)
+		return (NULL);
+	while (lst->next)
 	{
-		s[i] = p[i];
-		i++;
+		lst = lst->next;
 	}
-	while(i < size)
-		s[i++] = '\0';
-	free(ptr);
-	return ((void *) s);
+	return (lst);
 }

@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 15:03:03 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 12:36:11 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/11/06 16:03:30 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 18:46:26 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-t_token	*init_token(int type, char *value)
+char	*ft_strdup(const char *s1)
 {
-	t_token	*token;
+	int		i;
+	int		j;
+	char	*ptr;
 
-	token = ft_calloc(1, sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->e_type = type;
-	token->value = value;
-	// token->next = NULL;
-	// token->previous = NULL;
-	return (token);
+	i = ft_strlen((char *)s1);
+	j = 0;
+	ptr = (char *) malloc((i + 1) * sizeof(char));
+	if (!ptr)
+		return (0);
+	while (j < i)
+	{
+		*(ptr + j) = *(s1 + j);
+		j++;
+	}
+	*(ptr + j) = '\0';
+	return (ptr);
 }

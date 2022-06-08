@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 01:47:30 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 20:24:06 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/11/06 18:04:04 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:39 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-int	ft_lstsize(t_token *lst)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	int		i;
-	t_token	*tmp;
+	char	*ptr;
+	size_t	len;
+	size_t	i;
 
 	i = 0;
-	tmp = lst;
-	while (tmp != NULL)
+	if (!s1 || !s2)
+		return (0);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	ptr = (char *) malloc((len + 1) * sizeof(char));
+	if (!ptr)
 	{
-		i++;
-		tmp = tmp->next;
+		return (0);
 	}
-	return (i);
+	while (i < len)
+	{
+		if (i < ft_strlen(s1))
+			*(ptr + i) = *(s1 + i);
+		else if (i >= ft_strlen(s1))
+			*(ptr + i) = *(s2++);
+		i++;
+	}
+	*(ptr + i) = '\0';
+	return (ptr);
 }

@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 01:49:12 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/04 20:24:06 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/05/26 16:52:55 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-void	ft_lstadd_back(t_token **lst, t_token *new)
+void	*ft_realloc(void *ptr, size_t size)
 {
-	t_token	*tmp;
+	int				i;
+	unsigned char	*p;
+	unsigned char	*s;
 
-	tmp = *lst;
-	if (!(*lst))
+	i = 0;
+	p = (unsigned char *) ptr;
+	s = calloc(size, sizeof(void));
+	while (p[i])
 	{
-		(*lst) = new;
-		return ;
+		s[i] = p[i];
+		i++;
 	}
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
+	while (i < size)
+		s[i++] = '\0';
+	free(ptr);
+	return ((void *) s);
 }

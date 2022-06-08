@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/25 19:32:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/25 19:33:36 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/08/16 14:22:50 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:32 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-int ft_strlen(char *str)
+char	*ft_strcat(char *dest, char *src)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (str[i])
+	j = 0;
+	while (dest[i] != '\0')
+	{
 		i++;
-	return (i);
+	}
+	while (src[j] != '\0')
+	{
+		dest[i] = src[j];
+		j++;
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

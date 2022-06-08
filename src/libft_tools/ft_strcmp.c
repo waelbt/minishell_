@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 10:38:22 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/05/26 15:08:18 by waboutzo         ###   ########.fr       */
+/*   Created: 2021/08/16 13:23:31 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/07 12:34:37 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+int	ft_strcmp(char *s1, char *s2)
 {
-	char	*ptr;
+	int	i;
 
-	ptr = (char *) s;
-	while (n-- > 0)
+	i = 0;
+	while ((s1[i] == s2[i]) && (s1[i]) && (s2[i]))
 	{
-		*(ptr++) = 0;
+		i++;
 	}
+	return (s1[i] - s2[i]);
 }
