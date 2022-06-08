@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/08 13:13:41 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/08 20:15:11 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ t_redirec	*init_redirection(char *str, t_lexer *lexer)
 	if (token->e_type == TOKEN_STRING)
 	{
 		redrec->file = token->value;
-		// red->fd = open(red->file, O_RDWR | O_CREAT); //3la 7ssab type wach 4adi t ready ou la t creat
+		// red->fd = open(red->file, O_RDWR | O_CREAT);
+			//3la 7ssab type wach 4adi t ready ou la t creat
 	}
 	else
 	{
@@ -60,6 +61,30 @@ t_redirec	*init_redirection(char *str, t_lexer *lexer)
 		redrec->e_rtype = ERROR;
 	}
 	return (redrec);
+}
+
+void	init_cmd1(t_token **token, t_node **tmp, t_cmd **cmd)
+{
+	if ((*token)->e_type == TOKEN_STRING)
+	{
+		(*cmd)->args = ft_lstnew((void *)
+				init_arg(ft_strdup((const char *)(*token)->value)));
+		ft_lstadd_back(tmp, (*cmd)->args);
+	}
+}
+
+void	*init_cmd2(t_token **token, t_node **tmp1, t_cmd **cmd, t_lexer *lexer)
+{
+	if ((*token)->e_type == TOKEN_REDICRECTION)
+	{
+		(*cmd)->redrec = ft_lstnew((void *)init_redirection
+				(ft_strdup((const char *)(*token)->value), lexer));
+		system("leaks minishell");
+		if (((t_redirec *)(*cmd)->redrec->content)->e_rtype == ERROR)
+			return (NULL);
+		ft_lstadd_back(tmp1, (*cmd)->redrec);
+		/*hena kayn leak*/
+	}
 }
 
 t_cmd	*init_cmd(t_lexer *lexer, t_token **token)
@@ -78,21 +103,8 @@ t_cmd	*init_cmd(t_lexer *lexer, t_token **token)
 	{
 		if ((*token)->e_type == TOKEN_ERROR)
 			return (NULL);
-		if ((*token)->e_type == TOKEN_STRING)
-		{
-			cmd->args = ft_lstnew((void *)
-					init_arg(ft_strdup((const char *)(*token)->value)));
-			ft_lstadd_back(&tmp, cmd->args);
-		}
-		else if ((*token)->e_type == TOKEN_REDICRECTION)
-		{
-			cmd->redrec = ft_lstnew((void *)init_redirection
-					(ft_strdup((const char *)(*token)->value), lexer));
-			system("leaks minishell"); /*hena kayn leak*/
-			if (((t_redirec *)cmd->redrec->content)->e_rtype == ERROR)
-				return (NULL);
-			ft_lstadd_back(&tmp1, cmd->redrec);
-		}
+		init_cmd1(token, &tmp, &cmd);
+		init_cmd2(token, &tmp1, &cmd, lexer);
 		free((*token)->value);
 		free(*token);
 		(*token) = lexer_get_next_token(lexer);

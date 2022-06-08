@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 09:30:26 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/08 11:10:07 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/08 19:21:58 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_node	*ft_lstnew(void *content)
 
 	if (!content)
 		return (NULL);
-	//system("leaks minishell");
 	new = malloc(sizeof(t_node));
 	if (!new)
 		return (NULL);
