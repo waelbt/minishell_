@@ -6,7 +6,7 @@
 /*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 19:28:27 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/09 19:39:33 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-typedef struct args
-{
-	t_node		*after_expand;
-	char	*value;
-}	t_args;
 
 typedef struct redirection
 {
@@ -49,6 +43,12 @@ typedef struct s_node
 	void			*content;
 	struct s_node	*next;
 }	t_node;
+
+typedef struct args
+{
+	t_node		*after_expand;
+	char	*value;
+}	t_args;
 
 typedef struct cmd
 {

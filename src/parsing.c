@@ -6,7 +6,7 @@
 /*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 19:30:56 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/09 19:51:09 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,17 @@ void	expand_dollar(char *tmp, char **expd, int i)
 	}
 	*expd = malloc(j * sizeof(char *));
 	(*expd)[j--] = '\0';
-	while(j > -1)
+	while (j > -1)
 	{
 		(*expd)[j] = tmp[i];
 		j--;
 		i--;
 	}
+	if (tmp[i + 1] == '?')
+		printf("hadik val ghadkon f wahd g_varli kaytbdel tal lakhar d execution\n");
 }
 
-void pure_arg(char **str)
+void	pure_arg(char **str)
 {
 	int		i;
 	char	*tmp;
@@ -51,18 +53,18 @@ void pure_arg(char **str)
 
 	tmp = *str;
 	i = 0;
-	while(tmp[i])
+	while (tmp[i])
 	{
 		if (tmp[i] == '$')
 		{
 			expand_dollar(tmp, &expd, i);
-//			= expd;
 			free(expd);
 		}
 		i++;
 	}
 }
-void parsing_args(t_node **head)
+
+void	parsing_args(t_node **head)
 {
 	t_node		*temporary;
 
@@ -85,7 +87,7 @@ void parsing_args(t_node **head)
 // 	}
 // }
 
-void parsing(t_node **command, char **envp)
+void	parsing(t_node **command, char **envp)
 {
 	t_node	*temporary;
 
