@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 10:20:46 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:50:04 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_token	*get_redirection(t_lexer *lexer)
 {
 	char		c;
 	char		*tmp;
+	char		*tmp1;
 	t_token		*token;
 
 	c = lexer->c;
@@ -25,7 +26,9 @@ t_token	*get_redirection(t_lexer *lexer)
 	if (lexer->c == c)
 	{
 		tmp = lexer_get_current_char_as_string(lexer);
+		tmp1 = token->value;
 		token->value = ft_strjoin(token->value, tmp);
+		free(tmp1);
 		lexer_advance(lexer);
 		free(tmp);
 	}
