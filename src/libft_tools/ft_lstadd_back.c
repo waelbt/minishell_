@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 01:49:12 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/08 11:06:59 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:36:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,4 @@ void	ft_lstadd_back(t_node **lst, t_node *new)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
-	//free(tmp);
 }

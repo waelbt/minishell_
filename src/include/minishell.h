@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 10:25:22 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:36:20 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@ typedef struct s_node
 	struct s_node	*next;
 }	t_node;
 
-
 typedef struct cmd
 {
 	t_node		*args;
 	t_node		*redrec;
 }	t_cmd;
-
 
 int			ft_strlen(char *str);
 void		*ft_calloc(size_t count, size_t size);
@@ -75,15 +73,14 @@ char		*ft_strjoin(char *s1, char *s2);
 int			closed_qoutes(t_lexer *lexer, char c, int *bool);
 void		error_handler(char *str);
 t_node		*ft_lstnew(void *content);
-// t_redirec	*init_redirection(char *str, t_lexer *lexer);
-t_args  	*init_arg(char *str);
 void		printf_args(t_node *head);
 void		printf_redrection(t_node *head);
 void		printf_node(t_node *head);
 char		*ft_strdup(const char *s1);
 void		free_node(t_node **head);
 t_cmd		*init_cmd(t_lexer *lexer, t_token **token);
-t_redirec  *init_redirection(t_token **token, t_lexer *lexer);
-void dda(t_node **head);
-void fed(t_node **head);
+t_redirec	*init_redirection(t_token **token, t_lexer *lexer);
+void		dda(t_node **head);
+void		fed(t_node **head);
+int			get_type(char *c);
 #endif

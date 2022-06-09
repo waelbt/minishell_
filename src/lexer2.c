@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 11:50:04 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:28:46 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 	return (init_token(TOKEN_EOF, ft_strdup("")));
 }
 
-
-char *string_handler(t_lexer *lexer)
+char	*string_handler(t_lexer *lexer)
 {
 	if (lexer->c == 34)
 		return (lexer_handle_quotes(lexer, 34));
@@ -67,6 +66,7 @@ char *string_handler(t_lexer *lexer)
 	else
 		return (lexer_get_current_char_as_string(lexer));
 }
+
 t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 {
 	char	*value;

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:03:03 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 12:36:11 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:35:21 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,5 @@ t_token	*init_token(int type, char *value)
 		return (NULL);
 	token->e_type = type;
 	token->value = value;
-	// token->next = NULL;
-	// token->previous = NULL;
 	return (token);
 }
