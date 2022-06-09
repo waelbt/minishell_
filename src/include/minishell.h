@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/08 19:25:38 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/09 19:28:27 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 typedef struct args
 {
-	//t_node		*after_expand;
+	t_node		*after_expand;
 	char	*value;
 }	t_args;
 
@@ -81,4 +81,8 @@ void		printf_node(t_node *head);
 char		*ft_strdup(const char *s1);
 void		free_node(t_node **head);
 t_cmd		*init_cmd(t_lexer *lexer, t_token **token);
+
+//void	look_for_dollar(t_node *args);
+void		parsing(t_node **command, char **envp);
+
 #endif
