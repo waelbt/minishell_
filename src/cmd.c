@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 09:45:07 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/09 10:28:32 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,12 @@ t_cmd	*init_cmd(t_lexer *lexer, t_token **token)
 		&& (*token)->e_type != TOKEN_PIPE)
 	{
 		if ((*token)->e_type == TOKEN_ERROR)
+		{
+			dda(&tmp);
+			fed(&tmp1);
+			free(cmd);
 			return (NULL);
+		}
 		init_cmd1(token, &tmp, &cmd);
 		init_cmd2(token, &tmp1, &cmd, lexer);
 		free((*token)->value);

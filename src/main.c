@@ -6,12 +6,20 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 09:45:26 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/09 10:22:36 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
+void *ft_free(t_token *token, t_lexer *lexer, t_node *node, t_node *tmp)
+{
+	if(!node)
+		free_node(&tmp);
+	free(lexer);
+	free(token->value);
+	free(token);
+	return (node);
+}
 t_node	*handler(char *str)
 {
 	t_lexer *lexer;
@@ -24,34 +32,17 @@ t_node	*handler(char *str)
 	token = lexer_get_next_token(lexer);
 	while (token->e_type != TOKEN_EOF)
 	{
-		if(token->e_type == TOKEN_ERROR)
-		{
-			free(lexer);
-			free(token->value);
-			free(token);
-			return (NULL);
-		}
-		//printf("%p \n", node);
+		if (token->e_type == TOKEN_ERROR)
+			return (ft_free(token, lexer, NULL, tmp));
 		node = ft_lstnew((void *) init_cmd(lexer, &token));
-		if(!node)
-		{
-			free(token->value);
-			free(token);
-			free(lexer);
-			return (NULL);
-		}
+		if (!node)
+			return ft_free(token, lexer, NULL, tmp);
 		ft_lstadd_back(&tmp, node);
 		free(token->value);
 		free(token);
 		token = lexer_get_next_token(lexer);
 	}
-	// free(token);
-	node = tmp;
-	printf_node(node);
-	free(token->value);
-	free(token);
-	free(lexer);
-	return (node);
+	return ft_free(token, lexer, tmp, NULL);
 }
 
 
@@ -60,9 +51,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_node	*cmd;
-	// int counter = 0;
-	(void) envp;
 
+	(void) envp;
 	if (argc == 1)
 	{
 		while (1)
@@ -70,11 +60,8 @@ int	main(int argc, char **argv, char **envp)
 			str = readline("\033[0;35mminishell$ \033[0;37m");
 			add_history (str);
 			cmd = handler(str);
+			printf_node(cmd);
 			free_node(&cmd);
-			// if(counter == 1)
-			// 	while(1);
-			// counter++;
-			// printf("%p\n", cmd);
 			free(str);
 		}
 	}
