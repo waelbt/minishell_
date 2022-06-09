@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/08 22:19:32 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/09 09:45:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_redirec  *init_redirection(t_token **token, t_lexer *lexer)
 	*token = lexer_get_next_token(lexer);
 	if((*token)->e_type == TOKEN_STRING)
 	{
-		redrec->file = (*token)->value;
+		redrec->file = ft_strdup((*token)->value);
 		// red->fd = open(red->file, O_RDWR | O_CREAT); //3la 7ssab type wach 4adi t ready ou la t creat
 	}
 	else
@@ -79,7 +79,6 @@ void	init_cmd2(t_token **token, t_node **tmp1, t_cmd **cmd, t_lexer *lexer)
 	{
 		//system("leaks minishell");
 		(*cmd)->redrec = ft_lstnew((void *)init_redirection(token, lexer));
-		while(1);
 		if (((t_redirec *)(*cmd)->redrec->content)->e_rtype == ERROR)
 			return ;
 		ft_lstadd_back(tmp1, (*cmd)->redrec);

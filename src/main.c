@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/08 12:18:17 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/09 09:45:26 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ t_node	*handler(char *str)
 	node = tmp;
 	printf_node(node);
 	free(token->value);
-	free(lexer);
 	free(token);
+	free(lexer);
 	return (node);
 }
 
