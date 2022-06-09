@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 14:24:35 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:34:34 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	*ft_free(t_token *token, t_lexer *lexer, t_node *node, t_node *tmp)
 
 int	ft_pipe_check(t_token *token, t_token *previous)
 {
-	int value;
+	int	value;
 
 	value = 0;
 	if (ft_strchr(token->value, '|'))
 		printf("parse error near `||'\n");
-	if (previous->e_type == TOKEN_PIPE && token->e_type == TOKEN_EOF)
+	else if (previous->e_type == TOKEN_PIPE && token->e_type == TOKEN_EOF)
 		printf("parse error near `|'\n");
 	else
 		value = 1;
