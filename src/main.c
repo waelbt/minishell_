@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 12:31:00 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:44:52 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,32 @@ void	*ft_free(t_token *token, t_lexer *lexer, t_node *node, t_node *tmp)
 	return (node);
 }
 
+int	ft_pipe_check(t_token *token, t_token *previous)
+{
+	if (ft_strchr(token->value, '|'))
+	{
+		printf("parse error near `||'\n");
+		free(previous->value);
+		free(previous);
+		return (0);
+	}
+	if (previous->e_type == TOKEN_PIPE && token->e_type == TOKEN_EOF)
+	{
+		printf("parse error near `|'\n");
+		free(previous->value);
+		free(previous);
+		return (0);
+	}
+	return (1);
+}
+
 t_node	*handler(char *str)
 {
 	t_lexer	*lexer;
 	t_token	*token;
 	t_node	*node;
 	t_node	*tmp;
+	t_token	*tmp1;
 
 	tmp = NULL;
 	lexer = init_lexer(str);
@@ -40,9 +60,10 @@ t_node	*handler(char *str)
 		if (!node)
 			return (ft_free(token, lexer, NULL, tmp));
 		ft_lstadd_back(&tmp, node);
-		free(token->value);
-		free(token);
+		tmp1 = token;
 		token = lexer_get_next_token(lexer);
+		if (!ft_pipe_check(token, tmp1))
+			return (ft_free(token, lexer, NULL, tmp));
 	}
 	return (ft_free(token, lexer, tmp, NULL));
 }
