@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/10 15:39:07 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:35:04 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,25 @@ char *handle_env_var(t_lexer *lexer, char **envp)
 	char	*value;
 	char	*s;
 	
+	lexer_advance(lexer);
 	value = ft_calloc(1, sizeof(char));
-	while (ft_isalnum(lexer->c) || lexer->c == '_')
+	if (ft_isalnum(lexer->c) || lexer->c == '_')
 	{
-		s = lexer_get_current_char_as_string(lexer);
-		value = ft_realloc(value, (ft_strlen(value)
-					+ ft_strlen(s) + 1) * sizeof(char));
-		ft_strcat(value, s);
-		free(s);
-		lexer_advance(lexer);
+		while (ft_isalnum(lexer->c) || lexer->c == '_')
+		{
+			s = lexer_get_current_char_as_string(lexer);
+			value = ft_realloc(value, (ft_strlen(value)
+						+ ft_strlen(s) + 1) * sizeof(char));
+			ft_strcat(value, s);
+			free(s);
+			lexer_advance(lexer);
+		}
+		return dollar_value(envp,value);
 	}
-	return dollar_value(envp,value);
+	else
+	{
+		return (ft_strdup(""));
+	}
 }
 
 char *string_cases(t_lexer *lexer, char **envp)
@@ -83,7 +91,8 @@ char	*pure_arg(char *str, char **envp)
 		s = string_cases(lexer, envp);
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
-		ft_strcat(value, s);
+		if (*s != '"')
+			ft_strcat(value, s);
 		free(s);
 		lexer_advance(lexer);
 	}

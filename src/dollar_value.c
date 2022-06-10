@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_value.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:01 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/10 15:37:15 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:00:02 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ char	*dollar_value(char **envp, char *var)
 			envp++;
 		}
 	}
-	return (NULL);
+	return (ft_strdup(""));
 }
