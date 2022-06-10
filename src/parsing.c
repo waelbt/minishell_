@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 19:51:09 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/10 15:39:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,55 +23,85 @@ int	ft_isalnum(int c)
 	return (0);
 }
 
-void	expand_dollar(char *tmp, char **expd, int i)
-{
-	int	j;
+// void	expand_dollar(char *tmp, char **expd, int i)
+// {
+// 	int	j;
 
-	j = 0;
-	while (ft_isalnum(tmp[i + 1]) || tmp[i + 1] == '_')
+// 	j = 0;
+// 	while (ft_isalnum(tmp[i + 1]) || tmp[i + 1] == '_')
+// 	{
+// 		j++;
+// 		i++;
+// 	}
+// 	*expd = malloc(j * sizeof(char *));
+// 	(*expd)[j--] = '\0';
+// 	while (j > -1)
+// 	{
+// 		(*expd)[j] = tmp[i];
+// 		j--;
+// 		i--;
+// 	}
+// 	if (tmp[i + 1] == '?')
+// 		printf("hadik val ghadkon f wahd g_varli kaytbdel tal lakhar d execution\n");
+// }
+
+char *handle_env_var(t_lexer *lexer, char **envp)
+{
+	char	*value;
+	char	*s;
+	
+	value = ft_calloc(1, sizeof(char));
+	while (ft_isalnum(lexer->c) || lexer->c == '_')
 	{
-		j++;
-		i++;
+		s = lexer_get_current_char_as_string(lexer);
+		value = ft_realloc(value, (ft_strlen(value)
+					+ ft_strlen(s) + 1) * sizeof(char));
+		ft_strcat(value, s);
+		free(s);
+		lexer_advance(lexer);
 	}
-	*expd = malloc(j * sizeof(char *));
-	(*expd)[j--] = '\0';
-	while (j > -1)
-	{
-		(*expd)[j] = tmp[i];
-		j--;
-		i--;
-	}
-	if (tmp[i + 1] == '?')
-		printf("hadik val ghadkon f wahd g_varli kaytbdel tal lakhar d execution\n");
+	return dollar_value(envp,value);
 }
 
-void	pure_arg(char **str)
+char *string_cases(t_lexer *lexer, char **envp)
 {
-	int		i;
-	char	*tmp;
-	char	*expd;
-
-	tmp = *str;
-	i = 0;
-	while (tmp[i])
+	if(lexer->c == '$')
+		return handle_env_var(lexer, envp);
+	else
+		return (lexer_get_current_char_as_string(lexer));
+}
+char	*pure_arg(char *str, char **envp)
+{
+	char	*value;
+	char	*s;
+	t_lexer *lexer;
+	
+	value = ft_calloc(1, sizeof(char));
+	lexer = init_lexer(str);
+	while (lexer->c != '\0')
 	{
-		if (tmp[i] == '$')
-		{
-			expand_dollar(tmp, &expd, i);
-			free(expd);
-		}
-		i++;
+		s = string_cases(lexer, envp);
+		value = ft_realloc(value, (ft_strlen(value)
+					+ ft_strlen(s) + 1) * sizeof(char));
+		ft_strcat(value, s);
+		free(s);
+		lexer_advance(lexer);
 	}
+	free(str);
+	free(lexer);
+	return value;
 }
 
-void	parsing_args(t_node **head)
+void	parsing_args(t_node **head, char **envp)
 {
 	t_node		*temporary;
+	t_args		*args;
 
 	temporary = *head;
 	while (temporary != NULL)
 	{
-		pure_arg(&((t_args *) temporary->content)->value);
+		args = (t_args *) temporary->content;
+		args->value = pure_arg(args->value, envp);
 		temporary = temporary->next;
 	}
 }
@@ -94,8 +124,24 @@ void	parsing(t_node **command, char **envp)
 	temporary = *command;
 	while (temporary != NULL)
 	{
-		parsing_args(&((t_cmd *)temporary->content)->args);
+		parsing_args(&((t_cmd *)temporary->content)->args, envp);
 		// parsing_redrection(&((t_cmd *)temporary->content)->redrec);
 		temporary = temporary->next;
 	}
 }
+
+// int		i;
+// 	char	*tmp;
+// 	char	*expd;
+
+// 	tmp = *str;
+// 	i = 0;
+// 	while (tmp[i])
+// 	{
+// 		if (tmp[i] == '$')
+// 		{
+// 			expand_dollar(tmp, &expd, i);
+// 			free(expd);
+// 		}
+// 		i++;
+// 	}

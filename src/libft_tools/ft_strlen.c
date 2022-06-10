@@ -6,11 +6,24 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:32:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 12:34:42 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:22:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	get_type(char *c)
+{
+	if (!ft_strcmp(c, "<"))
+		return (0);
+	else if (!ft_strcmp(c, ">"))
+		return (1);
+	else if (!ft_strcmp(c, "<<"))
+		return (2);
+	else if (!ft_strcmp(c, ">>"))
+		return (3);
+	return (-1);
+}
 
 int	ft_strlen(char *str)
 {

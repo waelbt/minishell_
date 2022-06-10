@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 19:39:33 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/10 15:35:42 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,17 @@ char		*ft_strjoin(char *s1, char *s2);
 int			closed_qoutes(t_lexer *lexer, char c, int *bool);
 void		error_handler(char *str);
 t_node		*ft_lstnew(void *content);
-t_redirec	*init_redirection(char *str, t_lexer *lexer);
-t_args		*init_arg(char *str);
+t_redirec	*init_redirection(t_token **token, t_lexer *lexer);
 void		printf_args(t_node *head);
 void		printf_redrection(t_node *head);
 void		printf_node(t_node *head);
 char		*ft_strdup(const char *s1);
 void		free_node(t_node **head);
-t_cmd		*init_cmd(t_lexer *lexer, t_token **token);
-
+t_cmd	*init_cmd(t_lexer *lexer, t_token **token);
+void	dda(t_node **head);
+void	fed(t_node **head);
+char	*dollar_value(char **envp, char *var);
 //void	look_for_dollar(t_node *args);
 void		parsing(t_node **command, char **envp);
-
+int	get_type(char *c);
 #endif
