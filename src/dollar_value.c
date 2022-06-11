@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:01 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/11 18:34:44 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/11 18:36:09 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 	return (dollar_value(envp, value));
 }
 
-int		find_char(char *s, char c)
+int	find_char(char *s, char c)
 {
 	int		i;
 
@@ -71,8 +71,8 @@ char	*dollar_value(char **envp, char *var)
 	{
 		while (*envp)
 		{
-			if(!strncmp(*envp, var, ft_strlen(var)))
-				return (ft_strdup(*envp+ft_strlen(var)+1));
+			if (!strncmp(*envp, var, ft_strlen(var)))
+				return (ft_strdup(*envp + ft_strlen(var) + 1));
 			envp++;
 		}
 	}
