@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:01 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/11 18:39:08 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/11 19:19:32 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 	char	*s;
 
 	lexer_advance(lexer);
-	value = ft_calloc(1, sizeof(char));
 	if (lexer->c == 34)
 		return (handle_quoutes(lexer, envp, 34));
 	if (lexer->c == 39)
 		return (handle_quoutes(lexer, envp, 39));
 	if (!ft_isalnum(lexer->c))
 		lexer_advance(lexer);
+	value = ft_calloc(1, sizeof(char));
 	while (ft_isalnum(lexer->c) || lexer->c == '_')
 	{
 		s = lexer_get_current_char_as_string(lexer);
@@ -76,14 +76,21 @@ int	find_char(char *s, char c)
 
 char	*dollar_value(char **envp, char *var)
 {
+	char *str;
+
 	if (!(find_char(var, '=')) && *var)
 	{
 		while (*envp)
 		{
 			if (!strncmp(*envp, var, ft_strlen(var)))
-				return (ft_strdup(*envp + ft_strlen(var) + 1));
+			{
+				str = ft_strdup(*envp + ft_strlen(var) + 1);
+				free(var);
+				return str;
+			}
 			envp++;
 		}
 	}
+	free(var);
 	return (ft_strdup(""));
 }
