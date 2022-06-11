@@ -6,7 +6,7 @@
 /*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:01 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/10 16:00:02 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/11 17:36:22 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		find_char(char *s, char c)
 
 char	*dollar_value(char **envp, char *var)
 {
-	if (!(find_char(var, '=')))
+	if (!(find_char(var, '=')) && *var)
 	{
 		while (*envp)
 		{
