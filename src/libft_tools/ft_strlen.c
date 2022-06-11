@@ -6,11 +6,22 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:32:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/10 15:22:07 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/11 18:32:10 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	ft_isalnum(int c)
+{
+	if (c <= '9' && c >= '0' )
+		return (1);
+	if (c <= 122 && c >= 97)
+		return (1);
+	if (c <= 90 && c >= 65)
+		return (1);
+	return (0);
+}
 
 int	get_type(char *c)
 {

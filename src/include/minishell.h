@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/11 15:40:11 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/11 18:33:41 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,6 @@ char 		*handle_quoutes(t_lexer *lexer, char **envp, int c);
 char 		*handle_env_var(t_lexer *lexer, char **envp);
 char 		*string_cases(t_lexer *lexer, char **envp);
 char		*pure_arg(char *str, char **envp);
+int			ft_isalnum(int c);
+char	*dollar_inside_qoutes(t_lexer *lexer, char **envp, int c);
 #endif
