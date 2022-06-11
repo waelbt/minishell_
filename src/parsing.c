@@ -6,7 +6,7 @@
 /*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/11 11:11:26 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/11 11:27:30 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,7 @@ void	parsing_args(t_node **head, char **envp)
 {
 	t_node		*temporary;
 	t_args		*args;
-	char		c;
 
-	c = 39;
 	temporary = *head;
 	while (temporary != NULL)
 	{
