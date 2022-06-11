@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 12:36:20 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/11 18:38:34 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,12 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <string.h>
 # include "lexer.h"
 # include "token.h"
 # include <signal.h>
-
-typedef struct args
-{
-	//t_node		*after_expand;
-	char	*value;
-}	t_args;
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef struct redirection
 {
@@ -49,6 +43,12 @@ typedef struct s_node
 	void			*content;
 	struct s_node	*next;
 }	t_node;
+
+typedef struct args
+{
+	//t_node		*after_expand;
+	char	*value;
+}	t_args;
 
 typedef struct cmd
 {
@@ -73,14 +73,23 @@ char		*ft_strjoin(char *s1, char *s2);
 int			closed_qoutes(t_lexer *lexer, char c, int *bool);
 void		error_handler(char *str);
 t_node		*ft_lstnew(void *content);
+t_redirec	*init_redirection(t_token **token, t_lexer *lexer);
 void		printf_args(t_node *head);
 void		printf_redrection(t_node *head);
 void		printf_node(t_node *head);
 char		*ft_strdup(const char *s1);
 void		free_node(t_node **head);
 t_cmd		*init_cmd(t_lexer *lexer, t_token **token);
-t_redirec	*init_redirection(t_token **token, t_lexer *lexer);
 void		dda(t_node **head);
 void		fed(t_node **head);
+char		*dollar_value(char **envp, char *var);
+void		parsing(t_node **command, char **envp);
 int			get_type(char *c);
+char		*ft_substr(char *s, unsigned int start, size_t len);
+char		*handle_quoutes(t_lexer *lexer, char **envp, int c);
+char		*handle_env_var(t_lexer *lexer, char **envp);
+char		*string_cases(t_lexer *lexer, char **envp);
+char		*pure_arg(char *str, char **envp);
+int			ft_isalnum(int c);
+char		*dollar_inside_qoutes(t_lexer *lexer, char **envp, int c);
 #endif

@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   look_for_dollar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/08 09:30:26 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/08 19:21:58 by lchokri          ###   ########.fr       */
+/*   Created: 2022/06/09 16:00:33 by lchokri           #+#    #+#             */
+/*   Updated: 2022/06/09 17:18:30 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "include/minishell.h"
 
-t_node	*ft_lstnew(void *content)
+/*void	look_for_dollar(t_cmd *cmd)
 {
-	t_node	*new;
-
-	if (!content)
-		return (NULL);
-	new = malloc(sizeof(t_node));
-	if (!new)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
-}
+	printf ("\n%s\n", (((t_args *)(*cmd).args->content)->value));
+}*/

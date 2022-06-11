@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:02:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 12:27:29 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:30:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	dda(t_node **head)
 	t_node	*temporary;
 	t_args	*tmp;
 	t_node	*s;
+	int		i;
 
+	i = 0;
 	temporary = *head;
 	while (temporary != NULL)
 	{
@@ -35,11 +37,13 @@ void	fed(t_node **head)
 	t_node		*temporary;
 	t_redirec	*tmp;
 	t_node		*s;
+	int			i;
 
 	temporary = *head;
+	i = 0;
 	while (temporary != NULL)
 	{
-		tmp = (t_redirec *) temporary->content;
+		tmp = (t_redirec *)temporary->content;
 		s = temporary;
 		free(tmp->file);
 		free(tmp);
@@ -52,11 +56,14 @@ void	free_node(t_node **head)
 {
 	t_node	*temporary;
 	t_cmd	*cmd;
+	int		i;
 	t_node	*s;
 
 	temporary = *head;
+	i = 0;
 	while (temporary != NULL)
 	{
+		//printf("cmd number :%d\n", i++);
 		cmd = (t_cmd *)temporary->content;
 		s = temporary;
 		dda(&cmd->args);
@@ -64,5 +71,6 @@ void	free_node(t_node **head)
 		free(cmd);
 		temporary = temporary->next;
 		free(s);
+		//system("leaks minishell");
 	}
 }
