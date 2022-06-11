@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/10 15:35:42 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/10 19:34:08 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_node
 
 typedef struct args
 {
-	t_node		*after_expand;
+	//t_node		*after_expand;
 	char	*value;
 }	t_args;
 
@@ -86,4 +86,5 @@ char	*dollar_value(char **envp, char *var);
 //void	look_for_dollar(t_node *args);
 void		parsing(t_node **command, char **envp);
 int	get_type(char *c);
+char	*ft_substr(char *s, unsigned int start, size_t len);
 #endif

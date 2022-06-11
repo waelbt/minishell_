@@ -6,7 +6,7 @@
 /*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/10 16:35:04 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/11 11:11:26 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,14 @@ char *handle_env_var(t_lexer *lexer, char **envp)
 		return dollar_value(envp,value);
 	}
 	else
-	{
 		return (ft_strdup(""));
-	}
 }
 
 char *string_cases(t_lexer *lexer, char **envp)
 {
 	if(lexer->c == '$')
 		return handle_env_var(lexer, envp);
-	else
+	else 
 		return (lexer_get_current_char_as_string(lexer));
 }
 char	*pure_arg(char *str, char **envp)
@@ -101,16 +99,32 @@ char	*pure_arg(char *str, char **envp)
 	return value;
 }
 
+int		expandable(char *args)
+{
+		if (args[0] == 39)
+			return (0);
+	return (1);
+}
+
 void	parsing_args(t_node **head, char **envp)
 {
 	t_node		*temporary;
 	t_args		*args;
+	char		c;
 
+	c = 39;
 	temporary = *head;
 	while (temporary != NULL)
 	{
 		args = (t_args *) temporary->content;
-		args->value = pure_arg(args->value, envp);
+		if(expandable(args->value))
+		{
+			args->value = pure_arg(args->value, envp);
+			if (args->value[0] == 39 && args->value[1] != 39)
+				args->value = ft_strjoin(args->value, "\'");
+		}
+		else
+			args->value = ft_substr(args->value, 1, ft_strlen(args->value) - 2);
 		temporary = temporary->next;
 	}
 }
