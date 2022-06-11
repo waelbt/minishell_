@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:13:56 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 10:18:12 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:53:24 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ t_token	*lexer_collect_string(t_lexer *lexer, int type);
 
 char	*lexer_handle_quotes(t_lexer *lexer, int c);
 
+void	lexer_previous(t_lexer	*lexer);
 #endif

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:16:39 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 18:42:52 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:53:13 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ void	lexer_advance(t_lexer	*lexer)
 	if (lexer->c != '\0' && lexer->i < ft_strlen(lexer->contents))
 	{
 		lexer->i += 1;
+		lexer->c = lexer->contents[lexer->i];
+	}
+}
+
+void	lexer_previous(t_lexer	*lexer)
+{
+	if (lexer->i != 0)
+	{
+		lexer->i -= 1;
 		lexer->c = lexer->contents[lexer->i];
 	}
 }
