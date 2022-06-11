@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/11 11:27:30 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/11 13:27:23 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ int	ft_isalnum(int c)
 		return (1);
 	if (c <= 90 && c >= 65)
 		return (1);
+	if(c == 34)
+		return (34);
+	if(c == 39)
+		return (39);
 	return (0);
 }
 
@@ -44,15 +48,39 @@ int	ft_isalnum(int c)
 // 	if (tmp[i + 1] == '?')
 // 		printf("hadik val ghadkon f wahd g_varli kaytbdel tal lakhar d execution\n");
 // }
-
-char *handle_env_var(t_lexer *lexer, char **envp)
+char *handle_quoutes(t_lexer *lexer, char **envp, int c)
 {
 	char	*value;
 	char	*s;
 	
 	lexer_advance(lexer);
 	value = ft_calloc(1, sizeof(char));
-	if (ft_isalnum(lexer->c) || lexer->c == '_')
+	while (lexer->c != c)
+	{
+		if(c == 34 && lexer->c == '$')
+			s = handle_env_var(lexer, envp);
+		else
+			s = lexer_get_current_char_as_string(lexer);
+		value = ft_realloc(value, (ft_strlen(value)
+					+ ft_strlen(s) + 1) * sizeof(char));
+		ft_strcat(value, s);
+		free(s);
+		lexer_advance(lexer);
+	}
+	lexer_advance(lexer);
+	return (value);
+}
+
+char *handle_env_var(t_lexer *lexer, char **envp)
+{
+	char	*value;
+	char	*s;
+	int status;
+	
+	lexer_advance(lexer);
+	value = ft_calloc(1, sizeof(char));
+	status = ft_isalnum(lexer->c);
+	if (status || lexer->c == '_')
 	{
 		while (ft_isalnum(lexer->c) || lexer->c == '_')
 		{
@@ -63,7 +91,10 @@ char *handle_env_var(t_lexer *lexer, char **envp)
 			free(s);
 			lexer_advance(lexer);
 		}
-		return dollar_value(envp,value);
+		if(status != 39 && status != 34)
+			return (dollar_value(envp,value));
+		else
+			return handle_quoutes(init_lexer(value),envp,status);
 	}
 	else
 		return (ft_strdup(""));
@@ -73,6 +104,10 @@ char *string_cases(t_lexer *lexer, char **envp)
 {
 	if(lexer->c == '$')
 		return handle_env_var(lexer, envp);
+	if(lexer->c == '"')
+		return handle_quoutes(lexer, envp,'"');
+	if(lexer->c == '\'')
+		return handle_quoutes(lexer, envp,'\'');
 	else 
 		return (lexer_get_current_char_as_string(lexer));
 }
@@ -89,8 +124,7 @@ char	*pure_arg(char *str, char **envp)
 		s = string_cases(lexer, envp);
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
-		if (*s != '"')
-			ft_strcat(value, s);
+		ft_strcat(value, s);
 		free(s);
 		lexer_advance(lexer);
 	}
@@ -115,14 +149,7 @@ void	parsing_args(t_node **head, char **envp)
 	while (temporary != NULL)
 	{
 		args = (t_args *) temporary->content;
-		if(expandable(args->value))
-		{
-			args->value = pure_arg(args->value, envp);
-			if (args->value[0] == 39 && args->value[1] != 39)
-				args->value = ft_strjoin(args->value, "\'");
-		}
-		else
-			args->value = ft_substr(args->value, 1, ft_strlen(args->value) - 2);
+		args->value = pure_arg(args->value, envp);
 		temporary = temporary->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/10 19:34:08 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/11 13:27:37 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,8 @@ char	*dollar_value(char **envp, char *var);
 void		parsing(t_node **command, char **envp);
 int	get_type(char *c);
 char	*ft_substr(char *s, unsigned int start, size_t len);
+char *handle_quoutes(t_lexer *lexer, char **envp, int c);
+char *handle_env_var(t_lexer *lexer, char **envp);
+char *string_cases(t_lexer *lexer, char **envp);
+char	*pure_arg(char *str, char **envp);
 #endif
