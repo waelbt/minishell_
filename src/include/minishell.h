@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/12 16:54:29 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/12 17:41:43 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char		*ft_substr(char *s, unsigned int start, size_t len);
 char		*pure_arg(char *str, char **envp);
 int			ft_isalnum(int c);
 char		*quotes_handler(t_lexer *lexer, char **envp, int c);
-char	*handle_env_var(t_lexer *lexer, char **envp);
-char	*dollar_inside_qoutes(t_lexer *lexer, char **envp, int c);
-char	**ft_split(char const *s, char c);
+char		*handle_env_var(t_lexer *lexer, char **envp);
+char		*dollar_inside_qoutes(t_lexer *lexer, char **envp, int c);
+char		**ft_split(char *s, char c);
 #endif

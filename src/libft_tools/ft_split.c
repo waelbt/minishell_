@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 11:31:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/12 16:54:17 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/12 17:42:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	free_handle(int j, char **str)
 	return (0);
 }
 
-static int	ft_no_25line(char const *s, char c,	char **str, int start)
+static int	ft_no_25line(char *s, char c,	char **str, int start)
 {
 	int		t;
 	int		j;
@@ -68,7 +68,7 @@ static int	ft_no_25line(char const *s, char c,	char **str, int start)
 	return (1);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	int		i;
 	char	**str;

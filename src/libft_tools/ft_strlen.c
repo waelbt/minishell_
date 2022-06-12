@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:32:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/11 18:32:10 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/12 17:50:41 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	get_type(char *c)
 		return (0);
 	else if (!ft_strcmp(c, ">"))
 		return (1);
-	else if (!ft_strcmp(c, "<<"))
-		return (2);
 	else if (!ft_strcmp(c, ">>"))
+		return (2);
+	else if (!ft_strcmp(c, "<<"))
 		return (3);
 	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/12 16:42:34 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/12 17:47:48 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,22 @@ void	parsing_args(t_node **head, char **envp)
 	}
 }
 
-// void parsing_redrection(t_node **head)
-// {
-// 	t_node		*temporary;
+void parsing_redrection(t_node **head, char **envp)
+{
+	t_node		*temporary;
+	t_redirec	*redrec;
 
-// 	temporary = *head;
-// 	while (temporary != NULL)
-// 	{
-// 		temporary = temporary->next;
-// 	}
-// }
+	temporary = *head;
+	while (temporary != NULL)
+	{
+		redrec = (t_redirec *) temporary->content;
+		if(redrec->e_rtype != 3)
+			redrec->file = pure_arg(redrec->file, envp);
+		// else
+		// 	handle_herdoc
+		temporary = temporary->next;
+	}
+}
 void	parsing(t_node **command, char **envp)
 {
 	t_node	*temporary;
@@ -77,7 +83,7 @@ void	parsing(t_node **command, char **envp)
 	while (temporary != NULL)
 	{
 		parsing_args(&((t_cmd *)temporary->content)->args, envp);
-		// parsing_redrection(&((t_cmd *)temporary->content)->redrec);
+		parsing_redrection(&((t_cmd *)temporary->content)->redrec, envp);
 		temporary = temporary->next;
 	}
 }

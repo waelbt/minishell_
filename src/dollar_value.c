@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:01 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/12 16:58:30 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/12 17:13:01 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void free_double_char(char **tmp)
 	}
 	free(tmp);
 }
+
 char	*dollar_value(char **envp, char *var)
 {
 	char *str;
