@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:01 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/11 19:19:32 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/12 16:58:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,6 @@ void	lexer_previous(t_lexer	*lexer)
 	}
 }
 
-char	*dollar_inside_qoutes(t_lexer *lexer, char **envp, int c)
-{
-	char	*str;
-
-	if (lexer->c == '$' && c == 34)
-	{
-		str = handle_env_var(lexer, envp);
-		lexer_previous(lexer);
-		return (str);
-	}
-	else
-		return (lexer_get_current_char_as_string(lexer));
-}
-
 char	*handle_env_var(t_lexer *lexer, char **envp)
 {
 	char	*value;
@@ -42,11 +28,14 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 
 	lexer_advance(lexer);
 	if (lexer->c == 34)
-		return (handle_quoutes(lexer, envp, 34));
+		return (quotes_handler(lexer, envp, 34));
 	if (lexer->c == 39)
-		return (handle_quoutes(lexer, envp, 39));
+		return (quotes_handler(lexer, envp, 39));
 	if (!ft_isalnum(lexer->c))
+	{
 		lexer_advance(lexer);
+		return (lexer_get_current_char_as_string(lexer));
+	}
 	value = ft_calloc(1, sizeof(char));
 	while (ft_isalnum(lexer->c) || lexer->c == '_')
 	{
@@ -59,6 +48,7 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 	}
 	return (dollar_value(envp, value));
 }
+
 
 int	find_char(char *s, char c)
 {
@@ -74,20 +64,36 @@ int	find_char(char *s, char c)
 	return (0);
 }
 
+void free_double_char(char **tmp)
+{
+	int i;
+
+	i = 0;
+	while(tmp[i])
+	{
+		free(tmp[i]);
+		i++;
+	}
+	free(tmp);
+}
 char	*dollar_value(char **envp, char *var)
 {
 	char *str;
+	char **tmp;
 
 	if (!(find_char(var, '=')) && *var)
 	{
 		while (*envp)
 		{
-			if (!strncmp(*envp, var, ft_strlen(var)))
+			tmp = ft_split(*envp, '=');
+			if (!ft_strcmp(tmp[0],var))
 			{
-				str = ft_strdup(*envp + ft_strlen(var) + 1);
+				str = ft_strdup(tmp[1]);
 				free(var);
+				free_double_char(tmp);
 				return str;
 			}
+			free_double_char(tmp);
 			envp++;
 		}
 	}

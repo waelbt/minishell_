@@ -6,43 +6,23 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/11 18:34:42 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/12 16:42:34 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-char	*handle_quoutes(t_lexer *lexer, char **envp, int c)
-{
-	char	*value;
-	char	*s;
-
-	lexer_advance(lexer);
-	value = ft_calloc(1, sizeof(char));
-	while (lexer->c != c)
-	{
-		s = dollar_inside_qoutes(lexer, envp, c);
-		value = ft_realloc(value, (ft_strlen(value)
-					+ ft_strlen(s) + 1) * sizeof(char));
-		ft_strcat(value, s);
-		free(s);
-		lexer_advance(lexer);
-	}
-	return (value);
-}
-
 char	*string_cases(t_lexer *lexer, char **envp)
 {
-	if (lexer->c == '$')
+	if(lexer->c == '$')
 		return (handle_env_var(lexer, envp));
-	if (lexer->c == '"')
-		return (handle_quoutes(lexer, envp, '"'));
-	if (lexer->c == '\'')
-		return (handle_quoutes(lexer, envp, '\''));
+	if(lexer->c == '"')
+		return (quotes_handler(lexer, envp, '"'));
+	if(lexer->c == '\'')
+		return (quotes_handler(lexer, envp, '\''));
 	else
 		return (lexer_get_current_char_as_string(lexer));
 }
-
 char	*pure_arg(char *str, char **envp)
 {
 	char	*value;
