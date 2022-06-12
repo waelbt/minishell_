@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dollar_value.c                                     :+:      :+:    :+:   */
+/*   dollar_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:01 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/12 17:13:01 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/12 19:19:12 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 		return (quotes_handler(lexer, envp, 34));
 	if (lexer->c == 39)
 		return (quotes_handler(lexer, envp, 39));
-	if (!ft_isalnum(lexer->c))
+	if (!ft_isalnum(lexer->c) && lexer->c != 42)
+		return ft_strjoin("$", lexer_get_current_char_as_string(lexer));
+	if(lexer->c <= '9' && lexer->c >= '0')
 	{
 		lexer_advance(lexer);
-		return (lexer_get_current_char_as_string(lexer));
+		return lexer_get_current_char_as_string(lexer);
 	}
 	value = ft_calloc(1, sizeof(char));
 	while (ft_isalnum(lexer->c) || lexer->c == '_')

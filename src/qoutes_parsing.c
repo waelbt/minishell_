@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:21:38 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/12 16:37:38 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/12 19:19:55 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,14 @@ char	*env_var_inside_qoutes(t_lexer *lexer, char **envp)
 	char	*value;
 	char	*s;
 
-	if (!ft_isalnum(lexer->c) && (lexer->c != 34 || lexer->c != 39))
+	lexer_advance(lexer);
+	if (!ft_isalnum(lexer->c) && lexer->c != 42)
+		return ft_strjoin("$", lexer_get_current_char_as_string(lexer));
+	if(lexer->c <= '9' && lexer->c >= '0')
+	{
 		lexer_advance(lexer);
+		return lexer_get_current_char_as_string(lexer);
+	}
 	value = ft_calloc(1, sizeof(char));
 	while (ft_isalnum(lexer->c) || lexer->c == '_')
 	{

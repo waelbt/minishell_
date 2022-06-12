@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/12 17:41:43 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:35:48 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_node
 
 typedef struct args
 {
-	//t_node		*after_expand;
+	char	*after_expand;
 	char	*value;
 }	t_args;
 
