@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:21:38 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/13 07:37:29 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/13 11:24:57 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ char	*quotes_handler(t_lexer *lexer, char **envp, int c)
 		ft_strcat(value, s);
 		free(s);
 		lexer_advance(lexer);
+		printf("adad\n");
 	}
+	printf("%s\n", value);
 	return (value);
 }

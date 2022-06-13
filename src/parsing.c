@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/12 17:47:48 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/13 11:28:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,24 @@
 
 char	*string_cases(t_lexer *lexer, char **envp)
 {
-	if(lexer->c == '$')
-		return (handle_env_var(lexer, envp));
-	if(lexer->c == '"')
-		return (quotes_handler(lexer, envp, '"'));
-	if(lexer->c == '\'')
-		return (quotes_handler(lexer, envp, '\''));
+	char *str;
+	if (lexer->c == '$')
+	{
+		str = handle_env_var(lexer, envp);
+		lexer_previous(lexer);
+		return str;
+	}
+	if (lexer->c == '"')
+		str = quotes_handler(lexer, envp, '"');
+		return str;
+	if (lexer->c == '\'')
+		str = quotes_handler(lexer, envp, '\'');
+		// lexer_previous(lexer);
+		return str;
 	else
 		return (lexer_get_current_char_as_string(lexer));
 }
+
 char	*pure_arg(char *str, char **envp)
 {
 	char	*value;
@@ -59,7 +68,7 @@ void	parsing_args(t_node **head, char **envp)
 	}
 }
 
-void parsing_redrection(t_node **head, char **envp)
+void	parsing_redrection(t_node **head, char **envp)
 {
 	t_node		*temporary;
 	t_redirec	*redrec;
@@ -68,13 +77,14 @@ void parsing_redrection(t_node **head, char **envp)
 	while (temporary != NULL)
 	{
 		redrec = (t_redirec *) temporary->content;
-		if(redrec->e_rtype != 3)
+		if (redrec->e_rtype != 3)
 			redrec->file = pure_arg(redrec->file, envp);
 		// else
 		// 	handle_herdoc
 		temporary = temporary->next;
 	}
 }
+
 void	parsing(t_node **command, char **envp)
 {
 	t_node	*temporary;
