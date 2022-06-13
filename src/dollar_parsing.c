@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:01 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/12 19:19:12 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/13 07:41:23 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,32 @@ void	lexer_previous(t_lexer	*lexer)
 	}
 }
 
-char	*handle_env_var(t_lexer *lexer, char **envp)
+char	*hard_code_norm(t_lexer *lexer, char **envp)
 {
-	char	*value;
-	char	*s;
-
-	lexer_advance(lexer);
 	if (lexer->c == 34)
 		return (quotes_handler(lexer, envp, 34));
 	if (lexer->c == 39)
 		return (quotes_handler(lexer, envp, 39));
 	if (!ft_isalnum(lexer->c) && lexer->c != 42)
-		return ft_strjoin("$", lexer_get_current_char_as_string(lexer));
-	if(lexer->c <= '9' && lexer->c >= '0')
+		return (ft_strjoin("$", lexer_get_current_char_as_string(lexer)));
+	if (ft_isdigit(lexer->c))
 	{
 		lexer_advance(lexer);
-		return lexer_get_current_char_as_string(lexer);
+		return (lexer_get_current_char_as_string(lexer));
 	}
+	return (NULL);
+}
+
+char	*handle_env_var(t_lexer *lexer, char **envp)
+{
+	char	*value;
+	char	*s;
+	char	*str;
+
+	lexer_advance(lexer);
+	str = hard_code_norm(lexer, envp);
+	if (str)
+		return (str);
 	value = ft_calloc(1, sizeof(char));
 	while (ft_isalnum(lexer->c) || lexer->c == '_')
 	{
@@ -51,27 +60,12 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 	return (dollar_value(envp, value));
 }
 
-
-int	find_char(char *s, char c)
+void	free_double_char(char **tmp)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void free_double_char(char **tmp)
-{
-	int i;
-
-	i = 0;
-	while(tmp[i])
+	while (tmp[i])
 	{
 		free(tmp[i]);
 		i++;
@@ -81,20 +75,20 @@ void free_double_char(char **tmp)
 
 char	*dollar_value(char **envp, char *var)
 {
-	char *str;
-	char **tmp;
+	char	*str;
+	char	**tmp;
 
 	if (!(find_char(var, '=')) && *var)
 	{
 		while (*envp)
 		{
 			tmp = ft_split(*envp, '=');
-			if (!ft_strcmp(tmp[0],var))
+			if (!ft_strcmp(tmp[0], var))
 			{
 				str = ft_strdup(tmp[1]);
 				free(var);
 				free_double_char(tmp);
-				return str;
+				return (str);
 			}
 			free_double_char(tmp);
 			envp++;

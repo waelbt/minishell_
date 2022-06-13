@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:32:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/12 19:02:20 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/13 07:40:16 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,20 @@ int	get_type(char *c)
 	else if (!ft_strcmp(c, "<<"))
 		return (3);
 	return (-1);
+}
+
+int	find_char(char *s, char c)
+{
+	int		i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	ft_strlen(char *str)
