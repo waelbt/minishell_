@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/13 11:28:07 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/13 11:39:21 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,12 @@ char	*string_cases(t_lexer *lexer, char **envp)
 	{
 		str = handle_env_var(lexer, envp);
 		lexer_previous(lexer);
-		return str;
+		return (str);
 	}
 	if (lexer->c == '"')
-		str = quotes_handler(lexer, envp, '"');
-		return str;
+		return quotes_handler(lexer, envp, '"');
 	if (lexer->c == '\'')
-		str = quotes_handler(lexer, envp, '\'');
-		// lexer_previous(lexer);
-		return str;
+		return quotes_handler(lexer, envp, '\'');
 	else
 		return (lexer_get_current_char_as_string(lexer));
 }

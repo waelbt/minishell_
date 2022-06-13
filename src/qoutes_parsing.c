@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:21:38 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/13 11:24:57 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/13 12:14:46 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,16 @@ int	get_index(t_lexer lexer, char c)
 
 char	*hard_code(t_lexer *lexer, char **envp, int c, int next_qoutes)
 {
+	char *str;
 	if (lexer->i == next_qoutes)
 		return (ft_strdup("$"));
 	if (!ft_isalnum(lexer->c) && lexer->c != 42)
-		return (ft_strjoin("$", lexer_get_current_char_as_string(lexer)));
+	{
+		// printf("salam\n");
+		str = lexer_get_current_char_as_string(lexer);
+		lexer_advance(lexer);
+		return (ft_strjoin("$", str));
+	}
 	if (ft_isdigit(lexer->c))
 	{
 		lexer_advance(lexer);
@@ -92,7 +98,6 @@ char	*quotes_handler(t_lexer *lexer, char **envp, int c)
 		ft_strcat(value, s);
 		free(s);
 		lexer_advance(lexer);
-		printf("adad\n");
 	}
 	printf("%s\n", value);
 	return (value);
