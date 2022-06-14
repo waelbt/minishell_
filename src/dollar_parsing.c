@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/14 15:17:51 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:49:08 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*hard_code_norm(t_lexer *lexer, char **envp)
 		return (quotes_handler(lexer, envp, 34));
 	if (lexer->c == 39)
 		return (quotes_handler(lexer, envp, 39));
-	if (!ft_isalnum(lexer->c))
+	if (!ft_isalnum(lexer->c) && lexer->c != '_')
 	{
 		str = lexer_get_current_char_as_string(lexer);
 		lexer_advance(lexer);

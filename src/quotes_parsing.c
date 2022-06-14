@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:52:38 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/14 15:18:35 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:47:24 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,9 @@ char	*hard_code(t_lexer *lexer, char **envp, int c, int next_qoutes)
 {
 	char *str;
 
-	if(lexer->c == '$')
+	if(lexer->c == '$' || lexer->i == next_qoutes)
 		return ft_strdup("$");
-	if (lexer->i == next_qoutes)
-		return (ft_strdup("$"));
-	if (!ft_isalnum(lexer->c))
+	if (!ft_isalnum(lexer->c) && lexer->c != '_')
 	{
 		str = lexer_get_current_char_as_string(lexer);
 		lexer_advance(lexer);
