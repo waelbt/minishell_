@@ -5,34 +5,46 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/07 17:53:01 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/13 12:07:04 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/14 15:17:51 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-void	lexer_previous(t_lexer	*lexer)
-{
-	if (lexer->i != 0)
-	{
-		lexer->i -= 1;
-		lexer->c = lexer->contents[lexer->i];
-	}
-}
+// void	lexer_previous(t_lexer	*lexer)
+// {
+// 	if (lexer->i != 0)
+// 	{
+// 		lexer->i -= 1;
+// 		lexer->c = lexer->contents[lexer->i];
+// 	}
+// }
 
 char	*hard_code_norm(t_lexer *lexer, char **envp)
 {
+	char *str;
+
+	if(lexer->c == '$')
+		return ft_strdup("$");
 	if (lexer->c == 34)
 		return (quotes_handler(lexer, envp, 34));
 	if (lexer->c == 39)
 		return (quotes_handler(lexer, envp, 39));
-	if (!ft_isalnum(lexer->c) && lexer->c != 42)
-		return (ft_strjoin("$", lexer_get_current_char_as_string(lexer)));
+	if (!ft_isalnum(lexer->c))
+	{
+		str = lexer_get_current_char_as_string(lexer);
+		lexer_advance(lexer);
+		return (ft_strjoin("$", str));
+	}
 	if (ft_isdigit(lexer->c))
 	{
+		if(lexer->c == '0')
+		{
+			lexer_advance(lexer);
+			return ft_strdup("minishell");
+		}
 		lexer_advance(lexer);
-		return (lexer_get_current_char_as_string(lexer));
+		return ft_strdup("");
 	}
 	return (NULL);
 }

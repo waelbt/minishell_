@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   qoutes_parsing.c                                   :+:      :+:    :+:   */
+/*   quotes_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/12 15:21:38 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/13 12:14:46 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/06/14 12:52:38 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/14 15:18:35 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+void	lexer_previous(t_lexer	*lexer)
+{
+	if (lexer->i != 0)
+	{
+		lexer->i -= 1;
+		lexer->c = lexer->contents[lexer->i];
+	}
+}
 
 int	get_index(t_lexer lexer, char c)
 {
@@ -26,11 +35,13 @@ int	get_index(t_lexer lexer, char c)
 char	*hard_code(t_lexer *lexer, char **envp, int c, int next_qoutes)
 {
 	char *str;
+
+	if(lexer->c == '$')
+		return ft_strdup("$");
 	if (lexer->i == next_qoutes)
 		return (ft_strdup("$"));
-	if (!ft_isalnum(lexer->c) && lexer->c != 42)
+	if (!ft_isalnum(lexer->c))
 	{
-		// printf("salam\n");
 		str = lexer_get_current_char_as_string(lexer);
 		lexer_advance(lexer);
 		return (ft_strjoin("$", str));
@@ -38,7 +49,7 @@ char	*hard_code(t_lexer *lexer, char **envp, int c, int next_qoutes)
 	if (ft_isdigit(lexer->c))
 	{
 		lexer_advance(lexer);
-		return (lexer_get_current_char_as_string(lexer));
+		return ft_strdup("");
 	}
 	return (NULL);
 }
@@ -71,18 +82,17 @@ char	*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c)
 
 char	*quotes_cases(t_lexer *lexer, char **envp, int c)
 {
-	char	*str;
+	char *str;
 
 	if (lexer->c == '$' && c != 39)
-	{
 		str = env_var_inside_qoutes(lexer, envp, c);
-		lexer_previous(lexer);
-		return (str);
-	}
 	else
-		return (lexer_get_current_char_as_string(lexer));
+	{
+		str = lexer_get_current_char_as_string(lexer);
+		lexer_advance(lexer);
+	}
+	return (str);
 }
-
 char	*quotes_handler(t_lexer *lexer, char **envp, int c)
 {
 	char	*value;
@@ -97,8 +107,7 @@ char	*quotes_handler(t_lexer *lexer, char **envp, int c)
 					+ ft_strlen(s) + 1) * sizeof(char));
 		ft_strcat(value, s);
 		free(s);
-		lexer_advance(lexer);
 	}
-	printf("%s\n", value);
+	lexer_advance(lexer);
 	return (value);
 }

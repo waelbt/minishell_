@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/13 11:15:27 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/13 23:53:48 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,13 @@ int			get_type(char *c);
 char		*ft_substr(char *s, unsigned int start, size_t len);
 char		*pure_arg(char *str, char **envp);
 int			ft_isalnum(int c);
-char		*quotes_handler(t_lexer *lexer, char **envp, int c);
-char		*handle_env_var(t_lexer *lexer, char **envp);
-char		*dollar_inside_qoutes(t_lexer *lexer, char **envp, int c);
 char		**ft_split(char *s, char c);
 int			ft_isdigit(int c);
 int			find_char(char *s, char c);
+char		*handle_env_var_case(t_lexer *lexer, char **envp);
+char		*handle_env_var(t_lexer *lexer, char **envp);
+int			get_index(t_lexer lexer, char c);
+char		*hard_code(t_lexer *lexer, char **envp, int c, int next_qoutes);
+char		*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c);
+char		*quotes_handler(t_lexer *lexer, char **envp, int c);
 #endif

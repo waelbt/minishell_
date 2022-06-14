@@ -6,29 +6,29 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/13 11:39:21 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:14:44 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-char	*string_cases(t_lexer *lexer, char **envp)
+char *string_cases(t_lexer *lexer, char **envp)
 {
 	char *str;
-	if (lexer->c == '$')
-	{
-		str = handle_env_var(lexer, envp);
-		lexer_previous(lexer);
-		return (str);
-	}
-	if (lexer->c == '"')
-		return quotes_handler(lexer, envp, '"');
-	if (lexer->c == '\'')
-		return quotes_handler(lexer, envp, '\'');
-	else
-		return (lexer_get_current_char_as_string(lexer));
-}
 
+	if (lexer->c == '"')
+		str = quotes_handler(lexer, envp, '"');
+	else if (lexer->c == '\'')
+		str = quotes_handler(lexer, envp, '\'');
+	else if (lexer->c == '$')
+		str = handle_env_var(lexer, envp);
+	else
+	{
+		str = lexer_get_current_char_as_string(lexer);
+		lexer_advance(lexer);
+	}
+	return (str);
+}
 char	*pure_arg(char *str, char **envp)
 {
 	char	*value;
@@ -37,17 +37,15 @@ char	*pure_arg(char *str, char **envp)
 
 	value = ft_calloc(1, sizeof(char));
 	lexer = init_lexer(str);
-	while (lexer->c != '\0')
+	while(lexer->c != '\0')
 	{
 		s = string_cases(lexer, envp);
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
 		ft_strcat(value, s);
 		free(s);
-		lexer_advance(lexer);
 	}
 	free(str);
-	free(lexer);
 	return (value);
 }
 
