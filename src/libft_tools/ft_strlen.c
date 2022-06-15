@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:32:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/13 07:40:16 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/15 09:12:42 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@ int	ft_isalnum(int c)
 	if (c <= 90 && c >= 65)
 		return (1);
 	return (0);
+}
+
+int	get_index(t_lexer lexer, char c)
+{
+	while (lexer.c != '\0')
+	{
+		if (lexer.c == c)
+			return (lexer.i);
+		lexer_advance(&lexer);
+	}
+	return (-1);
 }
 
 int	get_type(char *c)

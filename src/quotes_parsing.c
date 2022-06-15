@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:52:38 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/14 15:47:24 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/15 09:31:24 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,15 @@ void	lexer_previous(t_lexer	*lexer)
 	}
 }
 
-int	get_index(t_lexer lexer, char c)
-{
-	while (lexer.c != '\0')
-	{
-		if (lexer.c == c)
-			return (lexer.i);
-		lexer_advance(&lexer);
-	}
-	return (-1);
-}
-
 char	*hard_code(t_lexer *lexer, char **envp, int c, int next_qoutes)
 {
-	char *str;
+	char	*str;
+	char	*tmp;
 
-	if(lexer->c == '$' || lexer->i == next_qoutes)
-		return ft_strdup("$");
-	if (!ft_isalnum(lexer->c) && lexer->c != '_')
-	{
-		str = lexer_get_current_char_as_string(lexer);
-		lexer_advance(lexer);
-		return (ft_strjoin("$", str));
-	}
-	if (ft_isdigit(lexer->c))
-	{
-		lexer_advance(lexer);
-		return ft_strdup("");
-	}
+	if (lexer->c == '$' || lexer->i == next_qoutes)
+		return (ft_strdup("$"));
+	else
+		return (ft_norm(lexer));
 	return (NULL);
 }
 
@@ -80,7 +61,7 @@ char	*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c)
 
 char	*quotes_cases(t_lexer *lexer, char **envp, int c)
 {
-	char *str;
+	char	*str;
 
 	if (lexer->c == '$' && c != 39)
 		str = env_var_inside_qoutes(lexer, envp, c);
@@ -91,6 +72,7 @@ char	*quotes_cases(t_lexer *lexer, char **envp, int c)
 	}
 	return (str);
 }
+
 char	*quotes_handler(t_lexer *lexer, char **envp, int c)
 {
 	char	*value;

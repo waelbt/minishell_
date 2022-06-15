@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/13 23:53:48 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/15 09:30:26 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ int			get_index(t_lexer lexer, char c);
 char		*hard_code(t_lexer *lexer, char **envp, int c, int next_qoutes);
 char		*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c);
 char		*quotes_handler(t_lexer *lexer, char **envp, int c);
+char		*ft_norm(t_lexer *lexer);
 #endif

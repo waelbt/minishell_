@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/14 15:14:44 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/15 09:14:03 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-char *string_cases(t_lexer *lexer, char **envp)
+char	*string_cases(t_lexer *lexer, char **envp)
 {
 	char *str;
 
@@ -46,6 +46,7 @@ char	*pure_arg(char *str, char **envp)
 		free(s);
 	}
 	free(str);
+	free(lexer);
 	return (value);
 }
 
