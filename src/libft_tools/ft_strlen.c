@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:32:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/11 18:32:10 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/15 09:12:42 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,42 @@ int	ft_isalnum(int c)
 	return (0);
 }
 
+int	get_index(t_lexer lexer, char c)
+{
+	while (lexer.c != '\0')
+	{
+		if (lexer.c == c)
+			return (lexer.i);
+		lexer_advance(&lexer);
+	}
+	return (-1);
+}
+
 int	get_type(char *c)
 {
 	if (!ft_strcmp(c, "<"))
 		return (0);
 	else if (!ft_strcmp(c, ">"))
 		return (1);
-	else if (!ft_strcmp(c, "<<"))
-		return (2);
 	else if (!ft_strcmp(c, ">>"))
+		return (2);
+	else if (!ft_strcmp(c, "<<"))
 		return (3);
 	return (-1);
+}
+
+int	find_char(char *s, char c)
+{
+	int		i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	ft_strlen(char *str)

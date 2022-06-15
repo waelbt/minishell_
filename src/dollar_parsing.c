@@ -1,52 +1,66 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dollar_value.c                                     :+:      :+:    :+:   */
+/*   dollar_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/07 17:53:01 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/11 19:19:32 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/15 09:32:59 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void	lexer_previous(t_lexer	*lexer)
-{
-	if (lexer->i != 0)
-	{
-		lexer->i -= 1;
-		lexer->c = lexer->contents[lexer->i];
-	}
-}
-
-char	*dollar_inside_qoutes(t_lexer *lexer, char **envp, int c)
+char	*ft_norm(t_lexer *lexer)
 {
 	char	*str;
+	char	*tmp;
 
-	if (lexer->c == '$' && c == 34)
+	if (!ft_isalnum(lexer->c) && lexer->c != '_')
 	{
-		str = handle_env_var(lexer, envp);
-		lexer_previous(lexer);
-		return (str);
+		str = lexer_get_current_char_as_string(lexer);
+		lexer_advance(lexer);
+		tmp = ft_strjoin("$", str);
+		free(str);
+		return (tmp);
 	}
+	if (ft_isdigit(lexer->c))
+	{
+		if (lexer->c == '0')
+		{
+			lexer_advance(lexer);
+			return (ft_strdup("minishell"));
+		}
+		lexer_advance(lexer);
+		return (ft_strdup(""));
+	}
+	return (NULL);
+}
+
+char	*hard_code_norm(t_lexer *lexer, char **envp)
+{
+	if (lexer->c == '$')
+		return (ft_strdup("$"));
+	if (lexer->c == 34)
+		return (quotes_handler(lexer, envp, 34));
+	if (lexer->c == 39)
+		return (quotes_handler(lexer, envp, 39));
 	else
-		return (lexer_get_current_char_as_string(lexer));
+		return (ft_norm(lexer));
+	return (NULL);
 }
 
 char	*handle_env_var(t_lexer *lexer, char **envp)
 {
 	char	*value;
 	char	*s;
+	char	*str;
 
 	lexer_advance(lexer);
-	if (lexer->c == 34)
-		return (handle_quoutes(lexer, envp, 34));
-	if (lexer->c == 39)
-		return (handle_quoutes(lexer, envp, 39));
-	if (!ft_isalnum(lexer->c))
-		lexer_advance(lexer);
+	str = hard_code_norm(lexer, envp);
+	if (str)
+		return (str);
 	value = ft_calloc(1, sizeof(char));
 	while (ft_isalnum(lexer->c) || lexer->c == '_')
 	{
@@ -60,34 +74,37 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 	return (dollar_value(envp, value));
 }
 
-int	find_char(char *s, char c)
+void	free_double_char(char **tmp)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (s[i])
+	while (tmp[i])
 	{
-		if (s[i] == c)
-			return (1);
+		free(tmp[i]);
 		i++;
 	}
-	return (0);
+	free(tmp);
 }
 
 char	*dollar_value(char **envp, char *var)
 {
-	char *str;
+	char	*str;
+	char	**tmp;
 
 	if (!(find_char(var, '=')) && *var)
 	{
 		while (*envp)
 		{
-			if (!strncmp(*envp, var, ft_strlen(var)))
+			tmp = ft_split(*envp, '=');
+			if (!ft_strcmp(tmp[0], var))
 			{
-				str = ft_strdup(*envp + ft_strlen(var) + 1);
+				str = ft_strdup(tmp[1]);
 				free(var);
-				return str;
+				free_double_char(tmp);
+				return (str);
 			}
+			free_double_char(tmp);
 			envp++;
 		}
 	}

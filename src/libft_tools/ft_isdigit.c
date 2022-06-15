@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   look_for_dollar.c                                  :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/09 16:00:33 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/09 17:18:30 by lchokri          ###   ########.fr       */
+/*   Created: 2021/11/02 10:50:43 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/13 07:21:56 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-/*void	look_for_dollar(t_cmd *cmd)
+int	ft_isdigit(int c)
 {
-	printf ("\n%s\n", (((t_args *)(*cmd).args->content)->value));
-}*/
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
