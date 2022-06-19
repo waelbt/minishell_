@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 18:30:12 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/18 20:14:15 by lchokri          ###   ########.fr       */
+/*   Created: 2022/06/13 08:19:46 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/19 20:10:10 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h" 
+#include "include/pipex.h"
 
 char	*check_cmd(char *cmd, char **envp)
 {
-	char	**paths;
-	char	**p;
+	char	**paths = NULL;
 	char	*path;
+	int i;
 
-	p = paths;
 	path = NULL;
 	while (envp)
 	{
@@ -27,95 +26,115 @@ char	*check_cmd(char *cmd, char **envp)
 		envp++;
 	}
 	paths = ft_split(*envp+5, ':');
-	while (*paths)
+	i = 0;
+	while (paths[i])
 	{
-		*paths = ft_strjoin(*paths, cmd);
-		if (access(*paths, X_OK) == 0)
-			path = ft_strdup(*paths);
-		free (*paths);
-		paths++;
+		paths[i] = ft_strjoin(paths[i], ft_strdup(cmd));
+		if (access(paths[i], X_OK) == 0)
+			path = ft_strdup(paths[i]);
+		free(paths[i]);
+		i++;
 	}
-//	free(p); where da fuck is that dbl free?
+	free(paths);
+	free(cmd);
 	return (path);
 }
 
-void	not_accessible(char **av, char **cmd1, char **cmd2, char **envp)
+int args_checker(char **argv)
 {
-	char	**argv1;
-	char	**argv2;
-
-	argv1 = ft_split(av[2], ' ' );
-	argv2 = ft_split(av[3], ' ' );
-	if (access(argv1[0], X_OK))
-	{
-		*cmd1 = ft_strjoin("/", argv1[0]);
-		*cmd1 = check_cmd(*cmd1, envp);
-	}
-	else
-		*cmd1 = av[2];
-	if (access(argv2[0], X_OK))
-	{
-		*cmd2 = ft_strjoin("/", argv2[0]);
-		*cmd2 = check_cmd(*cmd2, envp);
-	}
-	else
-		*cmd2 = av[3];
+	if(!ft_strcmp(argv[1], argv[4]))
+		return (0);
+	return (1);
 }
 
-void	manage_err()
+char	*check_acces(char *cmd, char **envp)
 {
-	perror("Error");
-	exit(EXIT_FAILURE);
-}
-//pipe writes to fd[1]
-int main(int ac, char **av, char **envp)
-{
-	int		fd[2];
-	int		end[2];
-	int		chld_pid;
-	char	*cmd1;
-	char	*cmd2;
-	char	**argv1;
-	char	**argv2;
-
-	if (ac == 5)
+	if (access(cmd, X_OK))
 	{
-		argv1 = ft_split(av[2], ' ' );
-		argv2 = ft_split(av[3], ' ' );
-		if ((fd[0] = open(av[1], O_RDONLY))== -1)
-			manage_err();
-		if ((fd[1] = open(av[4], O_RDWR | O_TRUNC | O_CREAT, 0666))== -1)
-			manage_err();
-		not_accessible(av, &argv1[0], &argv2[0], envp);
-		pipe(end);
-		chld_pid = fork();
-		if (chld_pid == 0)
+		if(ft_strchr(cmd, '/'))
+			return (NULL);
+		cmd = ft_strjoin(ft_strdup("/"), cmd);
+		cmd = check_cmd(cmd, envp);
+	}
+	return (cmd);
+}
+
+void child_work(int n, int *fd, char **env, char **argv)
+{
+	int i = 0;
+	int last_fd;
+	int id;
+	int pipe_fd[2];
+	char	**cmd;
+
+	last_fd = -1;
+
+	while(i < n)
+	{
+		cmd = ft_split(argv[2 + i], 32);
+		cmd[0] = check_acces(cmd[0], env);
+		pipe(pipe_fd);
+		id = fork();
+		if(id == 0)
 		{
-			close(end[0]);
-			dup2(fd[0], 0);
-			dup2(end[1], 1);
-			execve(argv1[0], argv1, envp);
+			if(i != n - 1)
+			{
+				dup2(pipe_fd[1], 1);
+				close(pipe_fd[1]);
+				close(pipe_fd[0]);
+			}
+			if(i == 1)
+			{
+				dup2(fd[1], 1);
+				close(fd[1]);
+			}
+			if(last_fd != -1)
+			{
+				dup2(last_fd, 0);
+				close(last_fd);
+			}
+			if(i == 0)
+			{
+				dup2(fd[0], 0);
+				close(fd[0]);
+			}
+			execve(cmd[0], cmd, env);
 		}
 		else
 		{
-			wait(NULL);
-			close(end[1]);
+			if(i != n - 1)
+			{
+				close(pipe_fd[1]);
+			}
+			if(last_fd != -1)
+			{
+				close(last_fd);
+			}
+			last_fd = pipe_fd[0];
+			
 		}
-		chld_pid = fork();
-		if (chld_pid == 0)
+		i++;
+	}
+}
+
+int main(int argc, char **argv, char **env)
+{
+	int fd[2];
+
+	if(argc == 5 && args_checker(argv))
+	{
+		fd[0] = open(argv[1], O_RDONLY);
+		fd[1] = open(argv[4], O_RDWR | O_TRUNC | O_CREAT, 0666);
+		if(fd[0] < 0 || fd[1] < 0)
 		{
-			close(end[1]);
-			dup2(end[0], 0);
-			dup2(fd[1], 1);
-			execve(argv2[0], argv2, envp);
-			printf("we're in child 2\n");
+			perror("Error");
+			exit(EXIT_FAILURE);
 		}
-		else
-		{
-			wait(NULL);
-			printf("we're back to parent 2\n");
-		}
+		child_work(2, fd, env, argv);
+		//printf("%s %s\n", cmd[0], cmd[1]);
 	}
 	else
-		write(2, "Error!\nUsage: ./pipex f1 cmd1 cmd2 f2\n", 41);
+		printf("invalid argements\n");
+	//child_work(2, fd);
+	//while(1);
 }
