@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 08:19:46 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/20 11:49:28 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/20 15:58:47 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*check_acces(char *cmd, char **envp)
 	return (cmd);
 }
 
-void child_work(int n, int *fd, char **env, char **argv)
+void child_work(int n, int *fd, char **env, char **argv, int start)
 {
 	int i = 0;
 	int last_fd;
@@ -89,8 +89,9 @@ void child_work(int n, int *fd, char **env, char **argv)
 
 	while(i < n)
 	{
-		cmd = ft_split(argv[2 + i], 32);
+		cmd = ft_split(argv[start + i], 32);
 		cmd[0] = check_acces(cmd[0], env);
+		// printf("%s\n", cmd[0]);
 		pipe(pipe_fd);
 		id = fork();
 		if(id == 0)
@@ -136,20 +137,49 @@ void child_work(int n, int *fd, char **env, char **argv)
 	wait(NULL);
 }
 
+int	ft_here_doc(char *limiter)
+{
+	char *str;
+	int fd;
+
+	fd = open("her_doc", O_RDWR | O_CREAT);
+	if(fd < 0)
+	{
+		perror("Error");
+		exit(EXIT_FAILURE);
+	}
+	str = get_next_line(0);
+	while (ft_strncmp(str, limiter,7))
+	{
+		write(fd, str, ft_strlen(str));
+		free(str);
+		str = get_next_line(0);
+	}
+	return (fd);
+}
+
 int main(int argc, char **argv, char **env)
 {
 	int fd[2];
-
-	if(args_checker(argc,argv))
+	int start = 2;
+	int i = 3;
+	if(argc >= 5 && args_checker(argc,argv))
 	{
-		fd[0] = open(argv[1], O_RDONLY);
+		if(!ft_strcmp(argv[1], "here_doc"))
+		{
+			fd[0] = ft_here_doc(argv[2]);
+			start = 3;
+			i++;
+		}
+		else
+			fd[0] = open(argv[1], O_RDONLY);
 		fd[1] = open(argv[argc - 1], O_RDWR | O_TRUNC | O_CREAT, 0666);
 		if(fd[0] < 0 || fd[1] < 0)
 		{
 			perror("Error");
 			exit(EXIT_FAILURE);
 		}
-		child_work(argc - 3, fd, env, argv);
+		child_work(argc - i, fd, env, argv, start);
 		//printf("%s %s\n", cmd[0], cmd[1]);
 	}
 	else

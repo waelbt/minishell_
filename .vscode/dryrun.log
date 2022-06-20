@@ -1,7 +1,6 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/waboutzo/Desktop/minishell_'
 gcc    -c -o src/cmd.o src/cmd.c
- 
 gcc    -c -o src/dollar_parsing.o src/dollar_parsing.c
 gcc    -c -o src/free_node.o src/free_node.c
 gcc    -c -o src/lexer.o src/lexer.c
@@ -10,13 +9,11 @@ gcc    -c -o src/main.o src/main.c
 gcc    -c -o src/parsing.o src/parsing.c
 gcc    -c -o src/print_function.o src/print_function.c
 gcc    -c -o src/quotes_parsing.o src/quotes_parsing.c
- 
 gcc    -c -o src/token.o src/token.c
 gcc    -c -o src/libft_tools/ft_bzero.o src/libft_tools/ft_bzero.c
 gcc    -c -o src/libft_tools/ft_calloc.o src/libft_tools/ft_calloc.c
 gcc    -c -o src/libft_tools/ft_isdigit.o src/libft_tools/ft_isdigit.c
 gcc    -c -o src/libft_tools/ft_lstadd_back.o src/libft_tools/ft_lstadd_back.c
- 
 gcc    -c -o src/libft_tools/ft_lstadd_front.o src/libft_tools/ft_lstadd_front.c
 gcc    -c -o src/libft_tools/ft_lstclear.o src/libft_tools/ft_lstclear.c
 gcc    -c -o src/libft_tools/ft_lstdelone.o src/libft_tools/ft_lstdelone.c
@@ -25,14 +22,12 @@ gcc    -c -o src/libft_tools/ft_lstnew.o src/libft_tools/ft_lstnew.c
 gcc    -c -o src/libft_tools/ft_lstsize.o src/libft_tools/ft_lstsize.c
 gcc    -c -o src/libft_tools/ft_realloc.o src/libft_tools/ft_realloc.c
 gcc    -c -o src/libft_tools/ft_split.o src/libft_tools/ft_split.c
- 
 gcc    -c -o src/libft_tools/ft_strcat.o src/libft_tools/ft_strcat.c
 gcc    -c -o src/libft_tools/ft_strchr.o src/libft_tools/ft_strchr.c
 gcc    -c -o src/libft_tools/ft_strcmp.o src/libft_tools/ft_strcmp.c
 gcc    -c -o src/libft_tools/ft_strdup.o src/libft_tools/ft_strdup.c
 gcc    -c -o src/libft_tools/ft_strjoin.o src/libft_tools/ft_strjoin.c
 gcc    -c -o src/libft_tools/ft_strlen.o src/libft_tools/ft_strlen.c
- 
 gcc    -c -o src/libft_tools/ft_substr.o src/libft_tools/ft_substr.c
 gcc src/cmd.o src/dollar_parsing.o src/free_node.o src/lexer.o src/lexer2.o src/main.o src/parsing.o src/print_function.o src/quotes_parsing.o src/token.o src/libft_tools/ft_bzero.o src/libft_tools/ft_calloc.o src/libft_tools/ft_isdigit.o src/libft_tools/ft_lstadd_back.o src/libft_tools/ft_lstadd_front.o src/libft_tools/ft_lstclear.o src/libft_tools/ft_lstdelone.o src/libft_tools/ft_lstlast.o src/libft_tools/ft_lstnew.o src/libft_tools/ft_lstsize.o src/libft_tools/ft_realloc.o src/libft_tools/ft_split.o src/libft_tools/ft_strcat.o src/libft_tools/ft_strchr.o src/libft_tools/ft_strcmp.o src/libft_tools/ft_strdup.o src/libft_tools/ft_strjoin.o src/libft_tools/ft_strlen.o src/libft_tools/ft_substr.o -Wall -Wextra -Werror -lreadline -o minishell
 make clean
