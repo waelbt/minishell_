@@ -37,6 +37,11 @@ char	*check_cmd(char *cmd, char **envp)
 	}
 	free(paths);
 	free(cmd);
+	if (path == NULL)
+	{
+			perror("Error");
+			exit(EXIT_FAILURE);
+	}
 	return (path);
 }
 
@@ -128,6 +133,7 @@ void child_work(int n, int *fd, char **env, char **argv)
 		}
 		i++;
 	}
+	wait(NULL);
 }
 
 int main(int argc, char **argv, char **env)

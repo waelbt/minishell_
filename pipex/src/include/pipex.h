@@ -1,6 +1,7 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
+#include <sys/wait.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
