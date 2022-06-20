@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 08:19:46 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/19 20:10:10 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/20 11:49:28 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,22 @@ char	*check_cmd(char *cmd, char **envp)
 	return (path);
 }
 
-int args_checker(char **argv)
+void ft_free(char **str)
 {
-	if(!ft_strcmp(argv[1], argv[4]))
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
+int args_checker(int argc, char **argv)
+{
+	if(!ft_strcmp(argv[1], argv[argc - 1]))
 		return (0);
 	return (1);
 }
@@ -83,7 +96,7 @@ void child_work(int n, int *fd, char **env, char **argv)
 				close(pipe_fd[1]);
 				close(pipe_fd[0]);
 			}
-			if(i == 1)
+			if(i == n - 1)
 			{
 				dup2(fd[1], 1);
 				close(fd[1]);
@@ -111,7 +124,7 @@ void child_work(int n, int *fd, char **env, char **argv)
 				close(last_fd);
 			}
 			last_fd = pipe_fd[0];
-			
+			ft_free(cmd);
 		}
 		i++;
 	}
@@ -121,20 +134,21 @@ int main(int argc, char **argv, char **env)
 {
 	int fd[2];
 
-	if(argc == 5 && args_checker(argv))
+	if(args_checker(argc,argv))
 	{
 		fd[0] = open(argv[1], O_RDONLY);
-		fd[1] = open(argv[4], O_RDWR | O_TRUNC | O_CREAT, 0666);
+		fd[1] = open(argv[argc - 1], O_RDWR | O_TRUNC | O_CREAT, 0666);
 		if(fd[0] < 0 || fd[1] < 0)
 		{
 			perror("Error");
 			exit(EXIT_FAILURE);
 		}
-		child_work(2, fd, env, argv);
+		child_work(argc - 3, fd, env, argv);
 		//printf("%s %s\n", cmd[0], cmd[1]);
 	}
 	else
 		printf("invalid argements\n");
+	return (0);
 	//child_work(2, fd);
 	//while(1);
 }

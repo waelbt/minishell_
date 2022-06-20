@@ -1,0 +1,16 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/waboutzo/Desktop/pipex'
+gcc    -c -o src/ft_calloc.o src/ft_calloc.c
+gcc    -c -o src/ft_split.o src/ft_split.c
+gcc    -c -o src/ft_strchr.o src/ft_strchr.c
+gcc    -c -o src/ft_strcmp.o src/ft_strcmp.c
+gcc    -c -o src/ft_strdup.o src/ft_strdup.c
+gcc    -c -o src/ft_strjoin.o src/ft_strjoin.c
+gcc    -c -o src/ft_strlen.o src/ft_strlen.c
+gcc    -c -o src/ft_strncmp.o src/ft_strncmp.c
+gcc    -c -o src/ft_substr.o src/ft_substr.c
+gcc    -c -o src/main.o src/main.c
+gcc src/ft_calloc.o src/ft_split.o src/ft_strchr.o src/ft_strcmp.o src/ft_strdup.o src/ft_strjoin.o src/ft_strlen.o src/ft_strncmp.o src/ft_substr.o src/main.o -Wall -Wextra -Werror -o pipex
+make clean
+make: Leaving directory `/Users/waboutzo/Desktop/pipex'
+ 

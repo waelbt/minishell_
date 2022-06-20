@@ -1,15 +1,30 @@
-src = pipex.c ft_calloc.c ft_split.c ft_strdup.c  ft_strjoin.c ft_strncmp.c 
+exec	=	pipex
 
-obj = $(src:.c=.o)
+sources =	$(wildcard src/*.c) $(wildcard src/libft_tools/*.c)
 
-exec = pipex
+objects =	$(sources:.c=.o)
 
-flags = -Wall -Wextra -Werror
+flags	= 	-Wall -Wextra -Werror
 
-CC = gcc
+CC		=	gcc
 
-$(exec) : $(obj)
-	$(CC) $(flags) $(obj) -o $(exec)
+RM		= 	rm -f
 
-clean : 
-	rm -rf *.o
+
+all :	$(exec)
+	make clean
+
+$(exec)	: $(objects)
+	$(CC) $(objects) $(flags) -o $(exec)
+
+%.o	: %.c include/pipex.h
+	$(CC) -c $(flags) %< -o $@
+
+clean	:
+	$(RM) src/*.o
+	$(RM) src/libft_tools/*.o
+
+fclean : clean
+	$(RM) $(exec)
+
+re : fclean all

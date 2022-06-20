@@ -3,26 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/12 03:29:26 by lchokri           #+#    #+#             */
-/*   Updated: 2021/11/26 02:59:52 by lchokri          ###   ########.fr       */
+/*   Created: 2022/06/19 15:18:17 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/06/19 16:00:59 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "include/pipex.h"
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0' )
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	size_t	i;
@@ -46,5 +36,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 			str[i++] = s2[j++];
 	}
 	str[i] = '\0';
+	free(s1);
+	free(s2);
 	return (str);
 }
