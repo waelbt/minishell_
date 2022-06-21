@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 13:01:52 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 16:19:11 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:03:01 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 int	here_doc(t_redirec *redirc, char **envp)
 {
-	char	*str;
-	int		fd;
+	static int	index = 0;
+	char		*str;
+	char		*tmp;
+	int			fd;
 
-	fd = open("/var/TMP/her_doc", O_RDWR | O_CREAT, 0777);
+	tmp = ft_itoa(index);
+	fd = open(ft_strjoin("/var/TMP/her_doc", tmp) , O_RDWR | O_CREAT, 0777);
+	index++;
+	free(tmp);
 	/*wach 5assni ndir O_TRUNC fe had lcas ?*/
 	if (fd < 0)
 		return (fd);
