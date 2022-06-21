@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/09 17:05:13 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/21 16:03:21 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,12 @@ int	main(int argc, char **argv, char **envp)
 			str = readline("\033[0;35mminishell$ \033[0;37m");
 			add_history (str);
 			cmd = handler(str);
-			parsing(&cmd, envp);
+			if (!parsing(&cmd, envp))
+			{
+				free_node(&cmd);
+				free(str);
+				continue ;
+			}
 			printf_node(cmd);
 			free_node(&cmd);
 			free(str);

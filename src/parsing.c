@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/15 10:31:54 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 16:03:29 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,12 @@ void	parsing_args(t_node **head, char **envp)
 	{
 		args = (t_args *) temporary->content;
 		args->value = pure_arg(args->value, envp);
+		args->after_expand = ft_split(args->value, 32);
 		temporary = temporary->next;
 	}
 }
 
-void	parsing_redrection(t_node **head, char **envp)
+void	*parsing_redrection(t_node **head, char **envp)
 {
 	t_node		*temporary;
 	t_redirec	*redrec;
@@ -76,13 +77,20 @@ void	parsing_redrection(t_node **head, char **envp)
 		redrec = (t_redirec *) temporary->content;
 		if (redrec->e_rtype != 3)
 			redrec->file = pure_arg(redrec->file, envp);
-		// else
-		// 	handle_herdoc
+		else
+			redrec->file = delimiter(redrec->file, envp);
+		redrec->fd = open_file_descriptor(redrec);
+		if (redrec->fd < 0)
+		{
+			perror("Error");
+			return (NULL);
+		}
 		temporary = temporary->next;
 	}
+	return ((void *)1);
 }
 
-void	parsing(t_node **command, char **envp)
+void	*parsing(t_node **command, char **envp)
 {
 	t_node	*temporary;
 
@@ -90,23 +98,9 @@ void	parsing(t_node **command, char **envp)
 	while (temporary != NULL)
 	{
 		parsing_args(&((t_cmd *)temporary->content)->args, envp);
-		parsing_redrection(&((t_cmd *)temporary->content)->redrec, envp);
+		if (!parsing_redrection(&((t_cmd *)temporary->content)->redrec, envp))
+			return (NULL);
 		temporary = temporary->next;
 	}
+	return ((void *)1);
 }
-
-// int		i;
-// 	char	*tmp;
-// 	char	*expd;
-
-// 	tmp = *str;
-// 	i = 0;
-// 	while (tmp[i])
-// 	{
-// 		if (tmp[i] == '$')
-// 		{
-// 			expand_dollar(tmp, &expd, i);
-// 			free(expd);
-// 		}
-// 		i++;
-// 	}
