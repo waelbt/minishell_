@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 17:03:43 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:28:29 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ typedef struct s_node
 
 typedef struct args
 {
-	char	**after_expand;
 	char	*value;
 }	t_args;
 
 typedef struct cmd
 {
+	char		**after_expand;
 	t_node		*args;
 	t_node		*redrec;
 }	t_cmd;
@@ -103,6 +103,6 @@ char		*delimiter(char *str, char **envp);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			open_file_descriptor(t_redirec	*redrec, char **envp);
 void		free_double_char(char **tmp);
-void		execution(t_cmd *cmd);
+void		*execution(t_node *head, char **env);
 char		*ft_itoa(int n);
 #endif

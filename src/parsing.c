@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 16:18:04 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:32:08 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	parsing_args(t_node **head, char **envp)
 	{
 		args = (t_args *) temporary->content;
 		args->value = pure_arg(args->value, envp);
-		args->after_expand = ft_split(args->value, 32);
+		//args->after_expand = ft_split(args->value, 32);
 		temporary = temporary->next;
 	}
 }

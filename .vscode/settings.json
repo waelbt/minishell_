@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"__config": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"history.h": "c"
 	}
 }
