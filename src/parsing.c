@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 16:03:29 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 16:18:04 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	*parsing_redrection(t_node **head, char **envp)
 			redrec->file = pure_arg(redrec->file, envp);
 		else
 			redrec->file = delimiter(redrec->file, envp);
-		redrec->fd = open_file_descriptor(redrec);
+		redrec->fd = open_file_descriptor(redrec, envp);
 		if (redrec->fd < 0)
 		{
 			perror("Error");

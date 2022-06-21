@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 13:01:52 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 14:34:19 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 16:19:11 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	here_doc(t_redirec *redirc)
+int	here_doc(t_redirec *redirc, char **envp)
 {
 	char	*str;
 	int		fd;
@@ -23,8 +23,9 @@ int	here_doc(t_redirec *redirc)
 		return (fd);
 	str = readline("\033[0;35> \033[0;37m");
 	//  && ft_strncmp(str, "EOF", 3)
-	while (ft_strncmp(str, redirc->file, 7))
+	while (ft_strncmp(str, redirc->file, ft_strlen(redirc->file)))
 	{
+		str = pure_arg(str, envp);
 		write(fd, str, ft_strlen(str));
 		free(str);
 		str = readline("\033[0;35> \033[0;37m");
@@ -32,7 +33,7 @@ int	here_doc(t_redirec *redirc)
 	return (fd);
 }
 
-int	open_file_descriptor(t_redirec	*redrec)
+int	open_file_descriptor(t_redirec	*redrec, char **envp)
 {
 	int	fd;
 
@@ -43,6 +44,6 @@ int	open_file_descriptor(t_redirec	*redrec)
 	else if (redrec->e_rtype == APPEND)
 		fd = open(redrec->file, O_RDWR | O_CREAT, 0666);
 	else if (redrec->e_rtype == HERE_DOC)
-		fd = here_doc(redrec);
+		fd = here_doc(redrec, envp);
 	return (fd);
 }
