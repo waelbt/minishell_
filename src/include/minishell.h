@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 13:42:16 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 14:19:55 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,5 @@ char		*ft_norm(t_lexer *lexer);
 char		*delimiter(char *str, char **envp);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			open_file_descriptor(t_redirec *redrec);
+void		free_double_char(char **tmp);
 #endif
