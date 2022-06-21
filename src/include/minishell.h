@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 18:28:29 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 19:06:38 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,5 @@ int			open_file_descriptor(t_redirec	*redrec, char **envp);
 void		free_double_char(char **tmp);
 void		*execution(t_node *head, char **env);
 char		*ft_itoa(int n);
+t_redirec	*get_input(t_node *head);
 #endif

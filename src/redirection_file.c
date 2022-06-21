@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 13:01:52 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 17:48:38 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 19:49:52 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	here_doc(t_redirec *redirc, char **envp)
 	index++;
 	free(tmp);
 	/*wach 5assni ndir O_TRUNC fe had lcas ?*/
+	/*new line*/
 	if (fd < 0)
 		return (fd);
 	str = readline("\033[0;35> \033[0;37m");

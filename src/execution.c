@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:13:12 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 18:52:37 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 20:04:03 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char *join_args(t_node *head, char **env)
 	char	*str;
 	char	*tmp;
 
+	if(!head)
+		return (NULL);
 	str = ft_strdup(((t_args *) head->content)->value);
 	head = head->next;
 	while (head != NULL)
@@ -82,10 +84,43 @@ char *join_args(t_node *head, char **env)
 	return (str);
 }
 
+t_redirec	*get_input(t_node *head)
+{
+	t_redirec	*redrec;
+	t_redirec	*tmp;
+
+	redrec = NULL;
+	while (head != NULL)
+	{
+		tmp = (t_redirec *) head->content;
+		if(tmp->e_rtype == INPUT || tmp->e_rtype == HERE_DOC)
+			redrec = tmp;
+		head = head->next;
+	}
+	return (redrec);
+}
+
+t_redirec	*get_output(t_node *head)
+{
+	t_redirec	*redrec;
+	t_redirec	*tmp;
+
+	redrec = NULL;
+	while (head != NULL)
+	{
+		tmp = (t_redirec *) head->content;
+		if(tmp->e_rtype == OUTPUT || tmp->e_rtype == APPEND)
+			redrec = tmp;
+		head = head->next;
+	}
+	return (redrec);
+}
 
 void	*execution(t_node *head, char **env)
 {
 	t_cmd	*cmd;
+	t_redirec	*input;
+	t_redirec	*output;
 	char	*str;
 	int		status;
 	int		last_fd;
@@ -98,9 +133,16 @@ void	*execution(t_node *head, char **env)
 		cmd = (t_cmd *)head->content;
 		str = join_args(cmd->args, env);
 		cmd->after_expand = ft_split(str, 32);
-		cmd->after_expand[0] = check_acces(cmd->after_expand[0], env);
-		if(!cmd->after_expand[0])
-			return (NULL);
+		if(cmd->after_expand)
+		{
+			cmd->after_expand[0] = check_acces(cmd->after_expand[0], env);
+		
+			if(!cmd->after_expand[0])
+				return (NULL);
+		}
+		input = get_input(cmd->redrec);
+		output = get_output(cmd->redrec);
+		//printf("%d\n",output->fd);
 		pipe(pipe_fd);
 		id = fork();
 		if(id == 0)
@@ -111,12 +153,25 @@ void	*execution(t_node *head, char **env)
 				close(pipe_fd[1]);
 				close(pipe_fd[0]);
 			}
+			if(output != NULL)
+			{
+				dup2(output->fd, 1);
+				close(output->fd);
+			}
 			if(last_fd != -1)
 			{
 				dup2(last_fd, 0);
 				close(last_fd);
 			}
-			execve(cmd->after_expand[0], cmd->after_expand, env);
+			if(input != NULL)
+			{
+				dup2(input->fd, 0);
+				close(input->fd);
+			}
+			if(cmd->after_expand)
+				execve(cmd->after_expand[0], cmd->after_expand, env);
+			else if(!cmd->after_expand)
+				exit(0);
 		}
 		else
 		{

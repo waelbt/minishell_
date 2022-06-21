@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/15 09:32:59 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 20:05:02 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	free_double_char(char **tmp)
 	int	i;
 
 	i = 0;
+	if(!tmp)
+		return ;
 	while (tmp[i])
 	{
 		free(tmp[i]);
