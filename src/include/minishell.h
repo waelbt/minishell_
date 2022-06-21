@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/15 09:30:26 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 13:42:16 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "lexer.h"
 # include "token.h"
 # include <signal.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -29,10 +30,10 @@ typedef struct redirection
 	int		fd;
 	enum
 	{
-		OUTPUT,
 		INPUT,
-		R_OUTPUT,
-		R_INPUT,
+		OUTPUT,
+		APPEND,
+		HERE_DOC,
 		ERROR,
 	}e_rtype;
 	char	*file;
@@ -98,4 +99,7 @@ char		*hard_code(t_lexer *lexer, char **envp, int c, int next_qoutes);
 char		*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c);
 char		*quotes_handler(t_lexer *lexer, char **envp, int c);
 char		*ft_norm(t_lexer *lexer);
+char		*delimiter(char *str, char **envp);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int			open_file_descriptor(t_redirec *redrec);
 #endif

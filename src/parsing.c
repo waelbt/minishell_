@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/15 09:14:03 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 13:01:47 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	parsing_args(t_node **head, char **envp)
 	{
 		args = (t_args *) temporary->content;
 		args->value = pure_arg(args->value, envp);
+		args->after_expand = ft_split(args->value, 32);
 		temporary = temporary->next;
 	}
 }
@@ -75,8 +76,13 @@ void	parsing_redrection(t_node **head, char **envp)
 		redrec = (t_redirec *) temporary->content;
 		if (redrec->e_rtype != 3)
 			redrec->file = pure_arg(redrec->file, envp);
-		// else
-		// 	handle_herdoc
+		else
+			redrec->file = delimiter(redrec->file, envp);
+		redrec->fd = open_file_descriptor(redrec);
+		// if(redrec->fd < 0)
+		// {
+		// 	#protection;
+		// }
 		temporary = temporary->next;
 	}
 }
