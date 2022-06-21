@@ -6,20 +6,21 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 15:51:21 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/07 19:03:02 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 14:47:10 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void printf_args(t_node *head)
+void	printf_args(t_node *head)
 {
-	t_node *temporary = head;
-	t_args *tmp;
-	int i;
+	t_node	*temporary;
+	t_args	*tmp;
+	int		i;
 
 	i = 0;
-    while(temporary != NULL)
+	temporary = head;
+    while (temporary != NULL)
     {
 		tmp = (t_args *) temporary->content;
         printf("[arg %d : %s] -> ", i++, tmp->value);
@@ -30,12 +31,13 @@ void printf_args(t_node *head)
 
 void printf_redrection(t_node *head)
 {
-	t_node *temporary = head;
-	t_redirec *tmp;
-	int i;
+	t_node		*temporary;
+	t_redirec	*tmp;
+	int			i;
 
 	i = 0;
-    while(temporary != NULL)
+	temporary = head;
+    while (temporary != NULL)
     {
 		tmp = (t_redirec *) temporary->content;
         printf("[redirction number %d type : %d, file: %s ]->", i++,tmp->e_rtype, tmp->file);
@@ -46,12 +48,13 @@ void printf_redrection(t_node *head)
 
 void printf_node(t_node *head)
 {
-	t_node *temporary = head;
-	t_cmd *cmd;
-	int i;
+	t_node	*temporary;
+	t_cmd	*cmd;
+	int		i;
 
     i = 0;
-	while(temporary != NULL)
+	temporary = head;
+	while (temporary != NULL)
    	{
 		printf("cmd number :%d\n", i++);
 		cmd = (t_cmd *)temporary->content;

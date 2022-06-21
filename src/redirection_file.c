@@ -6,28 +6,24 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 13:01:52 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 14:00:00 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 14:34:19 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int here_doc(t_redirec *redirc)
+int	here_doc(t_redirec *redirc)
 {
-	char *str;
-	int fd;
+	char	*str;
+	int		fd;
 
 	fd = open("/var/TMP/her_doc", O_RDWR | O_CREAT, 0777);
 	/*wach 5assni ndir O_TRUNC fe had lcas ?*/
-	if(fd < 0)
-	{
-		perror("Error");
+	if (fd < 0)
 		return (fd);
-		// exit(EXIT_FAILURE);
-	}
 	str = readline("\033[0;35> \033[0;37m");
 	//  && ft_strncmp(str, "EOF", 3)
-	while (ft_strncmp(str, redirc->file ,7))
+	while (ft_strncmp(str, redirc->file, 7))
 	{
 		write(fd, str, ft_strlen(str));
 		free(str);
@@ -36,17 +32,17 @@ int here_doc(t_redirec *redirc)
 	return (fd);
 }
 
-int open_file_descriptor(t_redirec *redrec)
+int	open_file_descriptor(t_redirec	*redrec)
 {
-	int fd;
+	int	fd;
 
-	if(redrec->e_rtype == INPUT)
-		fd = open(redrec->file , O_RDWR , 0666);
-	else if(redrec->e_rtype == OUTPUT)
-		fd = open(redrec->file , O_RDWR | O_TRUNC | O_CREAT, 0666);
-	else if(redrec->e_rtype == APPEND)
-		fd = open(redrec->file , O_RDWR | O_CREAT, 0666);
-	else if(redrec->e_rtype == HERE_DOC)
+	if (redrec->e_rtype == INPUT)
+		fd = open(redrec->file, O_RDWR, 0666);
+	else if (redrec->e_rtype == OUTPUT)
+		fd = open(redrec->file, O_RDWR | O_TRUNC | O_CREAT, 0666);
+	else if (redrec->e_rtype == APPEND)
+		fd = open(redrec->file, O_RDWR | O_CREAT, 0666);
+	else if (redrec->e_rtype == HERE_DOC)
 		fd = here_doc(redrec);
 	return (fd);
 }

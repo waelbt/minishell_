@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 14:17:55 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 14:41:52 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*string_cases(t_lexer *lexer, char **envp)
 {
-	char *str;
+	char	*str;
 
 	if (lexer->c == '"')
 		str = quotes_handler(lexer, envp, '"');
@@ -29,6 +29,7 @@ char	*string_cases(t_lexer *lexer, char **envp)
 	}
 	return (str);
 }
+
 char	*pure_arg(char *str, char **envp)
 {
 	char	*value;
@@ -37,7 +38,7 @@ char	*pure_arg(char *str, char **envp)
 
 	value = ft_calloc(1, sizeof(char));
 	lexer = init_lexer(str);
-	while(lexer->c != '\0')
+	while (lexer->c != '\0')
 	{
 		s = string_cases(lexer, envp);
 		value = ft_realloc(value, (ft_strlen(value)
@@ -65,7 +66,7 @@ void	parsing_args(t_node **head, char **envp)
 	}
 }
 
-void	parsing_redrection(t_node **head, char **envp)
+void	*parsing_redrection(t_node **head, char **envp)
 {
 	t_node		*temporary;
 	t_redirec	*redrec;
@@ -79,15 +80,17 @@ void	parsing_redrection(t_node **head, char **envp)
 		else
 			redrec->file = delimiter(redrec->file, envp);
 		redrec->fd = open_file_descriptor(redrec);
-		// if(redrec->fd < 0)
-		// {
-		// 	#protection;
-		// }
+		if (redrec->fd < 0)
+		{
+			perror("Error");
+			return (NULL);
+		}
 		temporary = temporary->next;
 	}
+	return ((void *)1);
 }
 
-void	parsing(t_node **command, char **envp)
+void	*parsing(t_node **command, char **envp)
 {
 	t_node	*temporary;
 
@@ -95,23 +98,9 @@ void	parsing(t_node **command, char **envp)
 	while (temporary != NULL)
 	{
 		parsing_args(&((t_cmd *)temporary->content)->args, envp);
-		parsing_redrection(&((t_cmd *)temporary->content)->redrec, envp);
+		if (!parsing_redrection(&((t_cmd *)temporary->content)->redrec, envp))
+			return (NULL);
 		temporary = temporary->next;
 	}
+	return ((void *)1);
 }
-
-// int		i;
-// 	char	*tmp;
-// 	char	*expd;
-
-// 	tmp = *str;
-// 	i = 0;
-// 	while (tmp[i])
-// 	{
-// 		if (tmp[i] == '$')
-// 		{
-// 			expand_dollar(tmp, &expd, i);
-// 			free(expd);
-// 		}
-// 		i++;
-// 	}
