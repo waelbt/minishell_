@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 15:51:21 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 14:47:10 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 15:20:11 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ void	printf_args(t_node *head)
 
 	i = 0;
 	temporary = head;
-    while (temporary != NULL)
-    {
+	while (temporary != NULL)
+	{
 		tmp = (t_args *) temporary->content;
-        printf("[arg %d : %s] -> ", i++, tmp->value);
-        temporary = temporary->next;
-    }
-    printf("\n");
+		printf("[arg %d : %s] -> ", i++, tmp->value);
+		temporary = temporary->next;
+	}
+	printf("\n");
 }
 
-void printf_redrection(t_node *head)
+void	printf_redrection(t_node *head)
 {
 	t_node		*temporary;
 	t_redirec	*tmp;
@@ -37,30 +37,31 @@ void printf_redrection(t_node *head)
 
 	i = 0;
 	temporary = head;
-    while (temporary != NULL)
-    {
+	while (temporary != NULL)
+	{
 		tmp = (t_redirec *) temporary->content;
-        printf("[redirction number %d type : %d, file: %s ]->", i++,tmp->e_rtype, tmp->file);
-        temporary = temporary->next;
-    }
-    printf("\n");
+		printf("[redirction number %d type : %d, file: %s ]->",
+			i++, tmp->e_rtype, tmp->file);
+		temporary = temporary->next;
+	}
+	printf("\n");
 }
 
-void printf_node(t_node *head)
+void	printf_node(t_node *head)
 {
 	t_node	*temporary;
 	t_cmd	*cmd;
 	int		i;
 
-    i = 0;
+	i = 0;
 	temporary = head;
 	while (temporary != NULL)
-   	{
+	{
 		printf("cmd number :%d\n", i++);
 		cmd = (t_cmd *)temporary->content;
 		printf_args(cmd->args);
 		printf("\n");
 		printf_redrection(cmd->redrec);
-        temporary = temporary->next;
-    }
+		temporary = temporary->next;
+	}
 }
