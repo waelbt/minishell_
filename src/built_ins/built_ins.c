@@ -6,9 +6,10 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:48:57 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/22 13:42:01 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/21 20:11:05 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../include/minishell.h"
 
@@ -39,17 +40,16 @@ void		echo(char **after_expand)
 	str = ft_strjoin(after_expand[i], " ");
 	while(after_expand[++i])
 	{
-		printf("%s\n", str);
 		str = ft_strjoin(str, after_expand[i]);
-		str = ft_strjoin(str, " ");
-	if (!ft_strncmp(after_expand[1], "-n", 3))
-//		i++;
+		if (after_expand[i + 1])
+			str = ft_strjoin(str, " ");
 	}
 	printf("%s", str);
 	free (str);
 	if (check == 0)
 		printf("\n");
 }
+
 int main(int ac, char **av)
 {
 	(void)ac;
