@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/15 09:30:26 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/21 19:06:38 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "lexer.h"
 # include "token.h"
 # include <signal.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -29,10 +30,10 @@ typedef struct redirection
 	int		fd;
 	enum
 	{
-		OUTPUT,
 		INPUT,
-		R_OUTPUT,
-		R_INPUT,
+		OUTPUT,
+		APPEND,
+		HERE_DOC,
 		ERROR,
 	}e_rtype;
 	char	*file;
@@ -46,12 +47,12 @@ typedef struct s_node
 
 typedef struct args
 {
-	char	**after_expand;
 	char	*value;
 }	t_args;
 
 typedef struct cmd
 {
+	char		**after_expand;
 	t_node		*args;
 	t_node		*redrec;
 }	t_cmd;
@@ -83,7 +84,7 @@ t_cmd		*init_cmd(t_lexer *lexer, t_token **token);
 void		dda(t_node **head);
 void		fed(t_node **head);
 char		*dollar_value(char **envp, char *var);
-void		parsing(t_node **command, char **envp);
+void		*parsing(t_node **command, char **envp);
 int			get_type(char *c);
 char		*ft_substr(char *s, unsigned int start, size_t len);
 char		*pure_arg(char *str, char **envp);
@@ -98,4 +99,11 @@ char		*hard_code(t_lexer *lexer, char **envp, int c, int next_qoutes);
 char		*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c);
 char		*quotes_handler(t_lexer *lexer, char **envp, int c);
 char		*ft_norm(t_lexer *lexer);
+char		*delimiter(char *str, char **envp);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int			open_file_descriptor(t_redirec	*redrec, char **envp);
+void		free_double_char(char **tmp);
+void		*execution(t_node *head, char **env);
+char		*ft_itoa(int n);
+t_redirec	*get_input(t_node *head);
 #endif
