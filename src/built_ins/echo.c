@@ -13,7 +13,7 @@
 
 #include "../include/minishell.h"
 
-int	ft_strlen(char *str)
+/*int	ft_strlen(char *str)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int	ft_strlen(char *str)
 		i++;
 	return (i);
 }
-
+*/
 void		echo(char **after_expand)
 {
 	int		i;
@@ -49,9 +49,9 @@ void		echo(char **after_expand)
 	if (check == 0)
 		printf("\n");
 }
-
+/*
 int main(int ac, char **av)
 {
 	(void)ac;
 	echo(av);
-}
+}*/
