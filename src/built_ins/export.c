@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
+/*   Updated: 2022/06/23 22:13:47 by lchokri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 #include <string.h>
 #include <stdio.h>
@@ -52,9 +64,7 @@ void	export(char ***envp, char *value)
 		}
 		new_envp[i++] = strdup(value);
 		new_envp[i] = NULL;
-		free_double_char(*envp);
 		*envp = my_envp(new_envp);
-//		free_double_char(new_envp);
 	}
 }
 
