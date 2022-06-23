@@ -19,14 +19,14 @@ void	free_double_char(char **tmp)
 	free(tmp);
 }
 /* strduppp*/
-void	print_env(char **envp)
+void	print_export(char **envp)
 {
 	int	i;
 	
 	i = 0;
 	while(envp[i])
 	{
-		printf("**%s\n", envp[i]);
+		printf("declare -x %s\n", envp[i]);
 		i++;
 	}
 }
@@ -38,7 +38,7 @@ void	export(char ***envp, char *value)
 
 	i = 0;
 	if (value == NULL)
-		print_env(*envp);
+		print_export(*envp);
 	else
 	{
 		while ((*envp)[i])
@@ -52,12 +52,12 @@ void	export(char ***envp, char *value)
 		}
 		new_envp[i++] = strdup(value);
 		new_envp[i] = NULL;
-//		free_double_char(*envp);
+		free_double_char(*envp);
 		*envp = my_envp(new_envp);
-		free_double_char(new_envp);
+//		free_double_char(new_envp);
 	}
 }
-/*zeeed wahd njma a bnti*/
+
 int main(int ac, char **av)
 {
 	int		i;
@@ -65,5 +65,9 @@ int main(int ac, char **av)
 	i = 0;
 	export(&av, "some var");
 	while(av[i])
-		printf("```%s```\n", av[i++]);
+	{
+		printf("```%s```\n", av[i]);
+		i++;
+	}
 }
+
