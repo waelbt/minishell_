@@ -49,3 +49,15 @@ void	pwd(void)
 {
 	printf("%s\n", getcwd(NULL, 0));
 }
+
+void	print_env(char **envp)
+{
+	int	i;
+	
+	i = 0;
+	while(envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+}
