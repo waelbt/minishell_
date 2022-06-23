@@ -106,4 +106,9 @@ void		free_double_char(char **tmp);
 void		*execution(t_node *head, char **env);
 char		*ft_itoa(int n);
 t_redirec	*get_input(t_node *head);
+
+void	free_double_char(char **tmp);
+char	**my_envp(char **envp);
+void	print_env(char **envp);
+
 #endif
