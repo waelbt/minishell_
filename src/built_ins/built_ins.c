@@ -6,23 +6,12 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:48:57 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/21 20:11:05 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/22 21:32:47 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/minishell.h"
 
-/*int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-*/
 void		echo(char **after_expand)
 {
 	int		i;
@@ -49,9 +38,14 @@ void		echo(char **after_expand)
 	if (check == 0)
 		printf("\n");
 }
-/*
-int main(int ac, char **av)
+
+void	cd(char *path)
 {
-	(void)ac;
-	echo(av);
-}*/
+	if (chdir(path) < 0)
+		perror("Error");
+}
+
+void	pwd(void)
+{
+	printf("%s\n", getcwd(NULL, 0));
+}
