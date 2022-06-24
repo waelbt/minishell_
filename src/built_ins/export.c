@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/24 18:33:18 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/24 20:19:05 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,19 +138,26 @@ void	right_value(char **str)
 {
 	char	*s;
 	char	*tmp;
+	char	*tmp1;
+	char	*tmp2;
 	int		j;
 
 	j = 0;
 	if ((s = ft_strchr(*str, '=')))
 		{
 			tmp = ft_strjoin("\"", ++s);
+			tmp1 = tmp;
 			tmp = ft_strjoin(tmp, "\"");
 			j = get_j(*str);
 			*str = ft_substr(*str, 0, j+1);
+			tmp2 = *str;
+			free(tmp2);
 		}
 	else
 		tmp = strdup("");
 	*str = ft_strjoin(*str, tmp);
+	free(tmp);
+	free(tmp1);
 }
 	
 void	my_export(char ***envp, char *value)
@@ -176,9 +183,8 @@ void	my_export(char ***envp, char *value)
 		new_envp[i] = strdup(value);
 		i++;
 		new_envp[i] = NULL;
-		/*old envp need to be freed*/
-	//	*envp = my_envp(new_envp);
 		*envp = new_envp;
+		free(value);
 	}
 }
 
