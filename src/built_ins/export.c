@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/24 20:19:05 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/24 20:30:43 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,8 @@ void	my_export(char ***envp, char *value)
 	}
 }
 
+/* sort table in another table
+ * if var hav no val don't add it to env*/
 int main(int ac, char **av)
 {
 	int		i;
