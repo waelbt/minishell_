@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/23 22:13:47 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/24 18:33:18 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+int		get_j(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	return (i);
+}
 
 int	ft_strlen(char *str)
 {
@@ -80,6 +90,33 @@ void	print_export(char **envp)
 	}
 }
 
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	char	*p;
+	size_t	i;
+	size_t	slen;
+
+	if (!s)
+		return (NULL);
+	slen = ft_strlen(s);
+	if (start >= slen)
+		len = 0;
+	i = 0;
+	if (len < slen)
+		p = (char *)malloc((len + 1) * sizeof(char));
+	else
+		p = (char *)malloc((slen + 1) * sizeof(char));
+	if (!p)
+		return (NULL);
+	while (s[start] && i < len)
+	{
+		p[i] = s[start];
+		i++;
+		start++;
+	}
+	p[i] = '\0';
+	return (p);
+}
 
 char	*ft_strchr(char *s, int c)
 {
@@ -97,22 +134,23 @@ char	*ft_strchr(char *s, int c)
 	return (0);
 }
 
-		//value should be splited only from the first '=', join 
-		//double quotes in the beg and ending pejjj so annoying
-
 void	right_value(char **str)
 {
 	char	*s;
 	char	*tmp;
+	int		j;
 
+	j = 0;
 	if ((s = ft_strchr(*str, '=')))
 		{
 			tmp = ft_strjoin("\"", ++s);
 			tmp = ft_strjoin(tmp, "\"");
+			j = get_j(*str);
+			*str = ft_substr(*str, 0, j+1);
 		}
-	*str = 
-	*str = strdup(tmp);
-	printf("str === %s\n", *str);
+	else
+		tmp = strdup("");
+	*str = ft_strjoin(*str, tmp);
 }
 	
 void	my_export(char ***envp, char *value)
@@ -125,13 +163,10 @@ void	my_export(char ***envp, char *value)
 		print_export(*envp);
 	else
 	{
-		printf("val before: %s\n", value);
 		right_value(&value);
-		printf("-------------------------------------------------------\n");
-		printf("val after: %s\n", value);
 		while ((*envp)[i])
 			i++;
-		new_envp = (char **)malloc((i + 1) * sizeof(char *));
+		new_envp = (char **)calloc((i + 2), sizeof(char *));
 		i = 0;
 		while ((*envp)[i])
 		{
@@ -139,19 +174,21 @@ void	my_export(char ***envp, char *value)
 			i++;
 		}
 		new_envp[i] = strdup(value);
-		new_envp[++i] = NULL;
+		i++;
+		new_envp[i] = NULL;
 		/*old envp need to be freed*/
-		*envp = my_envp(new_envp);
+	//	*envp = my_envp(new_envp);
+		*envp = new_envp;
 	}
 }
 
 int main(int ac, char **av)
 {
 	int		i;
+	char	**str;
 
-	(void)ac;
 	i = 0;
-	my_export(&av, "some=var");
+	my_export(&av, "so=me");
 	while(av[i])
 	{
 		printf("```%s```\n", av[i]);
