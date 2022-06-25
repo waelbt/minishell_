@@ -133,7 +133,35 @@ char	*ft_strchr(char *s, int c)
 	}
 	return (0);
 }
-
+char **sorted_env(char **env)
+{
+	int		i;
+	int		j;
+	int		size;
+	char	temp[5000];	
+	
+	i = 0;
+	j = 0;
+	size = 0;
+	while (env[size])
+			size++;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size -1 - i)
+		{
+			if(strcmp(env[j], env[j+1]) > 0)
+			{
+				strcpy(temp, env[j]);
+				strcpy(env[j], env[j+1]);
+				strcpy(env[j+1], temp);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (env);
+}
 void	right_value(char **str)
 {
 	char	*s;
@@ -146,18 +174,22 @@ void	right_value(char **str)
 	if ((s = ft_strchr(*str, '=')))
 		{
 			tmp = ft_strjoin("\"", ++s);
+			tmp2 = *str;
 			tmp1 = tmp;
 			tmp = ft_strjoin(tmp, "\"");
 			j = get_j(*str);
-			*str = ft_substr(*str, 0, j+1);
+			*str = ft_substr(*str, 0, j + 1);
 			tmp2 = *str;
+			*str = ft_strjoin(*str, tmp);
 			free(tmp2);
+			free(tmp1);
 		}
 	else
+	{
 		tmp = strdup("");
-	*str = ft_strjoin(*str, tmp);
-	free(tmp);
-	free(tmp1);
+		*str = ft_strjoin(*str, tmp);
+		free(tmp);
+	}
 }
 	
 void	my_export(char ***envp, char *value)
@@ -196,11 +228,12 @@ int main(int ac, char **av)
 	char	**str;
 
 	i = 0;
-	my_export(&av, "so=me");
+	sorted_env(av);
 	while(av[i])
 	{
 		printf("```%s```\n", av[i]);
 		i++;
 	}
+//	system("leaks a.out");
 }
 
