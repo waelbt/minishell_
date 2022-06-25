@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:02:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 17:40:29 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/25 17:43:34 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,13 @@ void	free_node(t_node **head)
 	i = 0;
 	while (temporary != NULL)
 	{
-		//printf("cmd number :%d\n", i++);
 		cmd = (t_cmd *)temporary->content;
 		s = temporary;
 		dda(&cmd->args);
 		fed(&cmd->redrec);
-		free_double_char(cmd->after_expand);
+		//free_double_char(cmd->after_expand, 0);
 		free(cmd);
 		temporary = temporary->next;
 		free(s);
-		//system("leaks minishell");
 	}
 }

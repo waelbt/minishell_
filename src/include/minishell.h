@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/24 14:42:58 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/25 17:44:06 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include "lexer.h"
 # include "token.h"
+# include  <errno.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <readline/readline.h>
@@ -37,6 +38,7 @@ typedef struct redirection
 		ERROR,
 	}e_rtype;
 	char	*file;
+	char	*previous_delimiter;
 }	t_redirec;
 
 typedef struct s_node
@@ -52,7 +54,6 @@ typedef struct args
 
 typedef struct cmd
 {
-	char		**after_expand;
 	t_node		*args;
 	t_node		*redrec;
 }	t_cmd;
@@ -102,9 +103,11 @@ char		*ft_norm(t_lexer *lexer);
 char		*delimiter(char *str, char **envp);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			open_file_descriptor(t_redirec	*redrec, char **envp, int *index);
-void		free_double_char(char **tmp);
+void		free_double_char(char **tmp, int t);
 void		*execution(t_node *head, char **env);
 char		*ft_itoa(int n);
-t_redirec	*get_input(t_node *head);
 void		ft_unlik(int *index);
+t_redirec	*get_output_input(t_node *head, int t);
+char		*join_args(t_node *head);
+char		**ft_spilt_beta(t_node *args);
 #endif

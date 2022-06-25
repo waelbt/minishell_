@@ -6,128 +6,85 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:13:12 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/24 16:40:06 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/25 18:44:20 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-char	*check_cmd(char *cmd, char **envp)
+char	*get_path(char **envp)
 {
-	char	**paths = NULL;
-	char	*path;
-	char	*tmp;
-	char	*tmp2;
-	int i;
-
-	path = NULL;
 	while (envp)
 	{
 		if ((ft_strncmp("PATH", *envp, 4)) == 0)
-			break;
+			return (*envp + 5);
 		envp++;
 	}
-	paths = ft_split(*envp+5, ':');
-	i = 0;
-	while (paths[i])
+	return (NULL);
+}
+
+char	*invalid_command_error(char *cmd, char *path)
+{
+	if (!ft_strcmp(cmd, "/"))
 	{
-		tmp = paths[i];
-		tmp2 = ft_strdup(cmd);
-		paths[i] = ft_strjoin(tmp, tmp2);
-		if (access(paths[i], X_OK) == 0)
-			path = ft_strdup(paths[i]);
-		free(paths[i]);
-		free(tmp);
-		free(tmp2);
-		i++;
+		free(cmd);
+		printf("minishell: : command not found\n");
 	}
+	else if (path == NULL)
+	{
+		printf("minishelll: %s: command not found\n", (cmd + 1));
+		free(cmd);
+	}
+	else
+		return ((void *)1);
+	return (NULL);
+}
+
+char	*check_cmd(char *cmd, char **envp)
+{
+	char	**paths;
+	char	*tmp[3];
+	int		i;
+
+	i = 0;
+	tmp[2] = NULL;
+	paths = ft_split(get_path(envp), ':');
+	while (paths[i++])
+	{
+		tmp[0] = paths[i];
+		tmp[1] = ft_strdup(cmd);
+		paths[i] = ft_strjoin(tmp[0], tmp[1]);
+		if (access(paths[i], X_OK) == 0)
+			tmp[2] = ft_strdup(paths[i]);
+		free(paths[i]);
+		free(tmp[0]);
+		free(tmp[1]);
+	}
+	if (!invalid_command_error(cmd, tmp[2]))
+		return (NULL);
 	free(paths);
 	free(cmd);
-	if (path == NULL)
-	{
-			perror("Error");
-			return (NULL);
-			// exit(EXIT_FAILURE);
-	}
-	return (path);
+	return (tmp[2]);
 }
 
 char	*check_acces(char *cmd, char **envp)
 {
-	char *tmp;
-	char *tmp2;
+	char	*tmp[2];
 
 	if (access(cmd, X_OK))
 	{
-		if(ft_strchr(cmd, '/'))
+		if (ft_strchr(cmd, '/'))
 			return (NULL);
-		tmp = ft_strdup("/");
-		tmp2 = cmd;
-		cmd = ft_strjoin(tmp, tmp2);
-		free(tmp);
-		free(tmp2);
+		tmp[0] = ft_strdup("/");
+		tmp[1] = cmd;
+		cmd = ft_strjoin(tmp[0], tmp[1]);
+		free(tmp[0]);
+		free(tmp[1]);
 		cmd = check_cmd(cmd, envp);
-		if(!cmd)
+		if (!cmd)
 			return (NULL);
 	}
 	return (cmd);
-}
-
-
-void ft_unlik(int *index)
-{
-	char		*tmp;
-	char		*tmp2;
-
-	while(*index > -1)
-	{
-		tmp = ft_itoa(*index);
-		tmp2 = ft_strjoin("/var/TMP/her_doc", tmp);
-		unlink(tmp2);
-		free(tmp);
-		free(tmp2);
-		(*index)--;
-	}
-	*index = 0;
-}
-char *join_args(t_node *head, char **env)
-{
-	t_args	*arg;
-	char	*str;
-	char	*tmp;
-
-	if(!head)
-		return (NULL);
-	str = ft_strdup(((t_args *) head->content)->value);
-	head = head->next;
-	while (head != NULL)
-	{
-		arg = (t_args *) head->content;
-		tmp = str;
-		str = ft_strjoin(str, " ");
-		free(tmp);
-		tmp = str;
-		str = ft_strjoin(str, arg->value);
-		free(tmp);
-		head = head->next;
-	}
-	return (str);
-}
-
-t_redirec	*get_input(t_node *head)
-{
-	t_redirec	*redrec;
-	t_redirec	*tmp;
-
-	redrec = NULL;
-	while (head != NULL)
-	{
-		tmp = (t_redirec *) head->content;
-		if(tmp->e_rtype == INPUT || tmp->e_rtype == HERE_DOC)
-			redrec = tmp;
-		head = head->next;
-	}
-	return (redrec);
 }
 
 t_redirec	*ft_close(t_node *head)
@@ -145,29 +102,42 @@ t_redirec	*ft_close(t_node *head)
 	return (redrec);
 }
 
-t_redirec	*get_output(t_node *head)
+void	dup_norm(int fildes1, int fildes2)
 {
-	t_redirec	*redrec;
-	t_redirec	*tmp;
+	dup2(fildes1, fildes2);
+	close(fildes1);
+}
 
-	redrec = NULL;
-	while (head != NULL)
-	{
-		tmp = (t_redirec *) head->content;
-		if(tmp->e_rtype == OUTPUT || tmp->e_rtype == APPEND)
-			redrec = tmp;
-		head = head->next;
-	}
-	return (redrec);
+void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
+{
+	t_cmd		*cmd;
+	t_redirec	*input;
+	t_redirec	*output;
+	char		**after_expand;
+
+	cmd = (t_cmd *)head->content;
+	after_expand = ft_spilt_beta(cmd->args);
+	if (after_expand)
+		after_expand[0] = check_acces(after_expand[0], env);
+	input = get_output_input(cmd->redrec, 1);
+	output = get_output_input(cmd->redrec, 0);
+	if (head->next != NULL)
+		dup_norm(pipe_fd[1], 1);
+	if (output != NULL)
+		dup_norm(output->fd, 1);
+	if (last_fd != -1)
+		dup_norm(last_fd, 0);
+	if (input != NULL)
+		dup_norm(input->fd, 0);
+	close(pipe_fd[0]);
+	ft_close(cmd->redrec);
+	if (after_expand && after_expand[0])
+		execve(after_expand[0], after_expand, env);
+	exit(0);
 }
 
 void	*execution(t_node *head, char **env)
 {
-	t_cmd	*cmd;
-	t_redirec	*input;
-	t_redirec	*output;
-	char	*str;
-	int		status;
 	int		last_fd;
 	int		pipe_fd[2];
 	int		id;
@@ -175,61 +145,22 @@ void	*execution(t_node *head, char **env)
 	last_fd = -1;
 	while (head != NULL)
 	{
-		cmd = (t_cmd *)head->content;
-		str = join_args(cmd->args, env);
-		cmd->after_expand = ft_split(str, 32);
-		if(cmd->after_expand)
-		{
-			cmd->after_expand[0] = check_acces(cmd->after_expand[0], env);
-		
-			if(!cmd->after_expand[0])
-				return (NULL);
-		}
-		input = get_input(cmd->redrec);
-		output = get_output(cmd->redrec);
 		pipe(pipe_fd);
 		id = fork();
-		if(id == 0)
-		{
-			if(head->next != NULL)
-			{
-				dup2(pipe_fd[1], 1);
-				close(pipe_fd[1]);
-				close(pipe_fd[0]);
-			}
-			if(output != NULL)
-			{
-				dup2(output->fd, 1);
-				close(output->fd);
-			}
-			if(last_fd != -1)
-			{
-				dup2(last_fd, 0);
-				close(last_fd);
-			}
-			if(input != NULL)
-			{
-				dup2(input->fd, 0);
-				close(input->fd);
-			}
-			ft_close(cmd->redrec);
-			if(cmd->after_expand)
-				execve(cmd->after_expand[0], cmd->after_expand, env);
-			// else if(!cmd->after_expand)
-			// 	exit(0);
-		}
+		if (id == 0)
+			child_work(head, env, pipe_fd, last_fd);
 		else
 		{
-			if(head->next != NULL)
+			if (head->next != NULL)
 				close(pipe_fd[1]);
-			if(last_fd != -1)
+			if (last_fd != -1)
 				close(last_fd);
-			ft_close(cmd->redrec);
+			ft_close(((t_cmd *)head->content)->redrec);
 			last_fd = pipe_fd[0];
-			free(str);
 		}
 		head = head->next;
 	}
-	while (wait(&status) > 0);
+	while (wait(NULL) > 0)
+		;
 	return ((void *)1);
 }

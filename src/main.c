@@ -6,11 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/25 11:39:05 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/25 16:21:28 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+// extern int errno ;
 
 void	*ft_free(t_token *token, t_lexer *lexer, t_node *node, t_node *tmp)
 {
@@ -80,12 +82,8 @@ int	main(int argc, char **argv, char **envp)
 			str = readline("\033[0;35mminishell$ \033[0;37m");
 			add_history (str);
 			cmd = handler(init_lexer(str));
-			if (!(parsing(&cmd, envp, &index)) || !(execution(cmd, envp)))
-			{
-				free_node(&cmd);
-				free(str);
-				continue ;
-			}
+			if (parsing(&cmd, envp, &index))
+				execution(cmd, envp);
 			ft_unlik(&index);
 			free_node(&cmd);
 			free(str);

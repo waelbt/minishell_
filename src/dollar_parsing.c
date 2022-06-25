@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 20:05:02 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/25 16:27:11 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,20 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 	return (dollar_value(envp, value));
 }
 
-void	free_double_char(char **tmp)
+void	free_double_char(char **tmp, int t)
 {
 	int	i;
 
 	i = 0;
-	if(!tmp)
+	if (!tmp)
 		return ;
 	while (tmp[i])
 	{
 		free(tmp[i]);
 		i++;
 	}
-	free(tmp);
+	if (t == 0)
+		free(tmp);
 }
 
 char	*dollar_value(char **envp, char *var)
@@ -103,10 +104,10 @@ char	*dollar_value(char **envp, char *var)
 			{
 				str = ft_strdup(tmp[1]);
 				free(var);
-				free_double_char(tmp);
+				free_double_char(tmp, 0);
 				return (str);
 			}
-			free_double_char(tmp);
+			free_double_char(tmp, 0);
 			envp++;
 		}
 	}
