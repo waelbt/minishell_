@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:48:57 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/22 21:32:47 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/25 20:04:06 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	print_env(char **envp)
 	i = 0;
 	while(envp[i])
 	{
-		printf("%s\n", envp[i]);
+		if (find_char(envp[i], '='))
+			printf("%s\n", envp[i]);
 		i++;
 	}
 }
