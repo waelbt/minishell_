@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 17:32:08 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/24 14:38:16 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	parsing_args(t_node **head, char **envp)
 	}
 }
 
-void	*parsing_redrection(t_node **head, char **envp)
+void	*parsing_redrection(t_node **head, char **envp, int *index)
 {
 	t_node		*temporary;
 	t_redirec	*redrec;
@@ -79,7 +79,7 @@ void	*parsing_redrection(t_node **head, char **envp)
 			redrec->file = pure_arg(redrec->file, envp);
 		else
 			redrec->file = delimiter(redrec->file, envp);
-		redrec->fd = open_file_descriptor(redrec, envp);
+		redrec->fd = open_file_descriptor(redrec, envp, index);
 		if (redrec->fd < 0)
 		{
 			perror("Error");
@@ -90,7 +90,7 @@ void	*parsing_redrection(t_node **head, char **envp)
 	return ((void *)1);
 }
 
-void	*parsing(t_node **command, char **envp)
+void	*parsing(t_node **command, char **envp, int *index)
 {
 	t_node	*temporary;
 
@@ -98,7 +98,7 @@ void	*parsing(t_node **command, char **envp)
 	while (temporary != NULL)
 	{
 		parsing_args(&((t_cmd *)temporary->content)->args, envp);
-		if (!parsing_redrection(&((t_cmd *)temporary->content)->redrec, envp))
+		if (!parsing_redrection(&((t_cmd *)temporary->content)->redrec, envp, index))
 			return (NULL);
 		temporary = temporary->next;
 	}

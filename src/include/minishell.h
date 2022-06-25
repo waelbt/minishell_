@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 19:06:38 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/24 14:42:58 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_cmd		*init_cmd(t_lexer *lexer, t_token **token);
 void		dda(t_node **head);
 void		fed(t_node **head);
 char		*dollar_value(char **envp, char *var);
-void		*parsing(t_node **command, char **envp);
+void		*parsing(t_node **command, char **envp, int *index);
 int			get_type(char *c);
 char		*ft_substr(char *s, unsigned int start, size_t len);
 char		*pure_arg(char *str, char **envp);
@@ -101,9 +101,10 @@ char		*quotes_handler(t_lexer *lexer, char **envp, int c);
 char		*ft_norm(t_lexer *lexer);
 char		*delimiter(char *str, char **envp);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
-int			open_file_descriptor(t_redirec	*redrec, char **envp);
+int			open_file_descriptor(t_redirec	*redrec, char **envp, int *index);
 void		free_double_char(char **tmp);
 void		*execution(t_node *head, char **env);
 char		*ft_itoa(int n);
 t_redirec	*get_input(t_node *head);
+void		ft_unlik(int *index);
 #endif

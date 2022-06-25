@@ -1,11 +1,11 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/waboutzo/Desktop/minishell_'
- 
 gcc    -c -o src/cmd.o src/cmd.c
 gcc    -c -o src/delimiter_parsing.o src/delimiter_parsing.c
 gcc    -c -o src/dollar_parsing.o src/dollar_parsing.c
 gcc    -c -o src/execution.o src/execution.c
 gcc    -c -o src/free_node.o src/free_node.c
+ 
 gcc    -c -o src/lexer.o src/lexer.c
 gcc    -c -o src/lexer2.o src/lexer2.c
 gcc    -c -o src/main.o src/main.c

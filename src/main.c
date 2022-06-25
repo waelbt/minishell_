@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 20:04:23 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/25 11:39:05 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,52 +38,55 @@ int	ft_pipe_check(t_token *token, t_token *previous)
 	return (value);
 }
 
-t_node	*handler(char *str)
+t_node	*handler(t_lexer *lexer)
 {
-	t_lexer	*lexer;
-	t_token	*token;
-	t_node	*node;
-	t_node	*tmp;
-	t_token	*tmp1;
+	t_token	*token[2];
+	t_node	*node[2];
 
-	tmp = NULL;
-	lexer = init_lexer(str);
-	token = lexer_get_next_token(lexer);
-	while (token->e_type != TOKEN_EOF)
+	node[1] = NULL;
+	token[0] = lexer_get_next_token(lexer);
+	if (!ft_strcmp(token[0]->value, "|"))
 	{
-		if (token->e_type == TOKEN_ERROR)
-			return (ft_free(token, lexer, NULL, tmp));
-		node = ft_lstnew((void *) init_cmd(lexer, &token));
-		if (!node)
-			return (ft_free(token, lexer, NULL, tmp));
-		ft_lstadd_back(&tmp, node);
-		tmp1 = token;
-		token = lexer_get_next_token(lexer);
-		if (!ft_pipe_check(token, tmp1))
-			return (ft_free(token, lexer, NULL, tmp));
+		printf("parse error near `|'\n");
+		return (ft_free(token[0], lexer, NULL, node[1]));
 	}
-	return (ft_free(token, lexer, tmp, NULL));
+	while (token[0]->e_type != TOKEN_EOF)
+	{
+		if (token[0]->e_type == TOKEN_ERROR)
+			return (ft_free(token[0], lexer, NULL, node[1]));
+		node[0] = ft_lstnew((void *) init_cmd(lexer, &token[0]));
+		if (!node[0])
+			return (ft_free(token[0], lexer, NULL, node[1]));
+		ft_lstadd_back(&node[1], node[0]);
+		token[1] = token[0];
+		token[0] = lexer_get_next_token(lexer);
+		if (!ft_pipe_check(token[0], token[1]))
+			return (ft_free(token[0], lexer, NULL, node[1]));
+	}
+	return (ft_free(token[0], lexer, node[1], NULL));
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_node	*cmd;
+	int		index;
 
+	index = 0;
 	if (argc == 1)
 	{
 		while (1)
 		{
 			str = readline("\033[0;35mminishell$ \033[0;37m");
 			add_history (str);
-			cmd = handler(str);
-			if (!(parsing(&cmd, envp)) || !(execution(cmd, envp)))
+			cmd = handler(init_lexer(str));
+			if (!(parsing(&cmd, envp, &index)) || !(execution(cmd, envp)))
 			{
 				free_node(&cmd);
 				free(str);
 				continue ;
 			}
-			//printf_node(cmd);
+			ft_unlik(&index);
 			free_node(&cmd);
 			free(str);
 		}

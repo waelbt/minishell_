@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:13:12 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 20:04:03 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/24 16:40:06 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*check_cmd(char *cmd, char **envp)
 {
 	char	**paths = NULL;
 	char	*path;
+	char	*tmp;
+	char	*tmp2;
 	int i;
 
 	path = NULL;
@@ -29,10 +31,14 @@ char	*check_cmd(char *cmd, char **envp)
 	i = 0;
 	while (paths[i])
 	{
-		paths[i] = ft_strjoin(paths[i], ft_strdup(cmd));
+		tmp = paths[i];
+		tmp2 = ft_strdup(cmd);
+		paths[i] = ft_strjoin(tmp, tmp2);
 		if (access(paths[i], X_OK) == 0)
 			path = ft_strdup(paths[i]);
 		free(paths[i]);
+		free(tmp);
+		free(tmp2);
 		i++;
 	}
 	free(paths);
@@ -48,11 +54,18 @@ char	*check_cmd(char *cmd, char **envp)
 
 char	*check_acces(char *cmd, char **envp)
 {
+	char *tmp;
+	char *tmp2;
+
 	if (access(cmd, X_OK))
 	{
 		if(ft_strchr(cmd, '/'))
 			return (NULL);
-		cmd = ft_strjoin(ft_strdup("/"), cmd);
+		tmp = ft_strdup("/");
+		tmp2 = cmd;
+		cmd = ft_strjoin(tmp, tmp2);
+		free(tmp);
+		free(tmp2);
 		cmd = check_cmd(cmd, envp);
 		if(!cmd)
 			return (NULL);
@@ -60,6 +73,23 @@ char	*check_acces(char *cmd, char **envp)
 	return (cmd);
 }
 
+
+void ft_unlik(int *index)
+{
+	char		*tmp;
+	char		*tmp2;
+
+	while(*index > -1)
+	{
+		tmp = ft_itoa(*index);
+		tmp2 = ft_strjoin("/var/TMP/her_doc", tmp);
+		unlink(tmp2);
+		free(tmp);
+		free(tmp2);
+		(*index)--;
+	}
+	*index = 0;
+}
 char *join_args(t_node *head, char **env)
 {
 	t_args	*arg;
@@ -95,6 +125,21 @@ t_redirec	*get_input(t_node *head)
 		tmp = (t_redirec *) head->content;
 		if(tmp->e_rtype == INPUT || tmp->e_rtype == HERE_DOC)
 			redrec = tmp;
+		head = head->next;
+	}
+	return (redrec);
+}
+
+t_redirec	*ft_close(t_node *head)
+{
+	t_redirec	*redrec;
+	t_redirec	*tmp;
+
+	redrec = NULL;
+	while (head != NULL)
+	{
+		tmp = (t_redirec *) head->content;
+		close(tmp->fd);
 		head = head->next;
 	}
 	return (redrec);
@@ -142,7 +187,6 @@ void	*execution(t_node *head, char **env)
 		}
 		input = get_input(cmd->redrec);
 		output = get_output(cmd->redrec);
-		//printf("%d\n",output->fd);
 		pipe(pipe_fd);
 		id = fork();
 		if(id == 0)
@@ -168,21 +212,19 @@ void	*execution(t_node *head, char **env)
 				dup2(input->fd, 0);
 				close(input->fd);
 			}
+			ft_close(cmd->redrec);
 			if(cmd->after_expand)
 				execve(cmd->after_expand[0], cmd->after_expand, env);
-			else if(!cmd->after_expand)
-				exit(0);
+			// else if(!cmd->after_expand)
+			// 	exit(0);
 		}
 		else
 		{
 			if(head->next != NULL)
-			{
 				close(pipe_fd[1]);
-			}
 			if(last_fd != -1)
-			{
 				close(last_fd);
-			}
+			ft_close(cmd->redrec);
 			last_fd = pipe_fd[0];
 			free(str);
 		}
