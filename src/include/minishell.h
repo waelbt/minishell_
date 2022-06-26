@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 19:06:38 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/26 01:54:48 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,9 @@ t_redirec	*get_input(t_node *head);
 void	free_double_char(char **tmp);
 char	**my_envp(char **envp);
 void	print_env(char **envp);
+int	str_to_num(const char *str);
+void	my_exit(char *str);
+void		echo(char **after_expand);
+void	execute(char **after_expand, char **env);
 
 #endif

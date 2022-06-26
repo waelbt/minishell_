@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:13:12 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 20:04:03 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/26 02:34:29 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,11 @@ void	*execution(t_node *head, char **env)
 				close(input->fd);
 			}
 			if(cmd->after_expand)
-				execve(cmd->after_expand[0], cmd->after_expand, env);
+			{
+				printf("thaaaaaat bitch!!\n");
+				execute(cmd->after_expand, env);
+//				execve(cmd->after_expand[0], cmd->after_expand, env);
+				}
 			else if(!cmd->after_expand)
 				exit(0);
 		}

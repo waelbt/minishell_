@@ -6,11 +6,11 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:48:57 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/25 20:04:06 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/26 02:02:22 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "include/minishell.h"
 
 void		echo(char **after_expand)
 {
@@ -37,6 +37,7 @@ void		echo(char **after_expand)
 	free (str);
 	if (check == 0)
 		printf("\n");
+	printf("we pprinted uding our echo!!!\n");
 }
 
 void	cd(char *path)
