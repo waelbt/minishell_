@@ -114,5 +114,7 @@ int	str_to_num(const char *str);
 void	my_exit(char *str);
 void		echo(char **after_expand);
 void	execute(char **after_expand, char **env);
+char	*check_cmd(char *cmd, char **envp);
+char	*check_acces(char *cmd, char **envp);
 
 #endif

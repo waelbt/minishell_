@@ -14,13 +14,12 @@
 
 void	execute(char **after_expand, char **env)
 {
-	printf("%s\n", after_expand[0]);
-	if (!(ft_strcmp(after_expand[0], "echo")))
-	{
+	if (!(ft_strcmp(after_expand[0], check_acces("echo", env))))
 			echo(after_expand);
-	}
+	if (!(ft_strcmp(after_expand[0], check_acces("echo", env))))
+	if (!(ft_strcmp(after_expand[0], check_acces("echo", env))))
+	if (!(ft_strcmp(after_expand[0], check_acces("echo", env))))
+	if (!(ft_strcmp(after_expand[0], check_acces("echo", env))))
 	else
-	{
 		execve(after_expand[0], after_expand, env);
-	}
 }

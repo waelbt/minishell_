@@ -37,7 +37,6 @@ void		echo(char **after_expand)
 	free (str);
 	if (check == 0)
 		printf("\n");
-	printf("we pprinted uding our echo!!!\n");
 }
 
 void	cd(char *path)
