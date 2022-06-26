@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/25 14:47:52 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/25 19:29:04 by lchokri          ###   ########.fr       */
+/*   Created: 2022/06/25 20:04:40 by lchokri           #+#    #+#             */
+/*   Updated: 2022/06/25 22:00:18 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "include/minishell.h"
 
-void	my_exit(char *str)
+void	unset(char ***envp, char *var)
 {
-	int		status;
+	int		i;
+	int		j;
+	char	**tmp;
 
-	if (str == NULL)
-		exit(0); //0 should be replaced by the global var because : WHEN EXIT HAVE NO PARAMETER, IT TAKES THE EXIT STATUS
-					//OF THE LAST CMD EXECUTED
-	else
+	i = 0;
+	j = 0;
+	while ((*envp)[j])
+		j++;
+	while ((*envp)[i])
 	{
-		status = str_to_num(str);
-		status = (unsigned char)status; //// <-- hada howa lglobal var to be saved
-		exit(status);
+		tmp = ft_split((*envp)[i], '=');
+		if (!ft_strcmp(tmp[0], var))
+		{
+			while (i < j-1)
+			{
+				(*envp)[i] = strdup((*envp)[i + 1]);
+				i++;
+			}
+			(*envp)[i] = NULL;
+		}
+		free_double_char(tmp, 0);
+		i++;
 	}
 }

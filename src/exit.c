@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/26 01:25:25 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/26 02:34:33 by lchokri          ###   ########.fr       */
+/*   Created: 2022/06/25 14:47:52 by lchokri           #+#    #+#             */
+/*   Updated: 2022/06/25 19:29:04 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void	execute(char **after_expand, char **env)
+void	my_exit(char *str)
 {
-	if (!(ft_strcmp(after_expand[0], check_acces("echo", env))))
-			echo(after_expand);
-	if (!(ft_strcmp(after_expand[0], check_acces("echo", env))))
-	if (!(ft_strcmp(after_expand[0], check_acces("echo", env))))
-	if (!(ft_strcmp(after_expand[0], check_acces("echo", env))))
-	if (!(ft_strcmp(after_expand[0], check_acces("echo", env))))
+	int		status;
+
+	if (str == NULL)
+		exit(0); //0 should be replaced by the global var because : WHEN EXIT HAVE NO PARAMETER, IT TAKES THE EXIT STATUS
+					//OF THE LAST CMD EXECUTED
 	else
-		execve(after_expand[0], after_expand, env);
+	{
+		status = str_to_num(str);
+		status = (unsigned char)status; //// <-- hada howa lglobal var to be saved
+		exit(status);
+	}
 }

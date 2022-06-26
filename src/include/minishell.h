@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/26 01:54:48 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/25 17:44:06 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include "lexer.h"
 # include "token.h"
+# include  <errno.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <readline/readline.h>
@@ -37,6 +38,7 @@ typedef struct redirection
 		ERROR,
 	}e_rtype;
 	char	*file;
+	char	*previous_delimiter;
 }	t_redirec;
 
 typedef struct s_node
@@ -52,7 +54,6 @@ typedef struct args
 
 typedef struct cmd
 {
-	char		**after_expand;
 	t_node		*args;
 	t_node		*redrec;
 }	t_cmd;
@@ -84,7 +85,7 @@ t_cmd		*init_cmd(t_lexer *lexer, t_token **token);
 void		dda(t_node **head);
 void		fed(t_node **head);
 char		*dollar_value(char **envp, char *var);
-void		*parsing(t_node **command, char **envp);
+void		*parsing(t_node **command, char **envp, int *index);
 int			get_type(char *c);
 char		*ft_substr(char *s, unsigned int start, size_t len);
 char		*pure_arg(char *str, char **envp);
@@ -101,20 +102,25 @@ char		*quotes_handler(t_lexer *lexer, char **envp, int c);
 char		*ft_norm(t_lexer *lexer);
 char		*delimiter(char *str, char **envp);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
-int			open_file_descriptor(t_redirec	*redrec, char **envp);
-void		free_double_char(char **tmp);
+int			open_file_descriptor(t_redirec	*redrec, char **envp, int *index);
+void		free_double_char(char **tmp, int t);
 void		*execution(t_node *head, char **env);
 char		*ft_itoa(int n);
-t_redirec	*get_input(t_node *head);
-
-void	free_double_char(char **tmp);
-char	**my_envp(char **envp);
-void	print_env(char **envp);
-int	str_to_num(const char *str);
+void		ft_unlik(int *index);
+t_redirec	*get_output_input(t_node *head, int t);
+char		*join_args(t_node *head);
+char		**ft_spilt_beta(t_node *args);
+/*=========================built_ins functions:========================*/
 void	my_exit(char *str);
-void		echo(char **after_expand);
+void	pwd(void);
+void	print_env(char **envp);
+void	cd(char *path);
+void	echo(char **after_expand);
 void	execute(char **after_expand, char **env);
-char	*check_cmd(char *cmd, char **envp);
+void	my_export(char ***envp, char *value);
+char	**my_envp(char **envp);
+int		str_to_num(const char *str);
+void	unset(char ***envp, char *var);
 char	*check_acces(char *cmd, char **envp);
 
 #endif

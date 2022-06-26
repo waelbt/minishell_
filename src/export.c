@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include <string.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "include/minishell.h"
 
 int		get_j(char *str)
 {
@@ -128,7 +124,7 @@ void	my_export(char ***envp, char *value)
 	}
 }
 /*ba9in leaks mcha3ch3in o function d c99 as strdup*/
-int main(int ac, char **av)
+/*int main(int ac, char **av)
 {
 	int		i;
 	char	**str;
@@ -142,4 +138,4 @@ int main(int ac, char **av)
 	}
 	//system("leaks a.out");
 }
-
+*/
