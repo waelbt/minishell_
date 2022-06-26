@@ -17,14 +17,10 @@ void	execute(char **after_expand, char **env)
 	printf("%s\n", after_expand[0]);
 	if (!(ft_strcmp(after_expand[0], "echo")))
 	{
-			printf("thaaaaaat bitch!!");
-			//sleep(1);
 			echo(after_expand);
 	}
 	else
 	{
-			printf("that bitch!!");
-			sleep(1);
 		execve(after_expand[0], after_expand, env);
 	}
 }

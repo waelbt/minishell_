@@ -170,7 +170,6 @@ void	*execution(t_node *head, char **env)
 			}
 			if(cmd->after_expand)
 			{
-				printf("thaaaaaat bitch!!\n");
 				execute(cmd->after_expand, env);
 //				execve(cmd->after_expand[0], cmd->after_expand, env);
 				}
