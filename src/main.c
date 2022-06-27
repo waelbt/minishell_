@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/27 02:44:31 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/27 17:29:50 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,17 @@ t_node	*handler(t_lexer *lexer)
 	return (ft_free(token[0], lexer, node[1], NULL));
 }
 
-void	sig_handler()
+void	sig_handler(int sig)
 {
-	printf("we caught a signal!!!\n");
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("minishell", 0);
+		rl_redisplay();
+	}
+	if (sig == SIGSEGV)
+		exit(0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -79,22 +87,20 @@ int	main(int argc, char **argv, char **envp)
 	char	**env;
 	t_node	*cmd;
 	int		index;
-	int		sig;
 
-	sig = 1;
 	env = my_envp(envp);
 	index = 0;
 	if (argc == 1)
 	{
-			while (sig <= 31)
-			{
-				signal(sig, sig_handler);
-				sig++;
-			}
+		signal(SIGINT, sig_handler);
+//		signal(, sig_handler);
 		while (1)
 		{
-		str = readline("\033[0;35mminishell$ \033[0;37m");
-			add_history (str);
+			str = readline("\033[0;35mminishell$ \033[0;37m");
+			if (!str)
+				break;
+			if (*str != '\0')
+				add_history (str);
 			cmd = handler(init_lexer(str));
 			if (parsing(&cmd, env, &index))
 				execution(cmd, env);
