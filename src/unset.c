@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:04:40 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/25 22:00:18 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/26 20:09:37 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	unset(char ***envp, char *var)
 			}
 			(*envp)[i] = NULL;
 		}
-		free_double_char(tmp, 0);
+		//free_double_char(tmp, 0);
 		i++;
 	}
 }

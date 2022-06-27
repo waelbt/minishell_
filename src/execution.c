@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:13:12 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/25 18:44:20 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/27 02:53:16 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*check_acces(char *cmd, char **envp)
 		tmp[1] = cmd;
 		cmd = ft_strjoin(tmp[0], tmp[1]);
 		free(tmp[0]);
-		free(tmp[1]);
+	//	free(tmp[1]);
 		cmd = check_cmd(cmd, envp);
 		if (!cmd)
 			return (NULL);

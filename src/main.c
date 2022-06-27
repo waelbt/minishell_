@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/25 16:21:28 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/27 02:44:31 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,36 @@ t_node	*handler(t_lexer *lexer)
 	return (ft_free(token[0], lexer, node[1], NULL));
 }
 
+void	sig_handler()
+{
+	printf("we caught a signal!!!\n");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
+	char	**env;
 	t_node	*cmd;
 	int		index;
+	int		sig;
 
+	sig = 1;
+	env = my_envp(envp);
 	index = 0;
 	if (argc == 1)
 	{
+			while (sig <= 31)
+			{
+				signal(sig, sig_handler);
+				sig++;
+			}
 		while (1)
 		{
-			str = readline("\033[0;35mminishell$ \033[0;37m");
+		str = readline("\033[0;35mminishell$ \033[0;37m");
 			add_history (str);
 			cmd = handler(init_lexer(str));
-			if (parsing(&cmd, envp, &index))
-				execution(cmd, envp);
+			if (parsing(&cmd, env, &index))
+				execution(cmd, env);
 			ft_unlik(&index);
 			free_node(&cmd);
 			free(str);

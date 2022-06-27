@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 01:25:25 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/26 02:34:33 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/27 01:48:05 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	execute(char **after_expand, char **env)
 		cd(after_expand[1]);
 	else if (!(ft_strcmp(after_expand[0], check_acces("pwd", env))))
 		pwd();
-	else if (!(ft_strcmp(after_expand[0], check_acces("export", env))))
+	else if (!(ft_strcmp(after_expand[0], "export")))
 		my_export(&env, after_expand[1]);
-	else if (!(ft_strcmp(after_expand[0], check_acces("unset", env))))
+	else if (!(ft_strcmp(after_expand[0], "unset")))
 		unset(&env, after_expand[1]);
 	else if (!(ft_strcmp(after_expand[0], check_acces("env", env))))
 		print_env(env);
-	else if (!(ft_strcmp(after_expand[0], check_acces("exit", env))))
+	else if (!(ft_strcmp(after_expand[0], "exit")))
 		my_exit(after_expand[1]);
 	else
 		{
