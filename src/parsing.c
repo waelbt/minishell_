@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/25 16:26:27 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/27 14:36:17 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ char	*pure_arg(char *str, char **envp)
 	while (lexer->c != '\0')
 	{
 		s = string_cases(lexer, envp);
+		if(!s)
+		{
+			if(value[0] == '\0')
+				return (NULL);
+			else
+				return (value);
+		}
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
 		ft_strcat(value, s);
@@ -73,7 +80,6 @@ void	*parsing_redrection(t_node **head, char **envp, int *index)
 	temporary = *head;
 	while (temporary != NULL)
 	{
-		redrec = (t_redirec *) temporary->content;
 		if (redrec->e_rtype != 3)
 			redrec->file = pure_arg(redrec->file, envp);
 		else

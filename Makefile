@@ -4,7 +4,7 @@ sources =	$(wildcard src/*.c) $(wildcard src/libft_tools/*.c)
 
 objects =	$(sources:.c=.o)
 
-flags	= 	-Wall -Wextra -Werror -lreadline
+flags	= 	-Wall -Wextra -Werror -lreadline -g -fsanitize=address
 
 CC		=	gcc
 

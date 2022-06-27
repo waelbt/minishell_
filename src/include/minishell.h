@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/25 17:44:06 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/27 14:38:06 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <string.h>
 # include "lexer.h"
 # include "token.h"
-# include  <errno.h>
+# include <errno.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <readline/readline.h>
@@ -49,6 +49,11 @@ typedef struct s_node
 
 typedef struct args
 {
+	enum
+	{
+		splittable,
+		not_splittable,
+	}e_rtype;
 	char	*value;
 }	t_args;
 
@@ -110,4 +115,9 @@ void		ft_unlik(int *index);
 t_redirec	*get_output_input(t_node *head, int t);
 char		*join_args(t_node *head);
 char		**ft_spilt_beta(t_node *args);
+char		*check_acces(char *cmd, char **envp);
+char		*invalid_command_error(char *cmd, char *path);
+char		*get_path(char **envp);
+t_redirec	*ft_close(t_node *head);
+char		*check_cmd(char *cmd, char **envp);
 #endif

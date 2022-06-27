@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/25 16:21:28 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/27 13:28:48 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ int	main(int argc, char **argv, char **envp)
 			add_history (str);
 			cmd = handler(init_lexer(str));
 			if (parsing(&cmd, envp, &index))
+			{
+				// printf_node(cmd);
 				execution(cmd, envp);
+			}
 			ft_unlik(&index);
 			free_node(&cmd);
 			free(str);
@@ -91,3 +94,4 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
+

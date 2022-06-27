@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 16:03:30 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 19:53:51 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/27 13:08:23 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s1)
 	int		j;
 	char	*ptr;
 
+	if(!s1)
+		return	(NULL);
 	i = ft_strlen((char *)s1);
 	j = 0;
 	ptr = (char *) malloc((i + 1) * sizeof(char));

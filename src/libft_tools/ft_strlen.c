@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:32:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/15 09:12:42 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/27 13:21:22 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	ft_strlen(char *str)
 	int	i;
 
 	i = 0;
+	if(!str)
+		return (0);
 	while (str[i])
 		i++;
 	return (i);
