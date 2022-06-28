@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/10 15:23:20 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/28 13:28:14 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*init_cmd1(t_token **token, t_node **tmp, t_cmd **cmd)
 		arg = ft_calloc(1, sizeof(t_args));
 		if (!arg)
 			return (NULL);
-		arg->value = ft_strdup((const char *)(*token)->value);
+		arg->value = ft_strdup((*token)->value);
 		(*cmd)->args = ft_lstnew((void *)arg);
 		ft_lstadd_back(tmp, (*cmd)->args);
 	}

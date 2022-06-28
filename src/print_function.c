@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 15:51:21 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 16:03:36 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:15:09 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,18 @@ void	printf_args(t_node *head)
 	int		i;
 
 	i = 0;
+	int j;
 	temporary = head;
 	while (temporary != NULL)
 	{
 		tmp = (t_args *) temporary->content;
-		printf("[arg %d : %s] -> ", i++, tmp->value);
+		j = 0;
+		// printf("[arg %d : %s] -> ", i++, tmp->value);
+		while(tmp->after_expand[j])
+		{
+			printf("[arg %d : %s] -> ", i++, tmp->after_expand[j]);
+			j++;
+		}
 		temporary = temporary->next;
 	}
 	printf("\n");

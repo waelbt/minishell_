@@ -6,11 +6,30 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/15 09:32:59 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:06:03 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+char	*quotes(t_lexer *lexer, char **envp, int c)
+{
+	char	*value;
+	char	*s;
+
+	lexer_advance(lexer);
+	value = ft_calloc(1, sizeof(char));
+	while (lexer->c != c)
+	{
+		s = quotes_cases(lexer, envp, c);
+		value = ft_realloc(value, (ft_strlen(value)
+					+ ft_strlen(s) + 1) * sizeof(char));
+		ft_strcat(value, s);
+		free(s);
+	}
+	lexer_advance(lexer);
+	return (value);
+}
 
 char	*ft_norm(t_lexer *lexer)
 {
@@ -43,9 +62,9 @@ char	*hard_code_norm(t_lexer *lexer, char **envp)
 	if (lexer->c == '$')
 		return (ft_strdup("$"));
 	if (lexer->c == 34)
-		return (quotes_handler(lexer, envp, 34));
+		return (quotes(lexer, envp, 34));
 	if (lexer->c == 39)
-		return (quotes_handler(lexer, envp, 39));
+		return (quotes(lexer, envp, 39));
 	else
 		return (ft_norm(lexer));
 	return (NULL);

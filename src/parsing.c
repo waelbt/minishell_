@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 16:18:04 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:22:28 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,82 @@ char	*pure_arg(char *str, char **envp)
 	return (value);
 }
 
+
+char	*remove_qoutes(char *str)
+{
+	char	*value;
+	char	*s;
+	t_lexer *lexer;
+
+	lexer = init_lexer(str);
+	value = ft_calloc(1, sizeof(char));
+	while(lexer->c != '\0')
+	{
+		if(lexer->c == '"')
+			s = quotes(lexer, NULL, '"');
+		else if(lexer->c == '\'')
+			s = quotes(lexer, NULL, '\'');
+		else
+		{
+			s = lexer_get_current_char_as_string(lexer);
+			lexer_advance(lexer);
+		}
+		value = ft_realloc(value, (ft_strlen(value)
+					+ ft_strlen(s) + 1) * sizeof(char));
+		ft_strcat(value, s);
+		free(s);
+	}
+	// free(str);
+	free(lexer);
+	return (value);
+}
+
+void	pure_after_expand(char **str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		str[i] = remove_qoutes(str[i]);
+		i++;
+	}
+}
+
+int ft_counte_novide(char **str)
+{
+	int i;
+	int counter;
+
+	i = 0;
+	counter = 0;
+	while(str[i])
+	{
+		if(str[i][0] != '\0')
+			counter++;
+		i++;
+	}
+	return counter;
+}
+char **remove_vide_string(char **str)
+{
+	char **ptr;
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	ptr = (char **)malloc((ft_counte_novide(str) + 1) * sizeof(char *));
+	while(str[i])
+	{
+		if(str[i][0] != '\0')
+			ptr[j++] = ft_strdup(str[i]);
+		i++;
+	}
+	ptr[j] = NULL;
+	//free_double_char(str);
+	return (ptr);
+}
 void	parsing_args(t_node **head, char **envp)
 {
 	t_node		*temporary;
@@ -60,35 +136,36 @@ void	parsing_args(t_node **head, char **envp)
 	while (temporary != NULL)
 	{
 		args = (t_args *) temporary->content;
-		args->value = pure_arg(args->value, envp);
-		args->after_expand = ft_split(args->value, 32);
+		args->after_expand = advanced_split(pure_arg(ft_strdup(args->value), envp)); 
+		//args->after_expand = remove_vide_string(args->after_expand);
+		//pure_after_expand(args->after_expand);
 		temporary = temporary->next;
 	}
 }
 
-void	*parsing_redrection(t_node **head, char **envp)
-{
-	t_node		*temporary;
-	t_redirec	*redrec;
+// void	*parsing_redrection(t_node **head, char **envp)
+// {
+// 	t_node		*temporary;
+// 	t_redirec	*redrec;
 
-	temporary = *head;
-	while (temporary != NULL)
-	{
-		redrec = (t_redirec *) temporary->content;
-		if (redrec->e_rtype != 3)
-			redrec->file = pure_arg(redrec->file, envp);
-		else
-			redrec->file = delimiter(redrec->file, envp);
-		redrec->fd = open_file_descriptor(redrec, envp);
-		if (redrec->fd < 0)
-		{
-			perror("Error");
-			return (NULL);
-		}
-		temporary = temporary->next;
-	}
-	return ((void *)1);
-}
+// 	temporary = *head;
+// 	while (temporary != NULL)
+// 	{
+// 		redrec = (t_redirec *) temporary->content;
+// 		if (redrec->e_rtype != 3)
+// 			redrec->file = pure_arg(redrec->file, envp);
+// 		else
+// 			redrec->file = delimiter(redrec->file, envp);
+// 		redrec->fd = open_file_descriptor(redrec, envp);
+// 		if (redrec->fd < 0)
+// 		{
+// 			perror("Error");
+// 			return (NULL);
+// 		}
+// 		temporary = temporary->next;
+// 	}
+// 	return ((void *)1);
+// }
 
 void	*parsing(t_node **command, char **envp)
 {
@@ -98,8 +175,8 @@ void	*parsing(t_node **command, char **envp)
 	while (temporary != NULL)
 	{
 		parsing_args(&((t_cmd *)temporary->content)->args, envp);
-		if (!parsing_redrection(&((t_cmd *)temporary->content)->redrec, envp))
-			return (NULL);
+		// if (!parsing_redrection(&((t_cmd *)temporary->content)->redrec, envp))
+		// 	return (NULL);
 		temporary = temporary->next;
 	}
 	return ((void *)1);

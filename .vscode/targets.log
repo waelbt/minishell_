@@ -6,8 +6,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
 
-# Make data base, printed on Tue Jun 21 16:12:46 2022
+# Make data base, printed on Tue Jun 28 18:58:01 2022
 
 # Variables
 
@@ -24,7 +25,7 @@ VSCODE_LOG_NATIVE = false
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /Users/waboutzo/Desktop/minishell_
+CURDIR := /Users/waboutzo/Desktop/parsing
 # makefile
 SHELL = /bin/sh
 # makefile (from `Makefile', line 11)
@@ -40,15 +41,15 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n0000hr8000462/T/vscode-ipc-53367f07-e879-4c83-9006-d67b1e27da23.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n0000hr8000462/T/vscode-ipc-e53b64cf-61e9-4ea5-b6cc-303a11892a66.sock
 # environment
-VSCODE_CWD = /Users/waboutzo/Desktop/minishell_
+VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.Pu7UY3JaH3/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.xf2bXbGfYy/Render
 # environment
-PATH = /Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+PATH = /Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Frameworks/Mono.framework/Versions/Current/Commands
 # makefile (from `Makefile', line 7)
-flags = -Wall -Wextra -Werror -lreadline
+flags = -Wall -Wextra -Werror -lreadline -g -fsanitize=address
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
@@ -58,7 +59,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.WZsiZni8nc/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.LzvGu8zON6/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -66,7 +67,7 @@ HOMEBREW_TEMP = /tmp/waboutzo/Homebrew/Temp
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /Users/waboutzo/Desktop/minishell_
+PWD = /Users/waboutzo/Desktop/parsing
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
@@ -89,16 +90,14 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
 XPC_FLAGS = 0x0
-# environment
-COLORTERM = truecolor
 # default
 MAKE = $(MAKE_COMMAND)
-# environment
-LC_TERMINAL = iTerm2
+# default
+MAKECMDGOALS := all
 # environment
 HOMEBREW_CACHE = /tmp/waboutzo/Homebrew/Caches
 # environment
-SHLVL = 2
+SHLVL = 1
 # makefile (from `Makefile', line 9)
 CC = gcc
 # default
@@ -107,18 +106,12 @@ MAKE_VERSION := 3.81
 USER = waboutzo
 # makefile
 .DEFAULT_GOAL := all
-# default
-MAKECMDGOALS := all
-# environment
-TERM_SESSION_ID = w0t0p0:2C4F684E-D0DB-44AB-AB10-C9C5A81E8276
 # environment
 LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # default
 MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
-# environment
-TERM_PROGRAM = iTerm.app
 # default
 .VARIABLES := 
 # environment
@@ -134,19 +127,11 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-TERM_PROGRAM_VERSION = 3.4.15
-# environment
-XPC_SERVICE_NAME = com.microsoft.VSCode.3492.1171E47E-3047-420D-87A5-74A69EE27A7E
-# environment
-LC_TERMINAL_VERSION = 3.4.15
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x1000000f.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
-# environment
-ITERM_SESSION_ID = w0t0p0:2C4F684E-D0DB-44AB-AB10-C9C5A81E8276
-# environment
-COLORFGBG = 7;0
 # environment
 __CF_USER_TEXT_ENCODING = 0x10C2:0x0:0x0
 # environment
@@ -158,13 +143,11 @@ sources = $(wildcard src/*.c) $(wildcard src/libft_tools/*.c)
 # automatic
 <F = $(notdir $<)
 # environment
-ITERM_PROFILE = Default
-# environment
 PAGER = less
 # environment
 LC_ALL = C
 # environment
-SECURITYSESSIONID = 18864
+SECURITYSESSIONID = 188d6
 # makefile (from `Makefile', line 1)
 exec = minishell
 # automatic
@@ -178,11 +161,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-TERM = xterm-256color
-# environment
-VSCODE_PID = 35889
+VSCODE_PID = 44221
 # variable set hash-table stats:
-# Load=85/1024=8%, Rehash=0, Collisions=4/113=4%
+# Load=75/1024=7%, Rehash=0, Collisions=1/103=1%
 
 # Pattern-specific Variable Values
 
@@ -191,11 +172,11 @@ VSCODE_PID = 35889
 # Directories
 
 # include (device 0, inode 0): No files, 1 impossibilities.
-# . (device 16777227, inode 4387965): 8 files, no impossibilities.
-# src/libft_tools (device 16777227, inode 4388050): 22 files, no impossibilities.
-# src (device 16777227, inode 4388038): 17 files, no impossibilities.
+# . (device 16777227, inode 4478746): 11 files, no impossibilities.
+# src/libft_tools (device 16777227, inode 4478831): 23 files, no impossibilities.
+# src (device 16777227, inode 4478819): 18 files, no impossibilities.
 
-# 47 files, 1 impossibilities in 4 directories.
+# 52 files, 1 impossibilities in 4 directories.
 
 # Implicit Rules
 
@@ -288,7 +269,7 @@ src/libft_tools/ft_substr.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-21 16:12:39
+#  Last modified 2022-06-28 18:57:43
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -322,14 +303,14 @@ src/redirection_file.o:
 src/libft_tools/ft_strncmp.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
-make: *** No rule to make target `src/cmd.o', needed by `minishell'.  Stop.
-
 #  File has not been updated.
 
-minishell: src/cmd.o src/delimiter_parsing.o src/dollar_parsing.o src/free_node.o src/lexer.o src/lexer2.o src/main.o src/parsing.o src/print_function.o src/quotes_parsing.o src/redirection_file.o src/token.o src/libft_tools/ft_bzero.o src/libft_tools/ft_calloc.o src/libft_tools/ft_isdigit.o src/libft_tools/ft_lstadd_back.o src/libft_tools/ft_lstadd_front.o src/libft_tools/ft_lstclear.o src/libft_tools/ft_lstdelone.o src/libft_tools/ft_lstlast.o src/libft_tools/ft_lstnew.o src/libft_tools/ft_lstsize.o src/libft_tools/ft_realloc.o src/libft_tools/ft_split.o src/libft_tools/ft_strcat.o src/libft_tools/ft_strchr.o src/libft_tools/ft_strcmp.o src/libft_tools/ft_strdup.o src/libft_tools/ft_strjoin.o src/libft_tools/ft_strlen.o src/libft_tools/ft_strncmp.o src/libft_tools/ft_substr.o
+ 
+make: *** No rule to make target `src/advanced_split.o', needed by `minishell'.  Stop.
+
+minishell: src/advanced_split.o src/cmd.o src/delimiter_parsing.o src/dollar_parsing.o src/free_node.o src/lexer.o src/lexer2.o src/main.o src/parsing.o src/print_function.o src/quotes_parsing.o src/redirection_file.o src/token.o src/libft_tools/ft_bzero.o src/libft_tools/ft_calloc.o src/libft_tools/ft_isdigit.o src/libft_tools/ft_itoa.o src/libft_tools/ft_lstadd_back.o src/libft_tools/ft_lstadd_front.o src/libft_tools/ft_lstclear.o src/libft_tools/ft_lstdelone.o src/libft_tools/ft_lstlast.o src/libft_tools/ft_lstnew.o src/libft_tools/ft_lstsize.o src/libft_tools/ft_realloc.o src/libft_tools/ft_split.o src/libft_tools/ft_strcat.o src/libft_tools/ft_strchr.o src/libft_tools/ft_strcmp.o src/libft_tools/ft_strdup.o src/libft_tools/ft_strjoin.o src/libft_tools/ft_strlen.o src/libft_tools/ft_strncmp.o src/libft_tools/ft_substr.o
 #  Implicit rule search has not been done.
-#  File does not exist.
+#  Last modified 2022-06-28 18:57:47
 #  File has not been updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
@@ -383,17 +364,23 @@ src/libft_tools/ft_strcmp.o:
 
 # Not a target:
 src/cmd.o:
-#  Implicit rule search has been done.
-#  File does not exist.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
 #  File has not been updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 src/token.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+# Not a target:
+src/advanced_split.o:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 .DEFAULT:
@@ -429,6 +416,12 @@ clean:
 
 # Not a target:
 src/libft_tools/ft_lstadd_back.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/libft_tools/ft_itoa.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -470,7 +463,7 @@ src/libft_tools/ft_lstclear.o:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=40/1024=4%, Rehash=0, Collisions=2/93=2%
+# Load=42/1024=4%, Rehash=0, Collisions=2/97=2%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -482,6 +475,6 @@ src/libft_tools/ft_lstclear.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Tue Jun 21 16:12:46 2022
+# Finished Make data base on Tue Jun 28 18:58:01 2022
 
  
