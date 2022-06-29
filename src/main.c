@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/28 18:31:32 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/29 18:28:35 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,27 @@ t_node	*handler(char *str)
 	return (ft_free(token, lexer, tmp, NULL));
 }
 
+void	ft_unlik(int *index)
+{
+	char	*tmp[2];
+
+	while (*index > -1)
+	{
+		tmp[0] = ft_itoa(*index);
+		tmp[1] = ft_strjoin("/var/TMP/her_doc", tmp[0]);
+		unlink(tmp[1]);
+		free(tmp[0]);
+		free(tmp[1]);
+		(*index)--;
+	}
+	*index = 0;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_node	*cmd;
+	int		index;
 
 	if (argc == 1)
 	{
@@ -77,13 +94,14 @@ int	main(int argc, char **argv, char **envp)
 			str = readline("\033[0;35mminishell$ \033[0;37m");
 			add_history (str);
 			cmd = handler(str);
-			if (!parsing(&cmd, envp))
+			if (!parsing(&cmd, envp, &index))
 			{
-				//free_node(&cmd);
-				//free(str);
+				free_node(&cmd);
+				free(str);
 				continue ;
 			}
 			printf_node(cmd);
+			ft_unlik(&index);
 			free_node(&cmd);
 			free(str);
 		}

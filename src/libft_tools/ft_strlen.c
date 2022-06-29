@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:32:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/15 09:12:42 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/29 18:27:09 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,16 @@ int	find_char(char *s, char c)
 		i++;
 	}
 	return (0);
+}
+
+int	double_pointer_len(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
 int	ft_strlen(char *str)

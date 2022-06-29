@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/28 18:40:14 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/29 18:27:17 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct redirection
 		ERROR,
 	}e_rtype;
 	char	*file;
+	char	**after_expand;
 }	t_redirec;
 
 typedef struct s_node
@@ -84,7 +85,7 @@ t_cmd		*init_cmd(t_lexer *lexer, t_token **token);
 void		dda(t_node **head);
 void		fed(t_node **head);
 char		*dollar_value(char **envp, char *var);
-void		*parsing(t_node **command, char **envp);
+void		*parsing(t_node **command, char **envp, int *index);
 int			get_type(char *c);
 char		*ft_substr(char *s, unsigned int start, size_t len);
 char		*pure_arg(char *str, char **envp);
@@ -102,10 +103,12 @@ char		*quotes_cases(t_lexer *lexer, char **envp, int c);
 char		*ft_norm(t_lexer *lexer);
 char		*delimiter(char *str, char **envp);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
-int			open_file_descriptor(t_redirec	*redrec, char **envp);
+int			open_file_descriptor(t_redirec	*redrec, char **envp, int *index);
 void		free_double_char(char **tmp);
 void		execution(t_cmd *cmd);
 char		*ft_itoa(int n);
 char		**advanced_split(char *str);
 char		*quotes(t_lexer *lexer, char **envp, int c);
+void		init_array(int *i, int size);
+int			double_pointer_len(char **str);
 #endif

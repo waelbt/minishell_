@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 11:54:17 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 14:41:09 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/29 18:21:41 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ char	*delimiter_handle_env_var_cases(t_lexer *lexer, char **envp)
 	if (lexer->c == '$')
 		return (ft_strdup("$"));
 	if (lexer->c == 34)
-		return (quotes_handler(lexer, envp, 34));
+		return (quotes(lexer, envp, 34));
 	if (lexer->c == 39)
-		return (quotes_handler(lexer, envp, 39));
+		return (quotes(lexer, envp, 39));
 	return (NULL);
 }
 
@@ -49,35 +49,11 @@ char	*delimiter_handle_env_var(t_lexer *lexer, char **envp)
 	return (tmp);
 }
 
-char	*delimiter_quotes_handler(t_lexer *lexer, char **envp, int c)
-{
-	char	*value;
-	char	*s;
-
-	lexer_advance(lexer);
-	value = ft_calloc(1, sizeof(char));
-	while (lexer->c != c)
-	{
-		s = lexer_get_current_char_as_string(lexer);
-		value = ft_realloc(value, (ft_strlen(value)
-					+ ft_strlen(s) + 1) * sizeof(char));
-		ft_strcat(value, s);
-		free(s);
-		lexer_advance(lexer);
-	}
-	lexer_advance(lexer);
-	return (value);
-}
-
 char	*delimiter_cases(t_lexer *lexer, char **envp)
 {
 	char	*str;
 
-	if (lexer->c == '"')
-		str = delimiter_quotes_handler(lexer, envp, '"');
-	else if (lexer->c == '\'')
-		str = delimiter_quotes_handler(lexer, envp, '\'');
-	else if (lexer->c == '$')
+	if (lexer->c == '$')
 		str = delimiter_handle_env_var(lexer, envp);
 	else
 	{
@@ -103,7 +79,6 @@ char	*delimiter(char *str, char **envp)
 		ft_strcat(value, s);
 		free(s);
 	}
-	free(str);
 	free(lexer);
 	return (value);
 }

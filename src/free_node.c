@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:02:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/28 19:02:44 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/29 13:20:17 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ void	dda(t_node **head)
 	{
 		tmp = (t_args *) temporary->content;
 		s = temporary;
-		printf("%p\n",tmp->after_expand[0]);
-		printf("%p\n",tmp->after_expand[1]);
-		printf("%p\n",tmp->after_expand);
 		free_double_char(tmp->after_expand);
 		free(tmp->value);
 		free(tmp);
