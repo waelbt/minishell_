@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 18:28:35 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/29 21:52:42 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	main(int argc, char **argv, char **envp)
 			cmd = handler(str);
 			if (!parsing(&cmd, envp, &index))
 			{
+				ft_unlik(&index);
 				free_node(&cmd);
 				free(str);
 				continue ;
