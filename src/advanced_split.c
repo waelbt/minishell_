@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:48:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 17:35:06 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:00:42 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_counter(char *str)
 
 	counter = 1;
 	i = 0;
-	while (str[0] == 32)
+	while (str[i] == 32)
 		i++;
 	while (str[i])
 	{
