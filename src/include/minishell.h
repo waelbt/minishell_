@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/25 17:44:06 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:10:42 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_node
 {
 	void			*content;
 	struct s_node	*next;
+	int		here_doc;
 }	t_node;
 
 typedef struct args
@@ -57,6 +58,13 @@ typedef struct cmd
 	t_node		*args;
 	t_node		*redrec;
 }	t_cmd;
+
+struct	vars
+{
+	int		h_doc;
+	int		exit_code;
+	int		fd_cp;
+};
 
 int			ft_strlen(char *str);
 void		*ft_calloc(size_t count, size_t size);
@@ -116,7 +124,7 @@ void	pwd(void);
 void	print_env(char **envp);
 void	cd(char *path);
 void	echo(char **after_expand);
-void	execute(char **after_expand, char **env);
+int		execute(char **after_expand, char **env);
 void	my_export(char ***envp, char *value);
 char	**my_envp(char **envp);
 int		str_to_num(const char *str);

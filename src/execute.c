@@ -6,31 +6,29 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 01:25:25 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/27 01:48:05 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/28 00:24:22 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void	execute(char **after_expand, char **env)
+int		execute(char **after_expand, char **env)
 {
-	if (!(ft_strcmp(after_expand[0], check_acces("echo", env))))
+	if (!(ft_strcmp(after_expand[0], "echo")))
 		echo(after_expand);
-	else if (!(ft_strcmp(after_expand[0], check_acces("cd", env))))
+	else if (!(ft_strcmp(after_expand[0], "cd")))
 		cd(after_expand[1]);
-	else if (!(ft_strcmp(after_expand[0], check_acces("pwd", env))))
+	else if (!(ft_strcmp(after_expand[0], "pwd")))
 		pwd();
 	else if (!(ft_strcmp(after_expand[0], "export")))
 		my_export(&env, after_expand[1]);
 	else if (!(ft_strcmp(after_expand[0], "unset")))
 		unset(&env, after_expand[1]);
-	else if (!(ft_strcmp(after_expand[0], check_acces("env", env))))
+	else if (!(ft_strcmp(after_expand[0], "env")))
 		print_env(env);
 	else if (!(ft_strcmp(after_expand[0], "exit")))
 		my_exit(after_expand[1]);
 	else
-		{
-		printf("runned by execve\n");
-		execve(after_expand[0], after_expand, env);
-		}
+		return (0);
+	return (1);
 }

@@ -6,11 +6,12 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 13:01:52 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/25 16:17:54 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/29 02:21:32 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+extern struct vars vr;
 
 void	here_doc(t_redirec *redirc, char **envp, int *index, int *fd)
 {
@@ -22,6 +23,9 @@ void	here_doc(t_redirec *redirc, char **envp, int *index, int *fd)
 	*fd = open(str[2], O_RDWR | O_CREAT, 0666);
 	if (*fd < 0)
 		return ;
+	vr.h_doc = 1;
+	vr.fd_cp = *fd;
+	printf("fd == %d\n", *fd);
 	(*index)++;
 	write(1, ">", 1);
 	str[0] = readline("\033[0;35> \033[0;37m");
@@ -35,7 +39,11 @@ void	here_doc(t_redirec *redirc, char **envp, int *index, int *fd)
 		free(str[0]);
 		write(1, ">", 1);
 		str[0] = readline("\033[0;35> \033[0;37m");
+	printf("h== %d\n", vr.h_doc);
 	}
+	printf("h== %d\n", vr.h_doc);
+	vr.h_doc = 0;
+	printf("doc == %d\n", vr.h_doc);
 	close(*fd);
 	*fd = open(str[2], O_RDWR | O_CREAT, 0666);
 	free_double_char(str, 1);

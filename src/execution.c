@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:13:12 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/27 02:53:16 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/28 00:23:35 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*check_acces(char *cmd, char **envp)
 		tmp[1] = cmd;
 		cmd = ft_strjoin(tmp[0], tmp[1]);
 		free(tmp[0]);
-	//	free(tmp[1]);
+		//free(tmp[1]);
 		cmd = check_cmd(cmd, envp);
 		if (!cmd)
 			return (NULL);
@@ -117,6 +117,8 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 
 	cmd = (t_cmd *)head->content;
 	after_expand = ft_spilt_beta(cmd->args);
+	if (execute(after_expand, env))
+		exit(EXIT_SUCCESS);
 	if (after_expand)
 		after_expand[0] = check_acces(after_expand[0], env);
 	input = get_output_input(cmd->redrec, 1);
@@ -132,8 +134,7 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 	close(pipe_fd[0]);
 	ft_close(cmd->redrec);
 	if (after_expand && after_expand[0])
-		execute(after_expand, env);
-		//execve(after_expand[0], after_expand, env);
+		execve(after_expand[0], after_expand, env);
 	exit(0);
 }
 

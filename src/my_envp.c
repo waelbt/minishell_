@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 21:27:46 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/22 21:47:21 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/27 21:52:35 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ char	**my_envp(char **envp)
 		my_envp[i] = strdup(envp[i]);
 		i++;
 	}
+	my_envp[i] = NULL;
 	return (my_envp);
 }

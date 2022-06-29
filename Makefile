@@ -4,7 +4,7 @@ sources =	$(wildcard src/*.c) $(wildcard src/libft_tools/*.c)
 
 objects =	$(sources:.c=.o)
 
-flags	= 	-Wall -Wextra -Werror -lreadline 
+flags	= 	-Wall -Wextra -Werror -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include 
 
 CC		=	gcc
 
@@ -16,6 +16,7 @@ all :	$(exec)
 
 $(exec)	: $(objects)
 	$(CC) $(objects) $(flags) -o $(exec)
+	@stty -echoctl
 
 %.o	: %.c include/minishell.h
 	$(CC) -c $(flags) %< -o $@
