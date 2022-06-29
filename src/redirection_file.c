@@ -6,35 +6,11 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 13:01:52 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 18:18:21 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/29 19:35:37 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-// int	here_doc(t_redirec *redirc, char **envp)
-// {
-// 	static int	index = 0;
-// 	char		*str;
-// 	char		*tmp;
-// 	int			fd;
-
-// 	tmp = ft_itoa(index);
-// 	fd = open(ft_strjoin("/var/TMP/her_doc", tmp) , O_RDWR | O_CREAT, 0777);
-// 	index++;
-// 	free(tmp);
-// 	if (fd < 0)
-// 		return (fd);
-// 	str = readline("\033[0;35> \033[0;37m");
-// 	while (ft_strncmp(str, redirc->after_expand[0], ft_strlen(redirc->after_expand[0])))
-// 	{
-// 		str = pure_arg(str, envp);
-// 		write(fd, str, ft_strlen(str));
-// 		free(str);
-// 		str = readline("\033[0;35> \033[0;37m");
-// 	}
-// 	return (fd);
-// }
 
 void	here_doc(t_redirec *redirc, char **envp, int *index, int *fd)
 {
@@ -62,7 +38,7 @@ void	here_doc(t_redirec *redirc, char **envp, int *index, int *fd)
 	}
 	close(*fd);
 	*fd = open(str[2], O_RDWR | O_CREAT, 0666);
-	//free_double_char(str, 1);
+	free_double_char(str, 1);
 }
 
 int	open_file_descriptor(t_redirec	*redrec, char **envp, int *index)
@@ -76,6 +52,6 @@ int	open_file_descriptor(t_redirec	*redrec, char **envp, int *index)
 	else if (redrec->e_rtype == APPEND)
 		fd = open(redrec->after_expand[0], O_RDWR | O_CREAT, 0666);
 	else if (redrec->e_rtype == HERE_DOC)
-		here_doc(redrec, envp, index ,&fd);
+		here_doc(redrec, envp, index, &fd);
 	return (fd);
 }
