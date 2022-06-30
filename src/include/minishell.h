@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 19:34:12 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/30 13:02:26 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char		*delimiter(char *str, char **envp);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			open_file_descriptor(t_redirec	*redrec, char **envp, int *index);
 void		free_double_char(char **tmp, int t);
-void		execution(t_cmd *cmd);
+// void		execution(t_cmd *cmd);
 char		*ft_itoa(int n);
 char		**advanced_split(char *str);
 char		*quotes(t_lexer *lexer, char **envp, int c);
@@ -114,4 +114,12 @@ int			double_pointer_len(char **str);
 char		*remove_qoutes(char *str);
 void		pure_after_expand(char **str);
 int			ft_counte_novide(char **str);
+t_redirec	*get_output_input(t_node *head, int t);
+char		*check_acces(char *cmd, char **envp);
+char		*invalid_command_error(char *cmd, char *path);
+char		*get_path(char **envp);
+t_redirec	*ft_close(t_node *head);
+char		**join_args(t_node *head);
+char		*check_cmd(char *cmd, char **envp);
+void		*execution(t_node *head, char **env);
 #endif
