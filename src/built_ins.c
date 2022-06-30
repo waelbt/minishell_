@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:48:57 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/26 20:15:37 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/29 19:39:27 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,18 @@ void		echo(char **after_expand)
 	free (str);
 	if (check == 0)
 		printf("\n");
-	exit(EXIT_SUCCESS);
 }
 
 void	cd(char *path)
 {
-	if (chdir(path) < 0)
+	printf("%s\n", path);
+	if (chdir(path) == -1)
 		perror("Error");
-	exit(EXIT_SUCCESS);
 }
 
 void	pwd(void)
 {
 	printf("%s\n", getcwd(NULL, 0));
-	exit(EXIT_SUCCESS);
 }
 
 void	print_env(char **envp)
@@ -64,5 +62,4 @@ void	print_env(char **envp)
 			printf("%s\n", envp[i]);
 		i++;
 	}
-	exit(EXIT_SUCCESS);
 }

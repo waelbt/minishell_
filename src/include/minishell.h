@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/28 18:10:42 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/30 07:44:08 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ struct	vars
 	int		h_doc;
 	int		exit_code;
 	int		fd_cp;
+	int		pid;
 };
 
 int			ft_strlen(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 01:25:25 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/28 00:24:22 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/30 03:39:45 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int		execute(char **after_expand, char **env)
 		print_env(env);
 	else if (!(ft_strcmp(after_expand[0], "exit")))
 		my_exit(after_expand[1]);
-	else
-		return (0);
+	else 
+	{
+		return (0);	
+	}
 	return (1);
 }

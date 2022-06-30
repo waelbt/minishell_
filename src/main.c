@@ -6,14 +6,14 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 02:32:45 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/30 07:45:41 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-struct vars vr = {.h_doc = 0, .exit_code = 0, .fd_cp = 0};
 // extern int errno ;
+struct vars vr = {.h_doc = 0, .exit_code = 0, .fd_cp = 0, .pid = -2};
 
 void	*ft_free(t_token *token, t_lexer *lexer, t_node *node, t_node *tmp)
 {
@@ -73,10 +73,10 @@ void	sig_handler(int sig)
 {
 	if (vr.h_doc == 1)
 	{
-		printf("in strc fd is : %d\n", vr.fd_cp);
-	//	close(vr.fd_cp);
-		close(0);
-		vr.h_doc = 2;
+		//close(vr.fd_cp);
+		kill(vr.pid, SIGINT);
+	//	vr.fd_cp = 2;
+		exit(EXIT_SUCCESS);
 	}
 	else if (vr.h_doc == 0)
 	{
@@ -87,15 +87,14 @@ void	sig_handler(int sig)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **env)
 {
 	char	*str;
-	char	**env;
+//	char	**env;
 	t_node	*cmd;
 	int		index;
 
-		int stdin_copy = dup(0);
-	env = my_envp(envp);
+//	env = my_envp(envp);
 	index = 0;
 	if (argc == 1)
 	{
@@ -103,7 +102,6 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGQUIT, SIG_IGN);
 		while (1)
 		{
-		//dup2(stdin_copy, 0);
 			str = readline("\033[0;35mminishell$ \033[0;37m");
 			if (!str)
 				break;
