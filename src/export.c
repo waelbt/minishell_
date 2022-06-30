@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/25 15:33:22 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/30 08:26:13 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ char **sorted_env(char **env)
 	size = 0;
 	while (env[size])
 			size++;
+	size--;
+	printf("%s________\n", env[2]);
 	while (i < size)
 	{
 		j = 0;
-		while (j < size -1 - i)
+		while (j < size - 1 - i)
 		{
-			if(ft_strcmp(env[j], env[j+1]) > 0)
+			if(ft_strcmp(env[j], env[ j + 1]) > 0)
 			{
 				temp = ft_strdup(env[j]);
 				env[j] = ft_strdup(env[j + 1]);

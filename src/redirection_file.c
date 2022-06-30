@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 13:01:52 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 18:35:48 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/30 08:50:18 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	here_doc(t_redirec *redirc, char **envp, int *index, int *fd)
 		return ;
 	vr.h_doc = 1;
 	vr.fd_cp = *fd;
-	printf("fd == %d\n", *fd);
 	(*index)++;
 	write(1, ">", 1);
 	str[0] = readline("\033[0;35> \033[0;37m");

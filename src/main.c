@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/30 07:45:41 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/06/30 08:46:16 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void	sig_handler(int sig)
 	if (vr.h_doc == 1)
 	{
 		//close(vr.fd_cp);
-		kill(vr.pid, SIGINT);
+	//	kill(vr.pid, SIGINT);
 	//	vr.fd_cp = 2;
-		exit(EXIT_SUCCESS);
+	//	exit(EXIT_SUCCESS);
 	}
 	else if (vr.h_doc == 0)
 	{
@@ -87,14 +87,14 @@ void	sig_handler(int sig)
 	}
 }
 
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
-//	char	**env;
+	char	**env;
 	t_node	*cmd;
 	int		index;
 
-//	env = my_envp(envp);
+	env = my_envp(envp);
 	index = 0;
 	if (argc == 1)
 	{
