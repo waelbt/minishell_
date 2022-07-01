@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/30 14:30:00 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/01 11:07:01 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 
 	cmd = (t_cmd *)head->content;
 	after_expand = join_args(cmd->args);
-	after_expand[0] = check_acces(after_expand[0], env);
+	if (after_expand && after_expand[0])
+		after_expand[0] = check_acces(after_expand[0], env);
 	input = get_output_input(cmd->redrec, 1);
 	output = get_output_input(cmd->redrec, 0);
 	if (head->next != NULL)

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:02:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 21:54:21 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 00:29:51 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	fed(t_node **head)
 		tmp = (t_redirec *)temporary->content;
 		s = temporary;
 		free_double_char(tmp->after_expand, 0);
+		free(tmp->path);
 		free(tmp->file);
 		free(tmp);
 		temporary = temporary->next;

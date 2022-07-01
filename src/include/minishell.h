@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/30 13:02:26 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 00:07:19 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct redirection
 	}e_rtype;
 	char	*file;
 	char	**after_expand;
+	char	*path;
 }	t_redirec;
 
 typedef struct s_node
@@ -58,6 +59,14 @@ typedef struct cmd
 	t_node		*redrec;
 }	t_cmd;
 
+struct	vars
+{
+	int		h_doc;
+	int		exit_code;
+	int		fd_cp;
+	int		pid;
+};
+ 
 int			ft_strlen(char *str);
 void		*ft_calloc(size_t count, size_t size);
 void		ft_bzero(void *s, size_t n);
@@ -103,7 +112,7 @@ char		*quotes_cases(t_lexer *lexer, char **envp, int c);
 char		*ft_norm(t_lexer *lexer);
 char		*delimiter(char *str, char **envp);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
-int			open_file_descriptor(t_redirec	*redrec, char **envp, int *index);
+void		*open_file_descriptor(t_node **head);
 void		free_double_char(char **tmp, int t);
 // void		execution(t_cmd *cmd);
 char		*ft_itoa(int n);
@@ -122,4 +131,8 @@ t_redirec	*ft_close(t_node *head);
 char		**join_args(t_node *head);
 char		*check_cmd(char *cmd, char **envp);
 void		*execution(t_node *head, char **env);
+char		**my_envp(char **envp);
+void		rl_replace_line (const char *text, int clear_undo);
+void		sig_handler(int sig);
+void		here_doc(t_redirec *redirc, char **envp);
 #endif

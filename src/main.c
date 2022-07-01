@@ -6,11 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/30 15:34:05 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 00:33:25 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+struct vars vr = {.h_doc = 0, .exit_code = 0, .fd_cp = 0, .pid = -2};
 
 void	*ft_free(t_token *token, t_lexer *lexer, t_node *node, t_node *tmp)
 {
@@ -82,25 +84,42 @@ void	ft_unlik(int *index)
 	*index = 0;
 }
 
+void	sig_handler(int sig)
+{
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_node	*cmd;
 	int		index;
+	char	**env;
 
 	if (argc == 1)
 	{
+		env =  my_envp(envp);
 		while (1)
 		{
+			signal(SIGINT, sig_handler);
+			signal(SIGQUIT, SIG_IGN);
 			str = readline("\033[0;35mminishell$ \033[0;37m");
+			if(!str)
+				break;
 			add_history (str);
 			cmd = handler(init_lexer(str));
-			if (parsing(&cmd, envp, &index))
-				execution(cmd, envp);
+			if (parsing(&cmd, env, &index))
+				execution(cmd, env);
 			ft_unlik(&index);
 			free_node(&cmd);
 			free(str);
 		}
+		free(str);
+		write(1, "exit\n", 5); //n7atoha fe blastha
+		free(env);
 	}
 	return (0);
 }
