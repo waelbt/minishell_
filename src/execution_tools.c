@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 19:17:58 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 22:01:39 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void check_acces(char **cmd, char **envp)
 			printf("minishell: %s: command not found\n", *cmd);
 			free(*cmd);
 			*cmd = NULL;
+			return ;
 		}
 		*cmd = ft_strjoin("/", *cmd);
 		*cmd = check_cmd(*cmd, envp);
