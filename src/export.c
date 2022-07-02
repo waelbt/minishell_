@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/30 08:26:13 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/02 01:12:45 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char **sorted_env(char **env)
 	while (env[size])
 			size++;
 	size--;
-	printf("%s________\n", env[2]);
 	while (i < size)
 	{
 		j = 0;

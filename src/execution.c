@@ -6,7 +6,7 @@
 /*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:13:12 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/30 07:49:39 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/01 18:57:43 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,9 @@ int	number_of_cmds(t_node *head)
 
 void	*execution(t_node *head, char **env)
 {
-	if (number_of_cmds(head) > 1)
+	if (number_of_cmds(head) == 0)
+		return ((void *)1);
+	else if (number_of_cmds(head) > 1)
 		execution_1(head, env);
 	else
 		execution_2(head, env);

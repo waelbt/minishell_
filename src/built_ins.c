@@ -6,11 +6,38 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:48:57 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/29 19:39:27 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/02 00:47:06 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+int		check_flag(char **after_expand, int *check)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (after_expand[i])
+	{
+		j = 2;
+		if (!ft_strncmp(after_expand[i], "-n", 2))
+		{
+			while (after_expand[i][j] == 'n' && after_expand[i])
+				j++;
+			if (j == ft_strlen(after_expand[i]))
+			{
+				*check = 1;
+				i++;
+			}
+			else
+				break;
+		}
+		else
+			break;
+	}
+	return (i);
+}
 
 void		echo(char **after_expand)
 {
@@ -21,28 +48,72 @@ void		echo(char **after_expand)
 	i = 1;
 	check = 0;
 	str = NULL;
-	if (!ft_strncmp(after_expand[1], "-n", 3))
-	{
-		check = 1;
-		i = 2;
-	}
-	str = ft_strjoin(after_expand[i], " ");
-	while(after_expand[++i])
-	{
-		str = ft_strjoin(str, after_expand[i]);
-		if (after_expand[i + 1])
-			str = ft_strjoin(str, " ");
-	}
-	printf("%s", str);
-	free (str);
-	if (check == 0)
+	if (!after_expand[1])
 		printf("\n");
+	else 
+	{
+		i = check_flag(after_expand, &check);
+		write(1, after_expand[i], ft_strlen(after_expand[i]));
+		while (after_expand[++i])
+		{
+			write(1, " ", 1);
+			write(1, after_expand[i], ft_strlen(after_expand[i]));
+		}
+		if (check == 0)
+			printf("\n");
+	}
 }
 
-void	cd(char *path)
+void	OLDPWD(char **env, char *old_path)
 {
-	printf("%s\n", path);
-	if (chdir(path) == -1)
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i], "OLDPWD=", 7))
+		{
+			free(env[i]);
+			env[i] = NULL;
+			env[i] = ft_strdup(old_path);
+			break;
+		}
+		i++;
+	}
+}
+
+void	update_paths(char **env)
+{
+	int		i;
+	char	*str;
+	char	*old_path;
+
+	i = 0;
+	while(env[i])
+	{
+		if (!ft_strncmp(env[i], "PWD=", 4))
+		{
+			str = ft_substr(env[i], 4, ft_strlen(env[i]));
+			old_path = ft_strjoin("OLDPWD=", str);
+			free(env[i]);
+			env[i] = NULL;
+			free(str);
+			str = (getcwd(NULL, 0));
+			env[i] = ft_strjoin("PWD=", str);
+			free(str);
+			break;
+		}
+		i++;
+	}
+	OLDPWD(env, old_path);
+	free(old_path);
+}
+
+void	cd(char *path, char **env)
+{
+	if (!(chdir(path) == -1))
+		update_paths(env);
+	else
 		perror("Error");
 }
 
