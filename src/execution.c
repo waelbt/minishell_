@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 02:40:52 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:45:26 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,30 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 
 	cmd = (t_cmd *)head->content;
 	after_expand = join_args(cmd->args);
-	if (after_expand && after_expand[0])
-		after_expand[0] = check_acces(after_expand[0], env);
 	input = get_output_input(cmd->redrec, 1);
 	output = get_output_input(cmd->redrec, 0);
 	if (head->next != NULL)
 		dup_norm(pipe_fd[1], 1);
 	if (output != NULL)
 		dup_norm(output->fd, 1);
-	if (last_fd != -1)
-		dup_norm(last_fd, 0);
-	if (input != NULL)
-		dup_norm(input->fd, 0);
 	close(pipe_fd[0]);
 	ft_close(cmd->redrec);
 	if (after_expand && after_expand[0])
-		execve(after_expand[0], after_expand, env);
+	{
+		if(!execute(after_expand, env))
+		{
+			if (last_fd != -1)
+				dup_norm(last_fd, 0);
+			if (input != NULL)
+				dup_norm(input->fd, 0);
+			check_acces(&after_expand[0], env);
+			execve(after_expand[0], after_expand, env);
+		}
+	}
 	exit(0);
 }
 
-void	*execution(t_node *head, char **env)
+void	execution_multi_cmd(t_node *head, char **env)
 {
 	int		last_fd;
 	int		pipe_fd[2];
@@ -102,5 +106,48 @@ void	*execution(t_node *head, char **env)
 	}
 	while (wait(NULL) > 0)
 		;
-	return ((void *)1);
+}
+
+void	execution_single_command(t_node *head, char **env)
+{
+	t_cmd		*cmd;
+	t_redirec	*input;
+	t_redirec	*output;
+	int			id;
+	char		**after_expand;
+
+	cmd = (t_cmd *)head->content;
+	after_expand = join_args(cmd->args);
+	input = get_output_input(cmd->redrec, 1);
+	output = get_output_input(cmd->redrec, 0);
+	if (output != NULL)
+		dup_norm(output->fd, 1);
+	ft_close(cmd->redrec);
+	if (after_expand && after_expand[0])
+	{
+		if(!execute(after_expand, env))
+		{
+			id = fork();
+			if(id == 0)
+			{
+				check_acces(&after_expand[0], env);
+				execve(after_expand[0], after_expand, env);
+			}
+			else
+			{
+				wait(NULL);
+				free_double_char(after_expand, 0);
+			}
+		}
+	}
+}
+
+void	execution(t_node *head, char **env)
+{
+	// if (number_of_cmds(head) == 0)
+	// 	return ((void *)1);
+	if (ft_lstsize(head) == 1)
+		execution_single_command(head, env);
+	else
+		execution_multi_cmd(head, env);
 }

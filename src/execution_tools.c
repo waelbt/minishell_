@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 02:42:30 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:17:58 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*invalid_command_error(char *cmd, char *path, char **paths)
 	/*laila ketbi fe sttdr input*/
 	if (path == NULL)
 	{
-		printf("minishelll: %s: No such file or directory\n", (cmd + 1));
+		printf("minishell: %s: No such file or directory\n", (cmd + 1));
 		free(cmd);
 	}
 	else if (!ft_strcmp(cmd, "/"))
@@ -56,33 +56,24 @@ char	*invalid_command_error(char *cmd, char *path, char **paths)
 	}
 	else if (path == NULL)
 	{
-		printf("minishelll: %s: command not found\n", (cmd + 1));
+		printf("minishell: %s: command not found\n", (cmd + 1));
 		free(cmd);
 	}
 	else
 		return ((void *)1);
 	return (NULL);
 }
-
-char	*check_acces(char *cmd, char **envp)
+void check_acces(char **cmd, char **envp)
 {
-	char	*tmp[2];
-
-	if (access(cmd, X_OK))
+	if (access(*cmd, X_OK))
 	{
-		if (ft_strchr(cmd, '/'))
+		if (ft_strchr(*cmd, '/'))
 		{
-			printf("minishelll: %s: command not found\n", cmd);
-			return (NULL);
+			printf("minishell: %s: command not found\n", *cmd);
+			free(*cmd);
+			*cmd = NULL;
 		}
-		tmp[0] = ft_strdup("/");
-		tmp[1] = cmd;
-		cmd = ft_strjoin(tmp[0], tmp[1]);
-		free(tmp[0]);
-		free(tmp[1]);
-		cmd = check_cmd(cmd, envp);
-		if (!cmd)
-			return (NULL);
+		*cmd = ft_strjoin("/", *cmd);
+		*cmd = check_cmd(*cmd, envp);
 	}
-	return (cmd);
 }

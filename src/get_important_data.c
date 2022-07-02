@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:39:07 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/01 11:02:15 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:48:40 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**join_double_pointer(char **str, char **ptr)
 		return (str);
 	index = -1;
 	j = 0;
-	len[0] = double_pointer_len(ptr);
+	len[0] = double_pointer_len(str);
 	len[1] = double_pointer_len(ptr);
 	len[2] = len[0] + len[1] + 1;
 	join = (char **) malloc(len[2] * sizeof(char *));
@@ -37,7 +37,27 @@ char	**join_double_pointer(char **str, char **ptr)
 			join[index] = ptr[j++];
 		index++;
 	}
+	free(str);
+	free(ptr);
 	return (join);
+}
+
+char 	**ft_strdup_double(char **ptr)
+{
+	char	**str;
+	int		i;
+
+	str = (char **)malloc((double_pointer_len(ptr) + 1) * sizeof(char *));
+	if(!str)
+		return (NULL);
+	i = 0;
+	while(ptr[i])
+	{
+		str[i] = ft_strdup(ptr[i]);
+		i++;
+	}
+	str[i] = NULL;
+	return (str);
 }
 
 char	**join_args(t_node *head)
@@ -47,12 +67,12 @@ char	**join_args(t_node *head)
 
 	if (!head)
 		return (NULL);
-	str = ((t_args *) head->content)->after_expand;
+	str = ft_strdup_double(((t_args *) head->content)->after_expand);
 	head = head->next;
 	while (head != NULL)
 	{
 		arg = (t_args *) head->content;
-		str = join_double_pointer(str, arg->after_expand);
+		str = join_double_pointer(str, ft_strdup_double(arg->after_expand));
 		head = head->next;
 	}
 	return (str);
