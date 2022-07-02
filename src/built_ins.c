@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:48:57 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/02 00:47:06 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/02 02:05:02 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,28 @@ void		echo(char **after_expand)
 
 void	OLDPWD(char **env, char *old_path)
 {
-	int	i;
+	int		i;
+	int		found;
+	char	*str;
 
+	found = 0;
 	i = 0;
+	str = NULL;
 	while (env[i])
 	{
 		if (!ft_strncmp(env[i], "OLDPWD=", 7))
 		{
+			found = 1;
 			free(env[i]);
 			env[i] = NULL;
 			env[i] = ft_strdup(old_path);
 			break;
 		}
 		i++;
+	}
+	if (!found)
+	{
+		
 	}
 }
 
@@ -114,7 +123,11 @@ void	cd(char *path, char **env)
 	if (!(chdir(path) == -1))
 		update_paths(env);
 	else
-		perror("Error");
+	{
+		write(2, "minishell: ", 11);
+		write(2, path, ft_strlen(path));
+		write(2, ": No such file or directory\n", 28);
+	}
 }
 
 void	pwd(void)
