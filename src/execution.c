@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/01 11:07:01 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 02:40:52 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,21 @@ char	*check_cmd(char *cmd, char **envp)
 	i = 0;
 	tmp[2] = NULL;
 	paths = ft_split(get_path(envp), ':');
-	while (paths[i++])
+	if(paths)
 	{
-		tmp[0] = paths[i];
-		tmp[1] = ft_strdup(cmd);
-		paths[i] = ft_strjoin(tmp[0], tmp[1]);
-		if (access(paths[i], X_OK) == 0)
-			tmp[2] = ft_strdup(paths[i]);
-		free(paths[i]);
-		free(tmp[0]);
-		free(tmp[1]);
+		while (paths[i++])
+		{
+			tmp[0] = paths[i];
+			tmp[1] = ft_strdup(cmd);
+			paths[i] = ft_strjoin(tmp[0], tmp[1]);
+			if (access(paths[i], X_OK) == 0)
+				tmp[2] = ft_strdup(paths[i]);
+			free(paths[i]);
+			free(tmp[0]);
+			free(tmp[1]);
+		}
 	}
-	if (!invalid_command_error(cmd, tmp[2]))
+	if (!invalid_command_error(cmd, tmp[2], paths))
 		return (NULL);
 	free(paths);
 	free(cmd);

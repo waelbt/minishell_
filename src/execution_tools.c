@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/30 15:34:19 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 02:42:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,27 @@ t_redirec	*ft_close(t_node *head)
 
 char	*get_path(char **envp)
 {
-	while (envp)
+	int i;
+
+	i = 0;
+	while (envp && envp[i])
 	{
-		if ((ft_strncmp("PATH", *envp, 4)) == 0)
-			return (*envp + 5);
-		envp++;
+		if ((ft_strncmp("PATH",  envp[i], 4)) == 0)
+			return (&(envp[i][5]));
+		i++;
 	}
 	return (NULL);
 }
 
-char	*invalid_command_error(char *cmd, char *path)
+char	*invalid_command_error(char *cmd, char *path, char **paths)
 {
-	if (!ft_strcmp(cmd, "/"))
+	/*laila ketbi fe sttdr input*/
+	if (path == NULL)
+	{
+		printf("minishelll: %s: No such file or directory\n", (cmd + 1));
+		free(cmd);
+	}
+	else if (!ft_strcmp(cmd, "/"))
 	{
 		free(cmd);
 		printf("minishell: : command not found\n");

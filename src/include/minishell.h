@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 00:07:19 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 02:42:47 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void		pure_after_expand(char **str);
 int			ft_counte_novide(char **str);
 t_redirec	*get_output_input(t_node *head, int t);
 char		*check_acces(char *cmd, char **envp);
-char		*invalid_command_error(char *cmd, char *path);
+char		*invalid_command_error(char *cmd, char *path, char **paths);
 char		*get_path(char **envp);
 t_redirec	*ft_close(t_node *head);
 char		**join_args(t_node *head);
