@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:48:57 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/02 02:05:02 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/02 16:08:02 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ void	update_paths(char **env)
 
 void	cd(char *path, char **env)
 {
+	if (!path)
+		return ;
 	if (!(chdir(path) == -1))
 		update_paths(env);
 	else

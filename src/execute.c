@@ -6,7 +6,7 @@
 /*   By: lchokri <lchokri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 01:25:25 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/01 17:28:01 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/02 16:20:40 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		execute(char **after_expand, char **env)
 	else if (!(ft_strcmp(after_expand[0], "pwd")))
 		pwd();
 	else if (!(ft_strcmp(after_expand[0], "export")))
-		my_export(&env, after_expand[1]);
+		my_export(&env, after_expand);
 	else if (!(ft_strcmp(after_expand[0], "unset")))
 		unset(&env, after_expand[1]);
 	else if (!(ft_strcmp(after_expand[0], "env")))

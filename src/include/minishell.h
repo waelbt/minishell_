@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/01 17:29:03 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/02 16:18:44 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	print_env(char **envp);
 void	cd(char *path, char **env);
 void	echo(char **after_expand);
 int		execute(char **after_expand, char **env);
-void	my_export(char ***envp, char *value);
+void	my_export(char ***envp, char **value);
 char	**my_envp(char **envp);
 int		str_to_num(const char *str);
 void	unset(char ***envp, char *var);
