@@ -6,11 +6,36 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:02:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/25 17:43:34 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 00:29:51 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+void	free_double_char(char **tmp, int t)
+{
+	int	i;
+
+	i = 0;
+	if (!tmp)
+		return ;
+	while (tmp[i])
+	{
+		free(tmp[i]);
+		i++;
+	}
+	if (t == 0)
+		free(tmp);
+}
+
+void	lexer_previous(t_lexer	*lexer)
+{
+	if (lexer->i != 0)
+	{
+		lexer->i -= 1;
+		lexer->c = lexer->contents[lexer->i];
+	}
+}
 
 void	dda(t_node **head)
 {
@@ -19,12 +44,12 @@ void	dda(t_node **head)
 	t_node	*s;
 	int		i;
 
-	i = 0;
 	temporary = *head;
 	while (temporary != NULL)
 	{
 		tmp = (t_args *) temporary->content;
 		s = temporary;
+		free_double_char(tmp->after_expand, 0);
 		free(tmp->value);
 		free(tmp);
 		temporary = temporary->next;
@@ -45,6 +70,8 @@ void	fed(t_node **head)
 	{
 		tmp = (t_redirec *)temporary->content;
 		s = temporary;
+		free_double_char(tmp->after_expand, 0);
+		free(tmp->path);
 		free(tmp->file);
 		free(tmp);
 		temporary = temporary->next;
@@ -67,7 +94,6 @@ void	free_node(t_node **head)
 		s = temporary;
 		dda(&cmd->args);
 		fed(&cmd->redrec);
-		//free_double_char(cmd->after_expand, 0);
 		free(cmd);
 		temporary = temporary->next;
 		free(s);

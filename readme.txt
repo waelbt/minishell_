@@ -1,1 +1,1 @@
-dwadadwdawd
+$'USER'"" " " " " "$USER " " " $" " $" dawdwd" " "

@@ -5,46 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/25 14:01:11 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/25 18:46:40 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/06/30 12:39:07 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/07/02 19:48:40 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	check_eof(t_node *head)
+char	**join_double_pointer(char **str, char **ptr)
 {
-	t_args	*args;
+	char	**join;
+	int		len[3];
+	int		index;
+	int		j;
 
-	while (head != NULL)
+	if (!ptr)
+		return (str);
+	index = -1;
+	j = 0;
+	len[0] = double_pointer_len(str);
+	len[1] = double_pointer_len(ptr);
+	len[2] = len[0] + len[1] + 1;
+	join = (char **) malloc(len[2] * sizeof(char *));
+	if (!join)
+		return (NULL);
+	while (index < len[2])
 	{
-		args = (t_args *) head->content;
-		if (args->value[0] == '\0')
-			return (0);
-		head = head->next;
+		if (index < len[0])
+			join[index] = str[index];
+		else if (index >= len[1])
+			join[index] = ptr[j++];
+		index++;
 	}
-	return (1);
+	free(str);
+	free(ptr);
+	return (join);
 }
 
-char	*join_args(t_node *head)
+char 	**ft_strdup_double(char **ptr)
+{
+	char	**str;
+	int		i;
+
+	str = (char **)malloc((double_pointer_len(ptr) + 1) * sizeof(char *));
+	if(!str)
+		return (NULL);
+	i = 0;
+	while(ptr[i])
+	{
+		str[i] = ft_strdup(ptr[i]);
+		i++;
+	}
+	str[i] = NULL;
+	return (str);
+}
+
+char	**join_args(t_node *head)
 {
 	t_args	*arg;
-	char	*str;
-	char	*tmp;
+	char	**str;
 
 	if (!head)
 		return (NULL);
-	str = ft_strdup(((t_args *) head->content)->value);
+	str = ft_strdup_double(((t_args *) head->content)->after_expand);
 	head = head->next;
 	while (head != NULL)
 	{
 		arg = (t_args *) head->content;
-		tmp = str;
-		str = ft_strjoin(str, " ");
-		free(tmp);
-		tmp = str;
-		str = ft_strjoin(str, arg->value);
-		free(tmp);
+		str = join_double_pointer(str, ft_strdup_double(arg->after_expand));
 		head = head->next;
 	}
 	return (str);
@@ -66,49 +94,4 @@ t_redirec	*get_output_input(t_node *head, int t)
 		head = head->next;
 	}
 	return (redrec);
-}
-
-void	ft_unlik(int *index)
-{
-	char	*tmp[2];
-
-	while (*index > -1)
-	{
-		tmp[0] = ft_itoa(*index);
-		tmp[1] = ft_strjoin("/var/TMP/her_doc", tmp[0]);
-		unlink(tmp[1]);
-		free(tmp[0]);
-		free(tmp[1]);
-		(*index)--;
-	}
-	*index = 0;
-}
-
-char	**ft_spilt_beta(t_node *args)
-{
-	char	*str;
-	char	**ptr;
-	t_args	*arg;
-	int		i;
-
-	i = 0;
-	if (check_eof(args))
-	{
-		str = join_args(args);
-		ptr = ft_split(str, 32);
-		free(str);
-	}
-	else
-	{
-		ptr = malloc(sizeof(char *) * (ft_lstsize(args) + 1));
-		while (args)
-		{
-			arg = (t_args *) args->content;
-			ptr[i] = ft_strdup(arg->value);
-			args = args->next;
-			i++;
-		}
-		ptr[i] = NULL;
-	}
-	return (ptr);
 }

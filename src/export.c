@@ -6,22 +6,11 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/03 03:16:36 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/03 17:40:29 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-/*int		get_j(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i] && str[i] != '=')
-		i++;
-	return (i);
-}
-*/
 
 char **ft_split_first(char *str, char c)
 {
@@ -73,7 +62,7 @@ char **sorted_env(char **env)
 		}
 		i++;
 	}
-	env[size - 1] = NULL;
+	env[size+1] = NULL;
 	return (env);
 }
 
@@ -93,71 +82,6 @@ void	print_export(char **envp)
 		free(line);
 	}
 }
-/*
-void	right_value(char **str)
-{
-	char	*s;
-	char	*tmp;
-	char	*tmp1;
-	char	*tmp2;
-	int		j;
-
-	j = 0;
-	if ((s = ft_strchr(*str, '=')))
-		{
-			tmp = ft_strjoin("\"", ++s);
-	//		tmp2 = *str;
-			tmp1 = tmp;
-			tmp = ft_strjoin(tmp, "\"");
-			j = get_j(*str);
-			*str = ft_substr(*str, 0, j + 1);
-			tmp2 = *str;
-			*str = ft_strjoin(*str, tmp);
-			free(tmp2);
-			free(tmp1);
-		}
-	else
-	{
-		tmp = ft_strdup("");
-		*str = ft_strjoin(*str, tmp);
-		free(tmp);
-	}
-}
-	
-void	my_export(char ***envp, char **value)
-{
-	int		i;
-	char	**new_envp;
-
-	i = 0;
-	if (value == NULL)
-		print_export(*envp);
-	else
-	{
-		right_value(&value);
-		while ((*envp)[i])
-			i++;
-		new_envp = (char **)malloc((i + 2) * sizeof(char *));
-		i = 0;
-		while ((*envp)[i])
-		{
-			new_envp[i] = ft_strdup((*envp)[i]);
-			i++;
-		}
-		new_envp[i] = ft_strdup(value);
-		i++;
-		new_envp[i] = NULL;
-		*envp = new_envp;
-		*envp = sorted_env(*envp);
-		free(value);
-	}
-}
-
-*/
-
-//find if the var exist   y--> if given a val, change it, if export d (and d="w") don't change
-//						  n--> realloc and creat it
-//
 
 void	change_existing_value(char ***env, int i, char *var_name, char *var_value)
 {
@@ -170,24 +94,24 @@ void	change_existing_value(char ***env, int i, char *var_name, char *var_value)
 	}
 }
 
-void	add_value()
+void	add_value(char ***env, char *var, int i)
 {
-/*	else
-	{
-		(*envp) = malloc((i + 1) * sizeof(char *));
-		i = 0;
-		while ((*env)[i++])
+	char	**envp;
+
+		envp = malloc((i + 1) * sizeof(char *));
+		i = -1;
+		while ((*env)[++i])
 		{
-			(*envp)[i] = ft_strdup((*env)[i]);
+			envp[i] = ft_strdup((*env)[i]);
 			(*env)[i] = NULL;
 			free((*env)[i]);
 		}
-//		printf("%s-----\n", (*envp)[i-1]);
-		holder = ft_strjoin(var_name, "=");
-		(*envp)[i++] = ft_strjoin(holder, var_value); 
-		(*envp)[i] = NULL;
-		free(holder);
-	}*/
+		(envp)[i++]= ft_strdup(var);
+		(envp)[i] = NULL;
+		print_env(envp);
+		free(*env);
+		*env = malloc(i * sizeof(char *));
+		env = &envp;
 }
 
 
@@ -240,8 +164,6 @@ char	*get_name(char *str)
 	return (var_name);
 }
 
-
-
 void	my_export(char ***env, char **vars)
 {
 	int		i;
@@ -264,10 +186,8 @@ void	my_export(char ***env, char **vars)
 			{
 				if (!(ft_strncmp(var_name, (*env)[i], ft_strlen(var_name))))
 				{
-					printf("(*env)[%d]= %s\n", i, (*env)[i]);
 					key = 1;
 					var_value = get_value(vars[j], var_name);
-					printf("%s\n\n", var_value);
 					if (!var_value)
 						break;
 					else
@@ -278,8 +198,7 @@ void	my_export(char ***env, char **vars)
 			}
 			if (!key)
 			{
-				var_value = get_value(vars[j], var_name);
-//				change_existing_value(env, i, var_name, var_value);
+				add_value(env, vars[j], i);
 
 			}
 			j++;
@@ -289,19 +208,3 @@ void	my_export(char ***env, char **vars)
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

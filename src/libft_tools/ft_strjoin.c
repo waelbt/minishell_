@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 18:04:04 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/25 15:18:47 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:34:39 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	if (!s1 || !s2)
-		return (NULL);
+		return (0);
 	len = ft_strlen(s1) + ft_strlen(s2);
 	ptr = (char *) malloc((len + 1) * sizeof(char));
 	if (!ptr)
-		return (NULL);
+	{
+		return (0);
+	}
 	while (i < len)
 	{
 		if (i < ft_strlen(s1))

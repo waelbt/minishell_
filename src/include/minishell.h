@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 16:18:44 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/03 17:36:02 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <string.h>
 # include "lexer.h"
 # include "token.h"
-# include  <errno.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <readline/readline.h>
@@ -38,18 +37,19 @@ typedef struct redirection
 		ERROR,
 	}e_rtype;
 	char	*file;
-	char	*previous_delimiter;
+	char	**after_expand;
+	char	*path;
 }	t_redirec;
 
 typedef struct s_node
 {
 	void			*content;
 	struct s_node	*next;
-	int		here_doc;
 }	t_node;
 
 typedef struct args
 {
+	char	**after_expand;
 	char	*value;
 }	t_args;
 
@@ -66,7 +66,7 @@ struct	vars
 	int		fd_cp;
 	int		pid;
 };
-
+ 
 int			ft_strlen(char *str);
 void		*ft_calloc(size_t count, size_t size);
 void		ft_bzero(void *s, size_t n);
@@ -108,28 +108,42 @@ int			get_index(t_lexer lexer, char c);
 char		*hard_code(t_lexer *lexer, char **envp, int c, int next_qoutes);
 char		*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c);
 char		*quotes_handler(t_lexer *lexer, char **envp, int c);
+char		*quotes_cases(t_lexer *lexer, char **envp, int c);
 char		*ft_norm(t_lexer *lexer);
 char		*delimiter(char *str, char **envp);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
-int			open_file_descriptor(t_redirec	*redrec, char **envp, int *index);
+void		*open_file_descriptor(t_node **head);
 void		free_double_char(char **tmp, int t);
-void		*execution(t_node *head, char **env);
+// void		execution(t_cmd *cmd);
 char		*ft_itoa(int n);
-void		ft_unlik(int *index);
+char		**advanced_split(char *str);
+char		*quotes(t_lexer *lexer, char **envp, int c);
+void		init_array(int *i, int size);
+int			double_pointer_len(char **str);
+char		*remove_qoutes(char *str);
+void		pure_after_expand(char **str);
+int			ft_counte_novide(char **str);
 t_redirec	*get_output_input(t_node *head, int t);
-char		*join_args(t_node *head);
-char		**ft_spilt_beta(t_node *args);
-/*=========================built_ins functions:========================*/
-void	my_exit(char *str);
-void	pwd(void);
-void	print_env(char **envp);
-void	cd(char *path, char **env);
-void	echo(char **after_expand);
-int		execute(char **after_expand, char **env);
-void	my_export(char ***envp, char **value);
-char	**my_envp(char **envp);
-int		str_to_num(const char *str);
-void	unset(char ***envp, char *var);
-char	*check_acces(char *cmd, char **envp);
-void	rl_replace_line (const char *text, int clear_undo);
+void		check_acces(char **cmd, char **envp);
+char		*invalid_command_error(char *cmd, char *path, char **paths);
+char		*get_path(char **envp);
+t_redirec	*ft_close(t_node *head);
+char		**join_args(t_node *head);
+char		*check_cmd(char *cmd, char **envp);
+void		execution(t_node *head, char ***env);
+char		**my_envp(char **envp);
+void		rl_replace_line (const char *text, int clear_undo);
+void		sig_handler(int sig);
+void		here_doc(t_redirec *redirc, char **envp);
+int			execute(char **after_expand, char ***env);
+void		my_exit(char *str);
+void		pwd(void);
+void		print_env(char **envp);
+void		cd(char *path, char **env);
+void		echo(char **after_expand);
+void    my_export(char ***env, char **vars);
+char		**my_envp(char **envp);
+int			str_to_num(const char *str);
+void		unset(char ***envp, char *var);
+void		rl_replace_line (const char *text, int clear_undo);
 #endif

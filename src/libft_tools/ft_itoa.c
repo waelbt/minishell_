@@ -6,11 +6,20 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:54:00 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/21 17:01:54 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/06/29 17:35:19 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	init_array(int *i, int size)
+{
+	int	co;
+
+	co = -1;
+	while (++co < size)
+		i[co] = 0;
+}
 
 static int	intlen(int n)
 {
