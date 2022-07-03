@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/03 18:42:54 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/03 21:54:40 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,19 +168,20 @@ int	plus_equal(char ***env, char *vars)
 	int		i;
 
 	i = 0;
-	while (*env)
-	{
-		while ((*env)[i++])
+		while (vars[i])
 		{
-			if ((*env)[i] == '=')
+			if (vars[i] == '=')
 			{
-				if ((*env)[i - 1] == '+')
+				if (vars[i - 1] == '+')
+				{
+					concat_var();	
 					return (1);
+				}
 				else
 					break;
 			}
-		}	
-		if 
+			i++;
+		}
 	}
 	return 0;
 }
