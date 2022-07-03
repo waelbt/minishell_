@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/03 17:46:55 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/03 18:42:54 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,16 +163,63 @@ char	*get_name(char *str)
 	return (var_name);
 }
 
-void	my_export(char ***env, char **vars)
+int	plus_equal(char ***env, char *vars)
 {
 	int		i;
-	int		j;
+
+	i = 0;
+	while (*env)
+	{
+		while ((*env)[i++])
+		{
+			if ((*env)[i] == '=')
+			{
+				if ((*env)[i - 1] == '+')
+					return (1);
+				else
+					break;
+			}
+		}	
+		if 
+	}
+	return 0;
+}
+
+void	equal(char ***env, char *vars)
+{
+	int		i;
 	int		key;
 	char	*var_name;
 	char	*var_value;
 
 	key = 0;
 	i = 0;
+	var_name = get_name(vars);
+	while ((*env)[i])
+	{
+		if (!(ft_strncmp(var_name, (*env)[i], ft_strlen(var_name))))
+		{
+			key = 1;
+			var_value = get_value(vars, var_name);
+			if (!var_value) //hnaya add the cond if = kayna wla la;
+				break;
+			else
+				change_existing_value(env, i, var_name, var_value);
+			break;
+		}
+		i++;
+	}
+	if (!key)
+		add_value(env, vars, i);
+	i = 0;
+	free(var_value);
+	free(var_name);
+}
+
+void	my_export(char ***env, char **vars)
+{
+	int		j;
+
 	j = 1;
 	if (vars[1] == NULL)
 		print_export(*env);
@@ -180,29 +227,9 @@ void	my_export(char ***env, char **vars)
 	{
 		while (vars[j])
 		{
-			var_name = get_name(vars[j]);
-			while ((*env)[i])
-			{
-				if (!(ft_strncmp(var_name, (*env)[i], ft_strlen(var_name))))
-				{
-					key = 1;
-					var_value = get_value(vars[j], var_name);
-					if (!var_value)
-						break;
-					else
-						change_existing_value(env, i, var_name, var_value);
-					break;
-				}
-				i++;
-			}
-			if (!key)
-			{
-				add_value(env, vars[j], i);
-			}
+			if(!plus_equal(env, vars[j]))
+				equal(env, vars[j]);
 			j++;
-			i = 0;
-			free(var_value);
-			free(var_name);
 		}
 	}
 }
