@@ -6,7 +6,7 @@
 /*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/03 17:40:29 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/03 17:46:55 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,9 @@ void	add_value(char ***env, char *var, int i)
 		}
 		(envp)[i++]= ft_strdup(var);
 		(envp)[i] = NULL;
-		print_env(envp);
 		free(*env);
 		*env = malloc(i * sizeof(char *));
-		env = &envp;
+		*env = envp;
 }
 
 
@@ -199,7 +198,6 @@ void	my_export(char ***env, char **vars)
 			if (!key)
 			{
 				add_value(env, vars[j], i);
-
 			}
 			j++;
 			i = 0;
