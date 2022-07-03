@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 22:04:45 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/03 17:11:53 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 	ft_close(cmd->redrec);
 	if (after_expand && after_expand[0])
 	{
-		if(!execute(after_expand, env))
+		if(!execute(after_expand, &env))
 		{
 			if (last_fd != -1)
 				dup_norm(last_fd, 0);
@@ -109,7 +109,7 @@ void	execution_multi_cmd(t_node *head, char **env)
 		;
 }
 
-void	execution_single_command(t_node *head, char **env)
+void	execution_single_command(t_node *head, char ***env)
 {
 	t_cmd		*cmd;
 	t_redirec	*input;
@@ -136,9 +136,9 @@ void	execution_single_command(t_node *head, char **env)
 			{
 				if (input != NULL)
 					dup_norm(input->fd, 0);
-				check_acces(&after_expand[0], env);
+				check_acces(&after_expand[0], *env);
 				if(after_expand[0])
-					execve(after_expand[0], after_expand, env);
+					execve(after_expand[0], after_expand, *env);
 				else
 					exit(0);
 			}
@@ -153,15 +153,16 @@ void	execution_single_command(t_node *head, char **env)
 		}
 		if (output != NULL)
 			dup_norm(fd_out, 1);
+		//print_env(env);
 	}
 }
 
-void	execution(t_node *head, char **env)
+void	execution(t_node *head, char ***env)
 {
 	// if (number_of_cmds(head) == 0)
 	// 	return ((void *)1);
 	if (ft_lstsize(head) == 1)
 		execution_single_command(head, env);
 	else
-		execution_multi_cmd(head, env);
+		execution_multi_cmd(head, *env);
 }

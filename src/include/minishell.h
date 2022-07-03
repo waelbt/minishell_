@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 19:07:14 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/03 17:11:12 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,18 +130,17 @@ char		*get_path(char **envp);
 t_redirec	*ft_close(t_node *head);
 char		**join_args(t_node *head);
 char		*check_cmd(char *cmd, char **envp);
-void		execution(t_node *head, char **env);
+void		execution(t_node *head, char ***env);
 char		**my_envp(char **envp);
 void		rl_replace_line (const char *text, int clear_undo);
 void		sig_handler(int sig);
 void		here_doc(t_redirec *redirc, char **envp);
-int			execute(char **after_expand, char **env);
+int			execute(char **after_expand, char ***env);
 void		my_exit(char *str);
 void		pwd(void);
 void		print_env(char **envp);
 void		cd(char *path, char **env);
 void		echo(char **after_expand);
-int			execute(char **after_expand, char **env);
 void		my_export(char ***envp, char *value);
 char		**my_envp(char **envp);
 int			str_to_num(const char *str);

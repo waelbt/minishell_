@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:16:39 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/01 11:15:22 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/02 23:25:08 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_lexer	*init_lexer(char *contents)
 
 	if(!contents)
 		return (NULL);
-	/*zet had lprotection*/
 	lexer = ft_calloc(1, sizeof(t_lexer));
 	if (!lexer)
 		return (NULL);
