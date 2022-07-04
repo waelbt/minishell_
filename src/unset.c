@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:04:40 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/03 16:42:56 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/03 18:36:46 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,12 @@ void unset(char ***envp, char *var)
 			new_env = (char **)malloc(len * sizeof(char *));
 			while((*envp)[i])
 			{
-				//printf("%s\n", (*envp)[i]);
 				if(index != i)
 					new_env[j++] = ft_strdup((*envp)[i]);
-				//printf("%s\n", new_env[j - 1]);
 				i++;				
 			}
 			new_env[j] = NULL;
-			//free_double_char(*envp, 0);
+			free_double_char(*envp, 0);
 			*envp = new_env;
 		}
 	}

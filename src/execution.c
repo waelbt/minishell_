@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/03 17:11:53 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/03 18:43:58 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,12 +148,11 @@ void	execution_single_command(t_node *head, char ***env)
 				if (input != NULL)
 					dup_norm(fd_int, 0);
 				ft_close(cmd->redrec);
-				free_double_char(after_expand, 0);
 			}
 		}
+		free_double_char(after_expand, 0);
 		if (output != NULL)
 			dup_norm(fd_out, 1);
-		//print_env(env);
 	}
 }
 
