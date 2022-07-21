@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/03 21:21:02 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:48:59 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,15 @@ char	*ft_norm(t_lexer *lexer)
 
 	if (!ft_isalnum(lexer->c) && lexer->c != '_')
 	{
-		str = lexer_get_current_char_as_string(lexer);
+		if(lexer->c == '?')
+			tmp = ft_itoa(ft_getter());
+		else
+		{
+			str = lexer_get_current_char_as_string(lexer);
+			tmp = ft_strjoin("$", str);
+			free(str);
+		}
 		lexer_advance(lexer);
-		tmp = ft_strjoin("$", str);
-		free(str);
 		return (tmp);
 	}
 	if (ft_isdigit(lexer->c))
@@ -104,7 +109,7 @@ char	*dollar_value(char **envp, char *var)
 		{
 			tmp = ft_split(*envp, '=');
 			free(tmp[1]);
-			tmp[1] = ft_substr(*envp, ft_strlen(tmp) + 1, ft_strlen(*envp));
+			tmp[1] = ft_substr(*envp, ft_strlen(*tmp) + 1, ft_strlen(*envp));
 			if (!ft_strcmp(tmp[0], var))
 			{
 				if (!tmp[1])

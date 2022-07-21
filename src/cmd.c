@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/28 13:28:14 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 16:03:26 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_redirec	*init_redirection(t_token **token, t_lexer *lexer)
 		redrec->file = ft_strdup((*token)->value);
 	else
 	{
-		printf("parse error 'missing redirection file'\n");
+		printf_error("parse error 'missing redirection file'\n", NULL, NULL);
 		redrec->e_rtype = ERROR;
 	}
 	return (redrec);

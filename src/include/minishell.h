@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/03 17:11:12 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 15:49:08 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,6 @@ typedef struct cmd
 	t_node		*redrec;
 }	t_cmd;
 
-struct	vars
-{
-	int		h_doc;
-	int		exit_code;
-	int		fd_cp;
-	int		pid;
-};
- 
 int			ft_strlen(char *str);
 void		*ft_calloc(size_t count, size_t size);
 void		ft_bzero(void *s, size_t n);
@@ -146,4 +138,7 @@ char		**my_envp(char **envp);
 int			str_to_num(const char *str);
 void		unset(char ***envp, char *var);
 void		rl_replace_line (const char *text, int clear_undo);
+int			ft_getter(void);
+void		ft_setter(int value);
+void		printf_error(char *p, char *str, char *s);
 #endif

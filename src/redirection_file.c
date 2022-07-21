@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 13:01:52 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 00:17:39 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 15:55:01 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	*open_file_descriptor(t_node **head)
 			redrec->fd = open(redrec->after_expand[0], O_RDWR | O_CREAT, 0666);
 		if(redrec->fd < 0)
 		{
-			printf("minishell: no such file or directory: %s\n", redrec->after_expand[0]);
+			ft_setter(1);
+			printf_error("minishell: no such file or directory: ", redrec->after_expand[0], "\n");
 			return (NULL);
 		}
 		temporary = temporary->next;

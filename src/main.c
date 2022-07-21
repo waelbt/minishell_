@@ -6,13 +6,11 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/03 17:10:51 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 16:05:49 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-struct vars vr = {.h_doc = 0, .exit_code = 0, .fd_cp = 0, .pid = -2};
 
 void	*ft_free(t_token *token, t_lexer *lexer, t_node *node, t_node *tmp)
 {
@@ -30,9 +28,15 @@ int	ft_pipe_check(t_token *token, t_token *previous)
 
 	value = 0;
 	if (ft_strchr(token->value, '|'))
-		printf("parse error near `||'\n");
+	{
+		ft_setter(258);
+		printf_error(NULL, "parse error near `||'\n", NULL);
+	}
 	else if (previous->e_type == TOKEN_PIPE && token->e_type == TOKEN_EOF)
-		printf("parse error near `|'\n");
+	{
+		ft_setter(258);
+		printf_error(NULL, "parse error near `|'\n", NULL);
+	}
 	else
 		value = 1;
 	free(previous->value);
@@ -49,7 +53,8 @@ t_node	*handler(t_lexer *lexer)
 	token[0] = lexer_get_next_token(lexer);
 	if (!ft_strcmp(token[0]->value, "|"))
 	{
-		printf("parse error near `|'\n");
+		ft_setter(258);
+		printf_error(NULL, "parse error near `|'\n", NULL);
 		return (ft_free(token[0], lexer, NULL, node[1]));
 	}
 	while (token[0]->e_type != TOKEN_EOF)
@@ -86,6 +91,7 @@ void	ft_unlik(int *index)
 
 void	sig_handler(int sig)
 {
+	ft_setter(1);
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

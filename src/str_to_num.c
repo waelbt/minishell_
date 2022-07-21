@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_to_num.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchokri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 18:58:41 by lchokri           #+#    #+#             */
-/*   Updated: 2022/06/25 18:58:46 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/07/21 16:01:16 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	str_to_num(const char *str)
 		}
 		else
 		{
-			printf("exit: %s: numeric argument required\n", str);
+			ft_setter(1);
+			printf("exit\n");
+			printf_error("minishell: exit: ", (char *)str, ": numeric argument required\n");
 			break;	
 			exit(EXIT_FAILURE);
 		}

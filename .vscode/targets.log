@@ -6,11 +6,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
-make: *** No rule to make target `src/advanced_split.o', needed by `minishell'.  Stop.
 
-
-# Make data base, printed on Mon Jul  4 14:48:08 2022
+# Make data base, printed on Thu Jul 21 01:36:05 2022
 
 # Variables
 
@@ -18,8 +15,6 @@ make: *** No rule to make target `src/advanced_split.o', needed by `minishell'. 
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
-# environment
-VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -41,33 +36,25 @@ objects = $(sources:.c=.o)
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n0000hr8000462/T/vscode-ipc-67cbce0f-df51-4091-875d-d9d05b71186b.sock
-# environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.jtH2J681I6/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.xHJg3Sa9px/Render
 # environment
-PATH = /Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Frameworks/Mono.framework/Versions/Current/Commands
+PATH = /Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # makefile (from `Makefile', line 7)
 flags = -Wall -Wextra -Werror -lreadline -L /Users/waboutzo/.brew/opt/readline/lib -I /Users/waboutzo/.brew/opt/readline/include 
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-VSCODE_LOG_STACK = false
-# environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.TJhJaPFxfu/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.FadnzUO9OR/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 HOMEBREW_TEMP = /tmp/waboutzo/Homebrew/Temp
-# environment
-VSCODE_PIPE_LOGGING = true
 # environment
 PWD = /Users/waboutzo/Desktop/minishell_ 2
 # environment
@@ -79,7 +66,7 @@ HOME = /Users/waboutzo
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/waboutzo/Library/Application Support/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
+VSCODE_CODE_CACHE_PATH = /Users/waboutzo/Library/Application Support/Code/CachedData/b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a
 # environment
 LOGNAME = waboutzo
 # environment
@@ -121,7 +108,9 @@ TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n0000hr8000462/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/waboutzo/Library/Application Support/Code/1.68.1-main.sock
+VSCODE_IPC_HOOK = /Users/waboutzo/Library/Application Support/Code/1.69.1-main.sock
+# environment
+MallocNanoZone = 0
 # makefile
 MAKEFLAGS = Rrqp
 # environment
@@ -129,7 +118,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000003.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000002.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -163,9 +152,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 16943
+VSCODE_PID = 6334
 # variable set hash-table stats:
-# Load=75/1024=7%, Rehash=0, Collisions=1/103=1%
+# Load=71/1024=7%, Rehash=0, Collisions=1/99=1%
 
 # Pattern-specific Variable Values
 
@@ -174,11 +163,11 @@ VSCODE_PID = 16943
 # Directories
 
 # include (device 0, inode 0): No files, 1 impossibilities.
-# . (device 16777227, inode 4675597): 8 files, no impossibilities.
+# . (device 16777227, inode 4675597): 7 files, no impossibilities.
 # src/libft_tools (device 16777227, inode 4675743): 23 files, no impossibilities.
 # src (device 16777227, inode 4675728): 28 files, no impossibilities.
 
-# 59 files, 1 impossibilities in 4 directories.
+# 58 files, 1 impossibilities in 4 directories.
 
 # Implicit Rules
 
@@ -283,7 +272,7 @@ src/execute.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-03 18:35:33
+#  Last modified 2022-07-21 01:34:45
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -326,15 +315,17 @@ src/libft_tools/ft_strncmp.o:
 #  File has not been updated.
 
  
+make: *** No rule to make target `src/advanced_split.o', needed by `minishell'.  Stop.
+
 minishell: src/advanced_split.o src/built_ins.o src/cmd.o src/delimiter_parsing.o src/dollar_parsing.o src/execute.o src/execution.o src/execution_tools.o src/exit.o src/export.o src/free_node.o src/get_important_data.o src/lexer.o src/lexer2.o src/main.o src/my_envp.o src/parsing.o src/parsing_.o src/print_function.o src/quotes_parsing.o src/redirection_file.o src/str_to_num.o src/token.o src/unset.o src/libft_tools/ft_bzero.o src/libft_tools/ft_calloc.o src/libft_tools/ft_isdigit.o src/libft_tools/ft_itoa.o src/libft_tools/ft_lstadd_back.o src/libft_tools/ft_lstadd_front.o src/libft_tools/ft_lstclear.o src/libft_tools/ft_lstdelone.o src/libft_tools/ft_lstlast.o src/libft_tools/ft_lstnew.o src/libft_tools/ft_lstsize.o src/libft_tools/ft_realloc.o src/libft_tools/ft_split.o src/libft_tools/ft_strcat.o src/libft_tools/ft_strchr.o src/libft_tools/ft_strcmp.o src/libft_tools/ft_strdup.o src/libft_tools/ft_strjoin.o src/libft_tools/ft_strlen.o src/libft_tools/ft_strncmp.o src/libft_tools/ft_substr.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-03 18:59:47
+#  File does not exist.
 #  File has not been updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 #  commands to execute (from `Makefile', line 18):
-	@stty -echoctl
 	$(CC) $(objects) $(flags) -o $(exec)
+	@stty -echoctl
 	
 
 # Not a target:
@@ -542,6 +533,6 @@ src/str_to_num.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Jul  4 14:48:08 2022
+# Finished Make data base on Thu Jul 21 01:36:05 2022
 
  

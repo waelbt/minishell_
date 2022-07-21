@@ -1,1 +1,4 @@
-$'USER'"" " " " " "$USER " " " $" " $" dawdwd" " "
+pwd dawdawdwd (bash)
+
+
+waitpid while;

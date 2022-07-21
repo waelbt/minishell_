@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/01 11:15:08 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 15:50:27 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 		s = string_handler(lexer);
 		if (!s)
 		{
-			printf("'Error: [$parse:lexerr] Lexer Error: Unclosed qoutes'\n");
+			ft_setter(258);
+			printf_error(NULL, "'Error: [$parse:lexerr] Lexer Error: Unclosed qoutes'\n", NULL);
 			return (init_token(TOKEN_ERROR, value));
 		}
 		value = ft_realloc(value, (ft_strlen(value)

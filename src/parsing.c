@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 00:29:31 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 15:54:21 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-extern struct vars vr;
+//extern struct vars vr;
 
 char	**remove_vide_string(char **str)
 {
@@ -87,7 +87,8 @@ void	*open_here_doc(t_node **head)
 			redrec->fd = open(redrec->path, O_RDWR , 0666);
 			if(redrec->fd < 0)
 			{
-				printf("minishell: no such file or directory: %s\n", redrec->path);
+				ft_setter(1);
+				printf_error("minishell: no such file or directory: ", redrec->path, "\n");
 				return (NULL);
 			}
 		}
@@ -100,13 +101,15 @@ void	*fill_her_doc_in_fork(t_node **head, char **envp)
 	t_node		*temporary;
 	t_redirec	*redrec;
 	int			status;
+	int			id;
 	char		*str[2];
 
-	vr.pid = fork();
-	if (vr.pid != 0)
+	id = fork();
+	if (id != 0)
 	{
 		signal(SIGINT, SIG_IGN);
 		wait(&status);
+		ft_setter(1);
 		if(WIFEXITED(status))
 			open_here_doc(head);
 		else if(WIFSIGNALED(status))
@@ -143,7 +146,8 @@ void	*parsing_redrection(t_node **head, char **envp, int *index)
 		pure_after_expand(redrec->after_expand);
 		if (double_pointer_len(redrec->after_expand) != 1)
 		{
-			printf("minishell: %s: ambiguous redirect\n", redrec->file);
+			ft_setter(1);
+			printf_error("minishell: ", redrec->file, ": ambiguous redirect\n");
 			return (NULL);
 		}
 		temporary = temporary->next;

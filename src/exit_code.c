@@ -1,28 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   exit_code.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/25 14:47:52 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/21 13:33:52 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/07/21 11:42:47 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/07/21 15:55:37 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void	my_exit(char *str)
+void	printf_error(char *p, char *str, char *s)
 {
-	int		status;
+	if(p)
+		write(2, p, ft_strlen(p));
+	if(str)
+		write(2, str, ft_strlen(str));
+	if(s)
+		write(2, s, ft_strlen(s));
+}
 
-	if (str == NULL)
-		exit(0); //0 should be replaced by the global var because : WHEN EXIT HAVE NO PARAMETER, IT TAKES THE EXIT STATUS
-				//OF THE LAST CMD EXECUTED
-	else
-	{
-		status = str_to_num(str);
-		status = (unsigned char)status; //// <-- hada howa lglobal var to be saved
-		exit(255);
-	}
+static int	*exit_code(void)
+{
+	static int c;
+	return (&c);
+}
+
+int ft_getter(void)
+{
+	int *i;
+
+	i = exit_code();
+	return (*i);
+}
+
+void ft_setter(int value)
+{
+	int *i;
+
+	i = exit_code();
+	*i = value;
 }

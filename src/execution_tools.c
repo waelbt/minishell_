@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 22:01:39 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 16:02:25 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,16 @@ char	*get_path(char **envp)
 
 char	*invalid_command_error(char *cmd, char *path, char **paths)
 {
-	/*laila ketbi fe sttdr input*/
-	if (path == NULL)
-	{
-		printf("minishell: %s: No such file or directory\n", (cmd + 1));
-		free(cmd);
-	}
+	ft_setter(127);
+	if (paths == NULL)
+		printf_error("minishell: ", (cmd + 1), "No such file or directory\n");
 	else if (!ft_strcmp(cmd, "/"))
-	{
-		free(cmd);
-		printf("minishell: : command not found\n");
-	}
+		printf_error("minishell: ", NULL, ": command not found\n");
 	else if (path == NULL)
-	{
-		printf("minishell: %s: command not found\n", (cmd + 1));
-		free(cmd);
-	}
+		printf_error("minishell: ", (cmd + 1), ": command not found\n");
 	else
 		return ((void *)1);
+	free(cmd);
 	return (NULL);
 }
 void check_acces(char **cmd, char **envp)
@@ -69,7 +61,8 @@ void check_acces(char **cmd, char **envp)
 	{
 		if (ft_strchr(*cmd, '/'))
 		{
-			printf("minishell: %s: command not found\n", *cmd);
+			ft_setter(127);
+			printf_error("minishell: ", *cmd, ": command not found\n");
 			free(*cmd);
 			*cmd = NULL;
 			return ;

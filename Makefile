@@ -15,8 +15,8 @@ all :	$(exec)
 	make clean
 
 $(exec)	: $(objects)
-	@stty -echoctl
 	$(CC) $(objects) $(flags) -o $(exec)
+	@stty -echoctl
 
 %.o	: %.c include/minishell.h
 	$(CC) $(flags) -c %< -o $@
