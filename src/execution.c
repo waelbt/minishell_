@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 15:36:22 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 17:40:50 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,9 @@ void	execution_multi_cmd(t_node *head, char **env)
 		}
 		head = head->next;
 	}
+	/*wach i9dr issali lpip tani 9bl men lkhr*/
 	while (waitpid(-1, &status, 0) != -1)
 		;
-	printf("%d\n", WEXITSTATUS(status));
 	ft_setter(WEXITSTATUS(status));
 }
 
@@ -145,6 +145,7 @@ void	execution_single_command(t_node *head, char ***env)
 				check_acces(&after_expand[0], *env);
 				if(after_expand[0])
 					execve(after_expand[0], after_expand, *env);
+				//printf("ddd\n");
 				exit(127);
 			}
 			else

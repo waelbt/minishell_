@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 15:54:21 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 17:40:53 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,8 @@ void	*parsing(t_node **command, char **envp, int *index)
 {
 	t_node	*temporary;
 
+	if(!*command)
+		return (NULL);
 	temporary = *command;
 	while (temporary != NULL)
 	{
