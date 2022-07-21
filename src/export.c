@@ -85,12 +85,23 @@ void	print_export(char **envp)
 
 void	change_existing_value(char ***env, int i, char *var_name, char *var_value)
 {
+	char	*p;
 
-	if (var_value)
+	p = NULL;
+	if (var_name[ft_strlen(var_name) - 1] == '+' && var_value)
+		{
+			p = (*env)[i];
+			(*env)[i] = ft_strjoin((*env)[i], var_value);
+			free(p);
+		}
+	else
 	{
-		free((*env)[i]);
-		(*env)[i] = NULL;
-		(*env)[i] = ft_strjoin(var_name, var_value);
+		if (var_value)
+		{
+			free((*env)[i]);
+			(*env)[i] = NULL;
+			(*env)[i] = ft_strjoin(var_name, var_value);
+		}
 	}
 }
 
@@ -147,7 +158,6 @@ char	*get_name(char *str)
 	char	*var_name;
 
 	i = 0;
-
 	while(str[i] && str[i] != '=')
 		i++;
 
@@ -158,12 +168,18 @@ char	*get_name(char *str)
 		var_name[i] = str[i];
 		i++;
 	}
-	var_name[i++] = '=';
+	if (var_name[i - 1] == '+')
+	{
+		var_name[i - 1] = '=';
+		var_name[i++] = '+';
+	}
+	else
+		var_name[i++] = '=';
 	var_name[i] = '\0';
 	return (var_name);
 }
 
-int	plus_equal(char ***env, char *vars)
+/*int	plus_equal(char ***env, char *vars)
 {
 	int		i;
 
@@ -174,7 +190,7 @@ int	plus_equal(char ***env, char *vars)
 			{
 				if (vars[i - 1] == '+')
 				{
-					concat_var();	
+					//concat_var();	
 					return (1);
 				}
 				else
@@ -182,8 +198,17 @@ int	plus_equal(char ***env, char *vars)
 			}
 			i++;
 		}
-	}
 	return 0;
+}
+*/
+int var_len(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '+')
+		i++;
+	return (i);
 }
 
 void	equal(char ***env, char *vars)
@@ -196,16 +221,22 @@ void	equal(char ***env, char *vars)
 	key = 0;
 	i = 0;
 	var_name = get_name(vars);
+	printf("var nm = %s len is %d\n", var_name, var_len(var_name));
 	while ((*env)[i])
 	{
-		if (!(ft_strncmp(var_name, (*env)[i], ft_strlen(var_name))))
+		if (!(ft_strncmp(var_name, (*env)[i], var_len(var_name))))
 		{
+		printf("well compared name %s in env %s len :%d\n", var_name, (*env)[i], var_len(var_name));
 			key = 1;
 			var_value = get_value(vars, var_name);
-			if (!var_value) //hnaya add the cond if = kayna wla la;
+			printf("var val = %s\n", var_value);
+			if (!var_value)
 				break;
 			else
+			{
 				change_existing_value(env, i, var_name, var_value);
+				free(var_value);
+			}
 			break;
 		}
 		i++;
@@ -213,7 +244,6 @@ void	equal(char ***env, char *vars)
 	if (!key)
 		add_value(env, vars, i);
 	i = 0;
-	free(var_value);
 	free(var_name);
 }
 
@@ -222,14 +252,13 @@ void	my_export(char ***env, char **vars)
 	int		j;
 
 	j = 1;
-	if (vars[1] == NULL)
+	if (vars[1] == NULL)//hadi maghad3mlchi mochkil f cas d export "" blah=q?
 		print_export(*env);
 	else
 	{
 		while (vars[j])
 		{
-			if(!plus_equal(env, vars[j]))
-				equal(env, vars[j]);
+			equal(env, vars[j]);
 			j++;
 		}
 	}

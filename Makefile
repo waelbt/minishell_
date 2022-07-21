@@ -4,7 +4,7 @@ sources =	$(wildcard src/*.c) $(wildcard src/libft_tools/*.c)
 
 objects =	$(sources:.c=.o)
 
-flags	=	-Wall -Wextra -Werror -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include -g -fsanitize=address
+flags	=	-Wall -Wextra -Werror -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include #-g -fsanitize=address
 
 CC		=	gcc
 
