@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 17:58:12 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:46:22 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void		rl_replace_line (const char *text, int clear_undo);
 void		sig_handler(int sig);
 void		here_doc(t_redirec *redirc, char **envp);
 int			execute(char **after_expand, char ***env);
-void		my_exit(char *str);
+void		my_exit(char **str);
 void		pwd(void);
 void		print_env(char **envp);
 void		cd(char *path, char **env);

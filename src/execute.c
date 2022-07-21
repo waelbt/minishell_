@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 01:25:25 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/21 17:46:59 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:46:32 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		execute(char **after_expand, char ***env)
 	else if (!(ft_strcmp(after_expand[0], "env")))
 		print_env(*env);
 	else if (!(ft_strcmp(after_expand[0], "exit")))
-		my_exit(after_expand[1]);
+		my_exit(after_expand);
 	else
 		return (0);	
 	return (1);

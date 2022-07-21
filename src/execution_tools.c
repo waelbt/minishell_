@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 16:02:25 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:30:16 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*invalid_command_error(char *cmd, char *path, char **paths)
 {
 	ft_setter(127);
 	if (paths == NULL)
-		printf_error("minishell: ", (cmd + 1), "No such file or directory\n");
+		printf_error("minishell: ", (cmd + 1), ": No such file or directory\n");
 	else if (!ft_strcmp(cmd, "/"))
 		printf_error("minishell: ", NULL, ": command not found\n");
 	else if (path == NULL)
