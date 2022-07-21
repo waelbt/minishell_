@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:04:40 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/21 13:54:06 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:06:58 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,38 +35,64 @@ int	get_unset_index(char **envp, char *var)
 	return (-1);
 }
 
-void unset(char ***envp, char *var)
+static int ft_check(char *s)
 {
+	int index;
+
+	if(!ft_isalpha(s[0]) && s[0] != '_')
+		return (0);
+	index = 1;
+	while(s[index])
+	{
+		if(!ft_isalnum(s[index]) && s[index] != '_')
+			return (0);
+		index++;
+	}
+	return (1);
+}
+
+void unset(char ***envp, char **var)
+{
+	int		d;
 	int 	len;
 	int		i;
 	int		j;
 	int		index;
 	char	**new_env;
 
-	i = 0;
-	j = 0;
-	len = double_pointer_len(*envp);
-	index = get_unset_index(*envp, var);
-	new_env = NULL;
-	if(index != -1)
+	d = 0;
+	while(var[++d])
 	{
-		if(len == 0)
+		i = 0;
+		j = 0;
+		len = double_pointer_len(*envp);
+		if(!ft_check(var[d]))
 		{
-			new_env = (char **)malloc(1 * sizeof(char *));
-			new_env = NULL;
+			printf_error("minishell: unset: `", var[d], "': not a valid identifier\n");
+			continue;
 		}
-		else
+		index = get_unset_index(*envp, var[d]);
+		new_env = NULL;
+		if(index != -1)
 		{
-			new_env = (char **)malloc(len * sizeof(char *));
-			while((*envp)[i])
+			if(len == 0)
 			{
-				if(index != i)
-					new_env[j++] = ft_strdup((*envp)[i]);
-				i++;				
+				new_env = (char **)malloc(1 * sizeof(char *));
+				new_env = NULL;
 			}
-			new_env[j] = NULL;
-			free_double_char(*envp, 0);
-			*envp = new_env;
+			else
+			{
+				new_env = (char **)malloc(len * sizeof(char *));
+				while((*envp)[i])
+				{
+					if(index != i)
+						new_env[j++] = ft_strdup((*envp)[i]);
+					i++;				
+				}
+				new_env[j] = NULL;
+				free_double_char(*envp, 0);
+				*envp = new_env;
+			}
 		}
 	}
 	

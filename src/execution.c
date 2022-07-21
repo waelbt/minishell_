@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 17:40:50 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 17:43:03 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ void	execution_single_command(t_node *head, char ***env)
 				check_acces(&after_expand[0], *env);
 				if(after_expand[0])
 					execve(after_expand[0], after_expand, *env);
-				//printf("ddd\n");
 				exit(127);
 			}
 			else

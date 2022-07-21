@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 15:49:08 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/21 17:58:12 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void		free_node(t_node **head);
 t_cmd		*init_cmd(t_lexer *lexer, t_token **token);
 void		dda(t_node **head);
 void		fed(t_node **head);
+int			ft_isalpha(int c);
 char		*dollar_value(char **envp, char *var);
 void		*parsing(t_node **command, char **envp, int *index);
 int			get_type(char *c);
@@ -136,7 +137,7 @@ void		echo(char **after_expand);
 void		my_export(char ***envp, char *value);
 char		**my_envp(char **envp);
 int			str_to_num(const char *str);
-void		unset(char ***envp, char *var);
+void		unset(char ***envp, char **var);
 void		rl_replace_line (const char *text, int clear_undo);
 int			ft_getter(void);
 void		ft_setter(int value);
