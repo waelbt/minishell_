@@ -36,3 +36,8 @@ exit
 
 bash-3.2$ export / l=k
 bash: export: `/': not a valid identifier
+export d="dwadda"
+➜  minishell_ 2 git:(main) ✗ export l="dwadda"
+➜  minishell_ 2 git:(main) ✗ export s="dwadda"
+➜  minishell_ 2 git:(main) ✗ export q="dwadda"
+➜  minishell_ 2 git:(main) ✗ export z="dwadda"
