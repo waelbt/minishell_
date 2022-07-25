@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:04:40 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/21 18:13:02 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/22 19:08:52 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	get_unset_index(char **envp, char *var)
+int	get_index_of_double_char(char **envp, char *var)
 {
 	int i;
 	char **tmp;
@@ -68,10 +68,12 @@ void unset(char ***envp, char **var)
 		len = double_pointer_len(*envp);
 		if(!ft_check(var[d]))
 		{
+			ft_setter(1);
 			printf_error("minishell: unset: `", var[d], "': not a valid identifier\n");
 			continue;
 		}
-		index = get_unset_index(*envp, var[d]);
+		ft_setter(0);
+		index = get_index_of_double_char(*envp, var[d]);
 		new_env = NULL;
 		if(index != -1)
 		{
@@ -79,7 +81,6 @@ void unset(char ***envp, char **var)
 			{
 				new_env = (char **)malloc(1 * sizeof(char *));
 				new_env[0] = NULL;
-				/*3lach makhdmtch be hadi*/
 			}
 			else
 			{
@@ -92,7 +93,6 @@ void unset(char ***envp, char **var)
 				}
 				new_env[j] = NULL;
 				free_double_char(*envp, 0);
-				//*envp = new_env;
 			}
 			*envp = new_env;
 		}

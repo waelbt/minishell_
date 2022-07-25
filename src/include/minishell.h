@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 18:46:22 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/25 02:33:54 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ typedef struct args
 
 typedef struct cmd
 {
+	t_redirec	*input;
+	t_redirec	*output;
+	char		**after_expand;
 	t_node		*args;
 	t_node		*redrec;
 }	t_cmd;
@@ -94,7 +97,6 @@ char		*pure_arg(char *str, char **envp);
 int			ft_isalnum(int c);
 char		**ft_split(char *s, char c);
 int			ft_isdigit(int c);
-int			find_char(char *s, char c);
 char		*handle_env_var_case(t_lexer *lexer, char **envp);
 char		*handle_env_var(t_lexer *lexer, char **envp);
 int			get_index(t_lexer lexer, char c);
@@ -109,6 +111,7 @@ void		*open_file_descriptor(t_node **head);
 void		free_double_char(char **tmp, int t);
 // void		execution(t_cmd *cmd);
 char		*ft_itoa(int n);
+void		dup_norm(int fildes1, int fildes2);
 char		**advanced_split(char *str);
 char		*quotes(t_lexer *lexer, char **envp, int c);
 void		init_array(int *i, int size);
@@ -120,26 +123,31 @@ t_redirec	*get_output_input(t_node *head, int t);
 void		check_acces(char **cmd, char **envp);
 char		*invalid_command_error(char *cmd, char *path, char **paths);
 char		*get_path(char **envp);
-t_redirec	*ft_close(t_node *head);
+void		ft_close(t_node *head);
 char		**join_args(t_node *head);
 char		*check_cmd(char *cmd, char **envp);
 void		execution(t_node *head, char ***env);
+int			get_index_of_double_char(char **envp, char *var);
 char		**my_envp(char **envp);
 void		rl_replace_line (const char *text, int clear_undo);
 void		sig_handler(int sig);
+char		**ft_strdup_double(char **ptr);
 void		here_doc(t_redirec *redirc, char **envp);
 int			execute(char **after_expand, char ***env);
 void		my_exit(char **str);
-void		pwd(void);
+void		pwd(char **env);
 void		print_env(char **envp);
-void		cd(char *path, char **env);
+void		cd(char *path, char ***env);
 void		echo(char **after_expand);
-void		my_export(char ***envp, char *value);
+void		my_export(char ***env, char **vars);
 char		**my_envp(char **envp);
-int			str_to_num(const char *str);
+int			ft_atoi(const char *ptr);
 void		unset(char ***envp, char **var);
 void		rl_replace_line (const char *text, int clear_undo);
 int			ft_getter(void);
 void		ft_setter(int value);
 void		printf_error(char *p, char *str, char *s);
+void		execution_cmd(t_node *head, char ***env);
+void		execution_multi_cmds(t_node *head, char **env);
+int			execve(const char *path, char *const argv[], char *const envp[]);
 #endif

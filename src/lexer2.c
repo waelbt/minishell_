@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 15:50:27 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/22 11:59:48 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 
 	if(!lexer)
 		return (init_token(TOKEN_EOF, ft_strdup("")));
-	/*zet had lprotection*/
 	while (lexer->c != '\0' && lexer->i < ft_strlen(lexer->contents))
 	{
 		lexer_skip_whitespace(lexer);

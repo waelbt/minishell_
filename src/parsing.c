@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 17:40:53 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/24 04:07:35 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	*open_here_doc(t_node **head)
 		redrec = (t_redirec *) temporary->content;
 		if(redrec->e_rtype == 3)
 		{
-			redrec->fd = open(redrec->path, O_RDWR , 0666);
+			redrec->fd = open(redrec->path, O_RDONLY, 0666);
 			if(redrec->fd < 0)
 			{
 				ft_setter(1);
@@ -102,17 +102,15 @@ void	*fill_her_doc_in_fork(t_node **head, char **envp)
 	t_redirec	*redrec;
 	int			status;
 	int			id;
-	char		*str[2];
 
 	id = fork();
 	if (id != 0)
 	{
 		signal(SIGINT, SIG_IGN);
 		wait(&status);
-		ft_setter(1);
 		if(WIFEXITED(status))
 			open_here_doc(head);
-		else if(WIFSIGNALED(status))
+		if(WIFSIGNALED(status))
 		{
 			signal(SIGINT, sig_handler);
 			return (NULL);
@@ -137,6 +135,8 @@ void	*parsing_redrection(t_node **head, char **envp, int *index)
 	t_node		*temporary;
 	t_redirec	*redrec;
 
+	if(!(*head))
+		return ((void *)1);
 	temporary = *head;
 	while (temporary != NULL)
 	{
@@ -159,19 +159,25 @@ void	*parsing_redrection(t_node **head, char **envp, int *index)
 	return ((void *)1);
 }
 
+
 void	*parsing(t_node **command, char **envp, int *index)
 {
 	t_node	*temporary;
+	t_cmd	*cmd;
 
 	if(!*command)
 		return (NULL);
 	temporary = *command;
 	while (temporary != NULL)
 	{
-		parsing_args(&((t_cmd *)temporary->content)->args, envp);
+		cmd = (t_cmd *)temporary->content;
+		parsing_args(&(cmd)->args, envp);
 		if (!parsing_redrection(
-				&((t_cmd *)temporary->content)->redrec, envp, index))
+				&(cmd)->redrec, envp, index))
 			return (NULL);
+		cmd->after_expand = join_args(cmd->args);
+		cmd->input	= get_output_input(cmd->redrec, 0);
+		cmd->output = get_output_input(cmd->redrec, 1);
 		temporary = temporary->next;
 	}
 	return ((void *)1);

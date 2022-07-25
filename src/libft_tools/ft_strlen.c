@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:32:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 19:32:11 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/22 19:04:13 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_isalnum(int c)
 {
-	if (c <= '9' && c >= '0' )
+	if (c <= '9' && c >= '0')
 		return (1);
 	if (c <= 122 && c >= 97)
 		return (1);
@@ -45,20 +45,6 @@ int	get_type(char *c)
 	else if (!ft_strcmp(c, "<<"))
 		return (3);
 	return (-1);
-}
-
-int	find_char(char *s, char c)
-{
-	int		i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 int	ft_strlen(char *str)

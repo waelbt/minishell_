@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:02:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 00:29:51 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/24 04:09:50 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	free_node(t_node **head)
 		s = temporary;
 		dda(&cmd->args);
 		fed(&cmd->redrec);
+		free_double_char(cmd->after_expand, 0);
 		free(cmd);
 		temporary = temporary->next;
 		free(s);

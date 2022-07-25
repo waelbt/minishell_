@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 13:01:52 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 15:55:01 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/24 03:27:53 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void	*open_file_descriptor(t_node **head)
 	{
 		redrec = (t_redirec *) temporary->content;
 		if (redrec->e_rtype == INPUT)
-			redrec->fd = open(redrec->after_expand[0], O_RDWR, 0666);
+			redrec->fd = open(redrec->after_expand[0], O_RDONLY, 0666);
 		else if (redrec->e_rtype == OUTPUT)
-			redrec->fd = open(redrec->after_expand[0], O_RDWR | O_TRUNC | O_CREAT, 0666);
+			redrec->fd = open(redrec->after_expand[0], O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		else if (redrec->e_rtype == APPEND)
-			redrec->fd = open(redrec->after_expand[0], O_RDWR | O_CREAT, 0666);
+			redrec->fd = open(redrec->after_expand[0], O_WRONLY | O_APPEND | O_CREAT, 0666);
 		if(redrec->fd < 0)
 		{
 			ft_setter(1);

@@ -6,25 +6,22 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 18:30:16 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/23 21:49:42 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-t_redirec	*ft_close(t_node *head)
+void	ft_close(t_node *head)
 {
-	t_redirec	*redrec;
 	t_redirec	*tmp;
 
-	redrec = NULL;
 	while (head != NULL)
 	{
 		tmp = (t_redirec *) head->content;
 		close(tmp->fd);
 		head = head->next;
 	}
-	return (redrec);
 }
 
 char	*get_path(char **envp)
@@ -43,7 +40,6 @@ char	*get_path(char **envp)
 
 char	*invalid_command_error(char *cmd, char *path, char **paths)
 {
-	ft_setter(127);
 	if (paths == NULL)
 		printf_error("minishell: ", (cmd + 1), ": No such file or directory\n");
 	else if (!ft_strcmp(cmd, "/"))
@@ -61,7 +57,6 @@ void check_acces(char **cmd, char **envp)
 	{
 		if (ft_strchr(*cmd, '/'))
 		{
-			ft_setter(127);
 			printf_error("minishell: ", *cmd, ": command not found\n");
 			free(*cmd);
 			*cmd = NULL;

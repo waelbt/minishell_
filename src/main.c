@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/21 17:32:10 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/24 23:11:34 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,12 @@ int	main(int argc, char **argv, char **envp)
 			add_history (str);
 			cmd = handler(init_lexer(str));
 			if (parsing(&cmd, env, &index))
-				execution(cmd, &env);
+			{
+				if (ft_lstsize(cmd) == 1)
+					execution_cmd(cmd, &env);
+				else
+					execution_multi_cmds(cmd, env);
+			}
 			ft_unlik(&index);
 			free_node(&cmd);
 			free(str);

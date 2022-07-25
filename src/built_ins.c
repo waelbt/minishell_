@@ -6,40 +6,43 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:48:57 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/21 15:50:06 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/22 21:45:50 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
+static int	ft_check(char *str)
+{
+	int i;
+
+	if (ft_strncmp(str, "-n", 2))
+		return (0);
+	i = 2;
+	while (str[i])
+	{
+		if(str[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 int		check_flag(char **after_expand, int *check)
 {
 	int	i;
-	int	j;
 
 	i = 1;
 	while (after_expand[i])
 	{
-		j = 2;
-		if (!ft_strncmp(after_expand[i], "-n", 2))
-		{
-			while (after_expand[i][j] == 'n' && after_expand[i])
-				j++;
-			if (j == ft_strlen(after_expand[i]))
-			{
-				*check = 1;
-				i++;
-			}
-			else
-				break;
-		}
-		else
-			break;
+		if(!ft_check(after_expand[i]))
+			return (i);
+		*check = 1;
+		i++;
 	}
-	return (i);
+	return (-1);
 }
 
-void		echo(char **after_expand)
+void	echo(char **after_expand)
 {
 	int		i;
 	int		check;
@@ -48,11 +51,14 @@ void		echo(char **after_expand)
 	i = 1;
 	check = 0;
 	str = NULL;
+	ft_setter(0);
 	if (!after_expand[1])
 		printf("\n");
 	else 
 	{
 		i = check_flag(after_expand, &check);
+		if (i == -1)
+			return ;
 		write(1, after_expand[i], ft_strlen(after_expand[i]));
 		while (after_expand[++i])
 		{
@@ -64,62 +70,81 @@ void		echo(char **after_expand)
 	}
 }
 
-void	OLDPWD(char **env, char *old_path)
+char	**add_to_env(char *str, char **env)
 {
-	int		i;
-	int		found;
-	char	*str;
+	char	**ptr;
+	int		index;
 
-	found = 0;
-	i = 0;
-	str = NULL;
-	while (env[i])
+	index = 0;
+	ptr = (char **) malloc((double_pointer_len(env) + 2) * sizeof(char *));
+	while(env[index])
 	{
-		if (!ft_strncmp(env[i], "OLDPWD=", 7))
-		{
-			found = 1;
-			free(env[i]);
-			env[i] = NULL;
-			env[i] = ft_strdup(old_path);
-			break;
-		}
-		i++;
+		ptr[index] = ft_strdup(env[index]);
+		index++;
 	}
-	if (!found)
-	{
-		
-	}
+	ptr[index++] = str;
+	ptr[index] = NULL;
+	free_double_char(env, 0);
+	return (ptr);
 }
 
-void	update_paths(char **env)
+void	OLDPWD(char ***env, char *old_path)
+{
+	int		i;
+	int		index;
+	char	*str;
+
+	i = 0;
+	str = NULL;
+	index = get_index_of_double_char(*env, "OLDPWD");
+	if(index == -1)
+		*env = add_to_env(old_path, *env);
+	else
+	{
+		while ((*env)[i])
+		{
+			if (i == index)
+			{
+				free((*env)[i]);
+				(*env)[i] = old_path;
+				break;
+			}
+		i++;
+		}
+	}		
+}
+
+void	update_paths(char ***env)
 {
 	int		i;
 	char	*str;
 	char	*old_path;
 
 	i = 0;
-	while(env[i])
+	while((*env)[i])
 	{
-		if (!ft_strncmp(env[i], "PWD=", 4))
+		if (!ft_strncmp((*env)[i], "PWD=", 4))
 		{
-			str = ft_substr(env[i], 4, ft_strlen(env[i]));
+			str = ft_substr((*env)[i], 4, ft_strlen((*env)[i]));
 			old_path = ft_strjoin("OLDPWD=", str);
-			free(env[i]);
-			env[i] = NULL;
+			free((*env)[i]);
 			free(str);
-			str = (getcwd(NULL, 0));
-			env[i] = ft_strjoin("PWD=", str);
+			str = getcwd(NULL, 0);
+			(*env)[i] = ft_strjoin("PWD=", str);
 			free(str);
 			break;
 		}
 		i++;
 	}
-	OLDPWD(env, old_path);
+	OLDPWD(env, strdup(old_path));
 	free(old_path);
 }
 
-void	cd(char *path, char **env)
+void	cd(char *path, char ***env)
 {
+	ft_setter(0);
+	if(!path)
+		return ;
 	if (!(chdir(path) == -1))
 		update_paths(env);
 	else
@@ -131,9 +156,46 @@ void	cd(char *path, char **env)
 	}
 }
 
-void	pwd(void)
+char	*getpwd(char **env)
 {
-	printf("%s\n", getcwd(NULL, 0));
+	int		i;
+	char	*str;
+	char	**tmp;
+
+	i = 0;
+	str = NULL;
+	while(env[i])
+	{
+		tmp = ft_split(env[i], '=');
+		free(tmp[1]);
+		tmp[1] = ft_substr(env[i], ft_strlen(*tmp) + 1, ft_strlen(env[i]));
+		if (!ft_strcmp(tmp[0], "PWD"))
+		{
+			str = ft_strdup(tmp[1]);
+			free_double_char(tmp, 0);
+		}
+		i++;
+	}
+	return (str);
+}
+
+void	pwd(char **env)
+{
+	char	*str;
+	char	*ptr;
+
+	str = getpwd(env);
+	ptr = getcwd(NULL, 0);
+	ft_setter(0);
+	if (!str && !ptr)
+	{
+		ft_setter(127);
+		printf_error("failed to get the current working directory\n", NULL, NULL);
+	}
+	else if (!str)
+		printf("%s\n", ptr);
+	else
+		printf("%s\n", str);
 }
 
 void	print_env(char **envp)
@@ -141,9 +203,10 @@ void	print_env(char **envp)
 	int	i;
 	
 	i = 0;
+	ft_setter(0);
 	while(envp[i])
 	{
-		if (find_char(envp[i], '='))
+		if (ft_strchr(envp[i], '='))
 			printf("%s\n", envp[i]);
 		i++;
 	}

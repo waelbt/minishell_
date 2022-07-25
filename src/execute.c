@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 01:25:25 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/21 18:46:32 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/22 18:51:16 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int		execute(char **after_expand, char ***env)
 	if (!(ft_strcmp(after_expand[0], "echo")))
 		echo(after_expand);
 	else if (!(ft_strcmp(after_expand[0], "cd")))
-		cd(after_expand[1], *env);
+		cd(after_expand[1], env);
 	else if (!(ft_strcmp(after_expand[0], "pwd")))
-		pwd();
+		pwd(*env);
 	else if (!(ft_strcmp(after_expand[0], "export")))
-		my_export(env, after_expand[1]);
+		my_export(env, after_expand);
 	else if (!(ft_strcmp(after_expand[0], "unset")))
 		unset(env, after_expand);
 	else if (!(ft_strcmp(after_expand[0], "env")))
@@ -29,6 +29,6 @@ int		execute(char **after_expand, char ***env)
 	else if (!(ft_strcmp(after_expand[0], "exit")))
 		my_exit(after_expand);
 	else
-		return (0);	
+		return (0);
 	return (1);
 }

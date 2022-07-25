@@ -41,3 +41,66 @@ export d="dwadda"
 ➜  minishell_ 2 git:(main) ✗ export s="dwadda"
 ➜  minishell_ 2 git:(main) ✗ export q="dwadda"
 ➜  minishell_ 2 git:(main) ✗ export z="dwadda"
+
+export d      d=''(set)    
+
+
+
+signal this case cat > l
+
+
+
+minishell$ cat << l 
+>da
+>wd
+>aw
+>d
+>aw
+>daw
+>d
+>l
+da
+wd
+aw
+d
+aw
+daw
+d
+minishell$ da
+minishell: da: command not found
+minishell$ da
+minishell: da: command not found
+minishell$ cat << l 
+>dwa
+>d
+>awd
+>
+>wa
+>d
+>l
+dwa
+d
+awd
+
+wa
+d
+minishell$ cat << l 
+>daw
+>d
+>aw
+>daw
+>d
+>w
+>wa
+>d
+>aw
+>d
+>aw
+>
+>awa
+>l
+daw
+d
+aw
+daw
+d
