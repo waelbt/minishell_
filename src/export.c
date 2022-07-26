@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/26 08:13:56 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/26 08:29:31 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,10 +161,10 @@ void	my_export(char ***env, char **new_var)
 		print_export(*env);
 	else
 	{
-		var = (t_env_var *) malloc(sizeof(t_env_var ));
-		var->value = NULL;
 		while (new_var[++j])
 		{
+			var = (t_env_var *) malloc(sizeof(t_env_var ));
+			var->value = NULL;
 			get_data(new_var[j], &var);
 			index = get_index_of_double_char(*env, var->name);
 			if(!ft_check_var_validition(var->name))
