@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/25 02:33:54 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/26 02:24:55 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,14 @@ typedef struct cmd
 	t_node		*args;
 	t_node		*redrec;
 }	t_cmd;
+
+typedef struct env_var
+{
+	int		key;
+	char	*name;
+	char	*value;
+}	t_env_var;
+
 
 int			ft_strlen(char *str);
 void		*ft_calloc(size_t count, size_t size);
@@ -150,4 +158,7 @@ void		printf_error(char *p, char *str, char *s);
 void		execution_cmd(t_node *head, char ***env);
 void		execution_multi_cmds(t_node *head, char **env);
 int			execve(const char *path, char *const argv[], char *const envp[]);
+int			ft_check_var_validition(char *s);
+int			get_index_of_double_char(char **envp, char *var);
+char 		*ft_strcat(char *dest, char *src);
 #endif

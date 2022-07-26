@@ -6,32 +6,32 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/22 22:56:36 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/26 07:42:32 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-char **ft_split_first(char *str, char c)
-{
-	int		i;
-	char	**ret;
+// char **ft_split_first(char *str, char c)
+// {
+// 	int		i;
+// 	char	**ret;
 
-	i = 0;
-	ret = ft_calloc(3, sizeof(char *));
-	while (str[i])
-	{
-		if (str[i] == c)
-		{
-			ret[0] = ft_substr(str, 0, ++i);
-			ret[1] = ft_substr(str, i, ft_strlen(str));
-			ret[3] = NULL;
-			return (ret);
-		}
-		i++;
-	}
-	return (ret);
-}
+// 	i = 0;
+// 	ret = ft_calloc(3, sizeof(char *));
+// 	while (str[i])
+// 	{
+// 		if (str[i] == c)
+// 		{
+// 			ret[0] = ft_substr(str, 0, ++i);
+// 			ret[1] = ft_substr(str, i, ft_strlen(str));
+// 			ret[3] = NULL;
+// 			return (ret);
+// 		}
+// 		i++;
+// 	}
+// 	return (ret);
+// }
 
 char **sorted_env(char **env)
 {
@@ -48,9 +48,9 @@ char **sorted_env(char **env)
 		{
 			if(ft_strcmp(env[i[0]], env[i[1] + i[0]]) > 0)
 			{
-				temp = ft_strdup(env[i[0]]);
-				env[i[0]] = ft_strdup(env[i[1] + i[0]]);
-				env[i[1] + i[0]] = ft_strdup(temp);
+				temp = env[i[0]];
+				env[i[0]] = env[i[1] + i[0]];
+				env[i[1] + i[0]] = temp;
 			}
 			i[1]++;
 		}
@@ -71,10 +71,15 @@ void	print_export(char **env)
 	while(envp[i])
 	{
 		line = ft_split(envp[i], '=');
-		free(line[1]);
-		line[1] = ft_substr(envp[i], ft_strlen(line[0]) + 1, ft_strlen(envp[i]));
+		if(line[1])
+		{
+			free(line[1]);
+			line[1] = ft_substr(envp[i], ft_strlen(line[0]) + 1, ft_strlen(envp[i]));
+		}
 		printf("declare -x %s=", line[0]);
-		if(strcmp(line[1], "''"))
+		if(!line[1])
+			printf("\"\"\n");
+		else if(line[1] && strcmp(line[1], "''"))
 			printf("\"%s\"\n", line[1]);
 		free_double_char(line, 0);
 		i++;
@@ -82,198 +87,139 @@ void	print_export(char **env)
 	free_double_char(envp, 0);
 }
 
-void	change_existing_value(char ***env, int i, char *var_name, char *var_value)
-{
-	char	*p;
+// void	change_existing_value(char ***env, int i, char *var_name, char *var_value)
+// {
+// 	char	*p;
 
-	p = NULL;
-	if (var_name[ft_strlen(var_name) - 1] == '+' && var_value)
-		{
-			p = (*env)[i];
-			(*env)[i] = ft_strjoin((*env)[i], var_value);
-			free(p);
-		}
-	else
+// 	p = NULL;
+// 	if (var_name[ft_strlen(var_name) - 1] == '+' && var_value)
+// 		{
+// 			p = (*env)[i];
+// 			(*env)[i] = ft_strjoin((*env)[i], var_value);
+// 			free(p);
+// 		}
+// 	else
+// 	{
+// 		if (var_value)
+// 		{
+// 			//free((*env)[i]);
+// 			(*env)[i] = NULL;
+// 			(*env)[i] = ft_strjoin(var_name, var_value);
+// 		}
+// 	}
+// }
+
+int get_name_index(char *s)
+{
+	int index;
+
+	index = 1;
+	while(s[index] && s[index]!= '+' && s[index] != '=')	
+		index++;
+	return (index);
+}
+
+int	get_key(char *s, int index)
+{
+	int key;
+
+	if (!s[index])
+		key = 0;
+	if (s[index] == '=')
+		key = 1;
+	if (s[index] == '+')
+		key = 2;
+	return (key);
+}
+void get_data(char *new_var, t_env_var **var)
+{
+	int	index;
+
+	index = get_name_index(new_var);
+	(*var)->name = ft_substr(new_var, 0, index);
+	(*var)->key = get_key(new_var, index);
+	if(index + (*var)->key != ft_strlen(new_var))
+		(*var)->value = ft_substr(new_var, index + (*var)->key, ft_strlen(new_var));
+}
+void	edit_excited_variable(char ***env, t_env_var *var, int index)
+{
+	int i;
+	char *last_value;
+
+	i = 0;
+	while((*env)[i])
 	{
-		if (var_value)
+		if(i == index)
 		{
+			if(var->key == 2)
+			{
+				last_value = ft_strchr((*env)[i], '=');
+				var->value= ft_strjoin((last_value + 1) , var->value);
+			}
 			free((*env)[i]);
-			(*env)[i] = NULL;
-			(*env)[i] = ft_strjoin(var_name, var_value);
+			(*env)[i] = ft_strjoin(var->name, "=");
+			(*env)[i] = ft_strjoin((*env)[i] , var->value);
 		}
+		i++;
 	}
 }
 
-void	check_for_plus(char *var_name)
+void	add_var(char	***env, char *var)
 {
+	char	**new_env;
+	int		len;
 	int		i;
 
+
+	len = double_pointer_len(*env);
+	new_env = (char **) malloc((len + 2) * sizeof(char *));
 	i = 0;
-	while (var_name[i++])
+	while((*env)[i])
 	{
-		if (var_name[i] == '+')
-			var_name[i] = '\0';
+		new_env[i] = ft_strdup((*env)[i]);
+		i++;
 	}
+	new_env[i] = ft_strdup(var);
+	new_env[i + 1] = NULL;
+	free_double_char(*env, 0);
+	*env = new_env;
 }
 
-void	add_value(char ***env, int i, char *var_name, char *var_value)
-{
-	char	**envp;
-
-		envp = malloc((i + 1) * sizeof(char *));
-		i = -1;
-		while ((*env)[++i])
-		{
-			envp[i] = ft_strdup((*env)[i]);
-			(*env)[i] = NULL;
-			free((*env)[i]);
-		}
-		check_for_plus(var_name);
-		(envp)[i++]= ft_strjoin(var_name, var_value);
-		(envp)[i] = NULL;
-		free(*env);
-		*env = malloc(i * sizeof(char *));
-		*env = envp;
-}
-
-char	*get_value(char	*str, char *var_name)
-{
-		int		i;
-		int		j;
-		int		k;
-		char	*var_value;
-
-		i = 0;
-		j = 0;
-		var_value = NULL;
-		i = ft_strlen(var_name);
-		k = i;
-		while(str[k++] != '\0')
-				j++;
-		var_value = malloc((j + 1) * sizeof(char));
-		j = 0;
-		while(str[i] != '\0')
-				var_value[j++] = str[i++];
-		var_value[j] = '\0';
-		if (j == 0)
-		{
-				free (var_value);
-				return (NULL);
-		}
-		return (var_value);
-}
-
-char	*get_name(char *str)
-{
-		int		i;
-		char	*var_name;
-
-		i = 0;
-		while(str[i] && str[i] != '=')
-				i++;
-
-		var_name = malloc((i + 1) * sizeof (char));
-		i = 0;
-		while(str[i] && str[i] != '=')
-		{
-				var_name[i] = str[i];
-				i++;
-		}
-		if (var_name[i - 1] == '+')
-		{
-				var_name[i - 1] = '=';
-				var_name[i++] = '+';
-		}
-		else
-				var_name[i++] = '=';
-		var_name[i] = '\0';
-		return (var_name);
-}
-
-/*int	plus_equal(char ***env, char *vars)
-  {
-  int		i;
-
-  i = 0;
-  while (vars[i])
-  {
-  if (vars[i] == '=')
-  {
-  if (vars[i - 1] == '+')
-  {
-//concat_var();	
-return (1);
-}
-else
-break;
-}
-i++;
-}
-return 0;
-}
-*/
-int var_len(char *str)
-{
-		int	i;
-
-		i = 0;
-		while (str[i] && str[i] != '+')
-				i++;
-		return (i);
-}
-
-void	equal(char ***env, char *vars)
-{
-		int		i;
-		int		key;
-		char	*var_name;
-		char	*var_value;
-
-		key = 0;
-		i = 0;
-		var_name = get_name(vars);
-		printf("var nm = %s len is %d\n", var_name, var_len(var_name));
-		while ((*env)[i])
-		{
-				if (!(ft_strncmp(var_name, (*env)[i], var_len(var_name))))
-				{
-						printf("well compared name %s in env %s len :%d\n", var_name, (*env)[i], var_len(var_name));
-						key = 1;
-						var_value = get_value(vars, var_name);
-						printf("var val = %s\n", var_value);
-						if (!var_value)
-								break;
-						else
-						{
-								change_existing_value(env, i, var_name, var_value);
-								free(var_value);
-						}
-						break;
-				}
-				i++;
-		}
-		if (!key)
-				add_value(env, i, var_name, get_value(vars, var_name));
-	i = 0;
-	free(var_name);
-}
-
-void	my_export(char ***env, char **vars)
+void	my_export(char ***env, char **new_var)
 {
 	int		j;
+	t_env_var	*var;
+	int		index;
 
-	j = 1;
-	if (vars[1] == NULL)
+	j = 0;
+	var = (t_env_var *) malloc(sizeof(t_env_var ));
+	var->value = NULL;
+	ft_setter(0);
+	if (new_var[1] == NULL)
 		print_export(*env);
 	else
 	{
-		while (vars[j])
+		while (new_var[++j])
 		{
-			if (vars[j][0] == '\0')
-				write(2, "minishell : export: `': not a valid identifier\n", 49);
+			get_data(new_var[j], &var);
+			index = get_index_of_double_char(*env, var->name);
+			if(!ft_check_var_validition(var->name))
+			{
+				ft_setter(1);
+				printf_error("minishell : export: `': not a valid identifier\n", NULL, NULL);
+			}
 			else
-				equal(env, vars[j]);
-			j++;
+			{
+				if(index != -1)
+				{
+					if(var->key != 0)
+						edit_excited_variable(env, var, index);
+					else if(var->key == 0)
+						return ;
+				}
+				else
+					add_var(env, new_var[j]);
+			}
 		}
 	}
 }

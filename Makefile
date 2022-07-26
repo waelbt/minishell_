@@ -12,7 +12,7 @@ RM		= 	rm -f
 
 
 all :	$(exec)
-	make clean
+	$(RM) src/*.o
 
 $(exec)	: $(objects)
 	$(CC) $(objects) $(flags) -o $(exec)

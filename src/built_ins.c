@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:48:57 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/22 21:45:50 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/25 08:12:08 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,7 @@ void	cd(char *path, char ***env)
 	else
 	{
 		ft_setter(1);
-		printf_error(NULL, "minishell: ", NULL);
-		printf_error(NULL, path, NULL);
-		printf_error(NULL, ": No such file or directory\n", NULL);
+		printf_error("minishell: ", path , ": No such file or directory\n");
 	}
 }
 

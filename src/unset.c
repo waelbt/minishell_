@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:04:40 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/22 19:08:52 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/26 01:40:41 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	get_index_of_double_char(char **envp, char *var)
 	return (-1);
 }
 
-static int ft_check(char *s)
+int ft_check_var_validition(char *s)
 {
 	int index;
 
@@ -66,7 +66,7 @@ void unset(char ***envp, char **var)
 		i = 0;
 		j = 0;
 		len = double_pointer_len(*envp);
-		if(!ft_check(var[d]))
+		if(!ft_check_var_validition(var[d]))
 		{
 			ft_setter(1);
 			printf_error("minishell: unset: `", var[d], "': not a valid identifier\n");

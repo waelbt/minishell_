@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `src/advanced_split.o', needed by `minishell'.  Stop.
 
 
-# Make data base, printed on Mon Jul 25 03:33:31 2022
+# Make data base, printed on Tue Jul 26 07:34:40 2022
 
 # Variables
 
@@ -25,7 +25,7 @@ make: *** No rule to make target `src/advanced_split.o', needed by `minishell'. 
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /Users/waboutzo/Desktop/minishell_ 2
+CURDIR := /Users/waboutzo/Desktop/minishell_
 # makefile
 SHELL = /bin/sh
 # makefile (from `Makefile', line 11)
@@ -41,7 +41,7 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.Z6Wtbi0HVQ/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.9dzhJ7voPM/Render
 # environment
 PATH = /Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # makefile (from `Makefile', line 7)
@@ -53,13 +53,13 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.9nAFjwBLba/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.WuFTrgE3Ov/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 HOMEBREW_TEMP = /tmp/waboutzo/Homebrew/Temp
 # environment
-PWD = /Users/waboutzo/Desktop/minishell_ 2
+PWD = /Users/waboutzo/Desktop/minishell_
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
@@ -155,7 +155,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 8901
+VSCODE_PID = 11383
 # variable set hash-table stats:
 # Load=71/1024=7%, Rehash=0, Collisions=1/99=1%
 
@@ -166,11 +166,11 @@ VSCODE_PID = 8901
 # Directories
 
 # include (device 0, inode 0): No files, 1 impossibilities.
-# . (device 16777227, inode 4675597): 10 files, no impossibilities.
-# src/libft_tools (device 16777227, inode 4675743): 25 files, no impossibilities.
-# src (device 16777227, inode 4675728): 29 files, no impossibilities.
+# . (device 16777227, inode 4937570): 8 files, no impossibilities.
+# src/libft_tools (device 16777227, inode 4937663): 48 files, no impossibilities.
+# src (device 16777227, inode 4937642): 29 files, no impossibilities.
 
-# 64 files, 1 impossibilities in 4 directories.
+# 85 files, 1 impossibilities in 4 directories.
 
 # Implicit Rules
 
@@ -209,7 +209,7 @@ all: minishell
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 #  commands to execute (from `Makefile', line 15):
-	make clean
+	$(RM) src/*.o
 	
 
 # Not a target:
@@ -281,7 +281,7 @@ src/execute.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 01:59:02
+#  Last modified 2022-07-25 06:30:34
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -344,7 +344,7 @@ src/exit_code.o:
 
 minishell: src/advanced_split.o src/built_ins.o src/cmd.o src/delimiter_parsing.o src/dollar_parsing.o src/execute.o src/execute_single_command.o src/execution_multi_commands.o src/execution_tools.o src/exit.o src/exit_code.o src/export.o src/free_node.o src/get_important_data.o src/lexer.o src/lexer2.o src/main.o src/my_envp.o src/parsing.o src/parsing_.o src/print_function.o src/quotes_parsing.o src/redirection_file.o src/token.o src/unset.o src/libft_tools/ft_atoi.o src/libft_tools/ft_bzero.o src/libft_tools/ft_calloc.o src/libft_tools/ft_isalpha.o src/libft_tools/ft_isdigit.o src/libft_tools/ft_itoa.o src/libft_tools/ft_lstadd_back.o src/libft_tools/ft_lstadd_front.o src/libft_tools/ft_lstclear.o src/libft_tools/ft_lstdelone.o src/libft_tools/ft_lstlast.o src/libft_tools/ft_lstnew.o src/libft_tools/ft_lstsize.o src/libft_tools/ft_realloc.o src/libft_tools/ft_split.o src/libft_tools/ft_strcat.o src/libft_tools/ft_strchr.o src/libft_tools/ft_strcmp.o src/libft_tools/ft_strdup.o src/libft_tools/ft_strjoin.o src/libft_tools/ft_strlen.o src/libft_tools/ft_strncmp.o src/libft_tools/ft_substr.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-25 02:34:14
+#  Last modified 2022-07-26 05:50:47
 #  File has not been updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
@@ -552,6 +552,6 @@ src/execution_tools.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Jul 25 03:33:31 2022
+# Finished Make data base on Tue Jul 26 07:34:40 2022
 
  
