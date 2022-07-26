@@ -6,32 +6,11 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/26 07:42:32 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/26 08:13:56 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-// char **ft_split_first(char *str, char c)
-// {
-// 	int		i;
-// 	char	**ret;
-
-// 	i = 0;
-// 	ret = ft_calloc(3, sizeof(char *));
-// 	while (str[i])
-// 	{
-// 		if (str[i] == c)
-// 		{
-// 			ret[0] = ft_substr(str, 0, ++i);
-// 			ret[1] = ft_substr(str, i, ft_strlen(str));
-// 			ret[3] = NULL;
-// 			return (ret);
-// 		}
-// 		i++;
-// 	}
-// 	return (ret);
-// }
 
 char **sorted_env(char **env)
 {
@@ -87,28 +66,6 @@ void	print_export(char **env)
 	free_double_char(envp, 0);
 }
 
-// void	change_existing_value(char ***env, int i, char *var_name, char *var_value)
-// {
-// 	char	*p;
-
-// 	p = NULL;
-// 	if (var_name[ft_strlen(var_name) - 1] == '+' && var_value)
-// 		{
-// 			p = (*env)[i];
-// 			(*env)[i] = ft_strjoin((*env)[i], var_value);
-// 			free(p);
-// 		}
-// 	else
-// 	{
-// 		if (var_value)
-// 		{
-// 			//free((*env)[i]);
-// 			(*env)[i] = NULL;
-// 			(*env)[i] = ft_strjoin(var_name, var_value);
-// 		}
-// 	}
-// }
-
 int get_name_index(char *s)
 {
 	int index;
@@ -143,8 +100,9 @@ void get_data(char *new_var, t_env_var **var)
 }
 void	edit_excited_variable(char ***env, t_env_var *var, int index)
 {
-	int i;
-	char *last_value;
+	int		i;
+	char	*last_value;
+	char	*tmp;
 
 	i = 0;
 	while((*env)[i])
@@ -154,11 +112,17 @@ void	edit_excited_variable(char ***env, t_env_var *var, int index)
 			if(var->key == 2)
 			{
 				last_value = ft_strchr((*env)[i], '=');
-				var->value= ft_strjoin((last_value + 1) , var->value);
+				tmp = var->value;
+				var->value = ft_strjoin((last_value + 1) , var->value);
+				free(tmp);
+				free(last_value);
 			}
 			free((*env)[i]);
 			(*env)[i] = ft_strjoin(var->name, "=");
+			tmp = (*env)[i];
 			(*env)[i] = ft_strjoin((*env)[i] , var->value);
+			free(tmp);
+			/*maybe i will edit strjoin*/
 		}
 		i++;
 	}
@@ -192,13 +156,13 @@ void	my_export(char ***env, char **new_var)
 	int		index;
 
 	j = 0;
-	var = (t_env_var *) malloc(sizeof(t_env_var ));
-	var->value = NULL;
 	ft_setter(0);
 	if (new_var[1] == NULL)
 		print_export(*env);
 	else
 	{
+		var = (t_env_var *) malloc(sizeof(t_env_var ));
+		var->value = NULL;
 		while (new_var[++j])
 		{
 			get_data(new_var[j], &var);
@@ -220,6 +184,10 @@ void	my_export(char ***env, char **new_var)
 				else
 					add_var(env, new_var[j]);
 			}
+			free(var->name);
+			if(var->key != 0)
+				free(var->value);
+			free(var);
 		}
 	}
 }
