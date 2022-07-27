@@ -104,3 +104,4 @@ d
 aw
 daw
 d
+export a+=b+=c+=d
