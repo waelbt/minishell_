@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 11:54:17 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 18:21:41 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 03:47:22 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,15 @@ char	*delimiter_handle_env_var(t_lexer *lexer, char **envp)
 	str = delimiter_handle_env_var_cases(lexer, envp);
 	if (str)
 		return (str);
-	value = ft_calloc(1, sizeof(char));
+	value = (char *) malloc(sizeof(char));
+	value[0] = '\0';
 	while (ft_isalnum(lexer->c) || lexer->c == '_')
 	{
 		s = lexer_get_current_char_as_string(lexer);
+		tmp = value;
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
+		free(tmp);
 		ft_strcat(value, s);
 		free(s);
 		lexer_advance(lexer);
@@ -68,14 +71,18 @@ char	*delimiter(char *str, char **envp)
 	char	*value;
 	char	*s;
 	t_lexer	*lexer;
+	char	*tmp;
 
-	value = ft_calloc(1, sizeof(char));
+	value = (char *) malloc(sizeof(char));
+	value[0] = '\0';
 	lexer = init_lexer(str);
 	while (lexer->c != '\0')
 	{
 		s = delimiter_cases(lexer, envp);
+		tmp = value;
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
+		free(tmp);
 		ft_strcat(value, s);
 		free(s);
 	}

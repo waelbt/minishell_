@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:52:38 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 19:45:51 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 03:48:49 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,23 @@ char	*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c)
 	str = hard_code(lexer, envp, c, next_qoutes);
 	if (str)
 		return (str);
-	value = ft_calloc(1, sizeof(char));
+	value = (char *) malloc(sizeof(char));
+	value[0] = '\0';
 	while (lexer->i != next_qoutes
 		&& (ft_isalnum(lexer->c) || lexer->c == '_'))
 	{
 		s = lexer_get_current_char_as_string(lexer);
+		str = value;
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
+		free(str);
 		ft_strcat(value, s);
 		free(s);
 		lexer_advance(lexer);
 	}
-	return (dollar_value(envp, value));
+	char *tmp =  dollar_value(envp, value);
+	free(value);
+	return tmp;
 }
 
 char	*quotes_cases(t_lexer *lexer, char **envp, int c)
@@ -83,14 +88,18 @@ char	*quotes_handler(t_lexer *lexer, char **envp, int c)
 	char	*value;
 	char	*s;
 	int		stop_point;
+	char	*tmp;
 
 	stop_point = get_end(*lexer, c);
-	value = ft_calloc(1, sizeof(char));
+	value = (char *) malloc(sizeof(char));
+	value[0] = '\0';
 	while (lexer->i < stop_point)
 	{
 		s = quotes_cases(lexer, envp, c);
+		tmp = value;
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
+		free(tmp);
 		ft_strcat(value, s);
 		free(s);
 	}

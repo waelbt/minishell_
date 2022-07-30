@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/25 09:08:29 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 03:32:06 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //extern struct vars vr;
 
-char	**remove_vide_string(char **str)
+void	remove_vide_string(char ***s)
 {
 	char	**ptr;
 	int		i;
@@ -22,16 +22,16 @@ char	**remove_vide_string(char **str)
 
 	i = 0;
 	j = 0;
-	ptr = (char **)malloc((ft_counte_novide(str) + 1) * sizeof(char *));
-	while (str[i])
+	ptr = (char **)malloc((ft_counte_novide(*s) + 1) * sizeof(char *));
+	while ((*s)[i])
 	{
-		if (str[i][0] != '\0')
-			ptr[j++] = ft_strdup(str[i]);
+		if ((*s)[i][0] != '\0')
+			ptr[j++] = ft_strdup((*s)[i]);
 		i++;
 	}
 	ptr[j] = NULL;
-	free_double_char(str, 0);
-	return (ptr);
+	free_double_char(*s, 0);
+	*s = ptr;
 }
 
 void	parsing_args(t_node **head, char **envp)
@@ -45,7 +45,7 @@ void	parsing_args(t_node **head, char **envp)
 		args = (t_args *) temporary->content;
 		args->after_expand = advanced_split(
 				pure_arg(ft_strdup(args->value), envp));
-		args->after_expand = remove_vide_string(args->after_expand);
+		remove_vide_string(&args->after_expand);
 		pure_after_expand(args->after_expand);
 		temporary = temporary->next;
 	}
@@ -142,7 +142,7 @@ void	*parsing_redrection(t_node **head, char **envp, int *index)
 	{
 		redrec = (t_redirec *) temporary->content;
 		norm_redirection(redrec, envp, index);
-		redrec->after_expand = remove_vide_string(redrec->after_expand);
+		remove_vide_string(&redrec->after_expand);
 		pure_after_expand(redrec->after_expand);
 		if (double_pointer_len(redrec->after_expand) != 1)
 		{

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/22 11:59:48 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 03:47:55 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 {
 	char	*value;
 	char	*s;
+	char	*tmp;
 
-	value = ft_calloc(1, sizeof(char));
+	value = (char *) malloc(sizeof(char));
+	value[0] = '\0';
 	if (lexer->c == '\0')
 		return (init_token(TOKEN_EOF, value));
 	while (lexer->c != 32 && lexer->c != '\0'
@@ -87,8 +89,10 @@ t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 			printf_error(NULL, "'Error: [$parse:lexerr] Lexer Error: Unclosed qoutes'\n", NULL);
 			return (init_token(TOKEN_ERROR, value));
 		}
+		tmp = value;
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
+		free(tmp);
 		ft_strcat(value, s);
 		free(s);
 		lexer_advance(lexer);

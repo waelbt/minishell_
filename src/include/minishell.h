@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/26 09:04:16 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 00:55:23 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,18 @@ typedef struct cmd
 
 typedef struct env_var
 {
+	enum
+	{
+		EXISTED,
+		NOT,
+	} t_stat;
+	enum
+	{
+		SET_VALUE,
+		CONCATENATE,
+		NOTHING,
+	} e_type;
+	int		index;
 	int		key;
 	char	*name;
 	char	*value;
@@ -73,7 +85,7 @@ typedef struct env_var
 int			ft_strlen(char *str);
 void		*ft_calloc(size_t count, size_t size);
 void		ft_bzero(void *s, size_t n);
-void		*ft_realloc(void *ptr, size_t size);
+char		*ft_realloc(char *ptr, size_t size);
 char		*ft_strcat(char *dest, char *src);
 void		ft_lstadd_front(t_node **list, t_node *new);
 void		ft_lstadd_back(t_node **lst, t_node *new);

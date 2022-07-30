@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:48:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 22:02:04 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 03:49:40 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ char	**advanced_split(char *str)
 		i[0]++;
 	}
 	value[i[1]] = NULL;
-	free(str);
+	//free(str);
 	return (value);
 }

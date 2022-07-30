@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:16:39 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 23:25:08 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 03:47:47 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,18 @@ char	*lexer_handle_quotes(t_lexer *lexer, int c)
 	char	*value;
 	char	*s;
 	int		close_quote;
+	char	*tmp;
 
 	close_quote = 0;
-	value = ft_calloc(1, sizeof(char));
+	value = (char *) malloc(sizeof(char));
+	value[0] = '\0';
 	while (lexer->c != '\0')
 	{
 		s = lexer_get_current_char_as_string(lexer);
+		tmp = value;
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
+		free(tmp);
 		ft_strcat(value, s);
 		free(s);
 		if (!closed_qoutes(lexer, c, &close_quote))

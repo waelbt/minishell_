@@ -1,3 +1,4 @@
+
 char **sorted_env(char **env)
 {
 	int		i[2];
@@ -84,58 +85,63 @@ void get_data(char *new_var, t_env_var **var)
 	if(index + (*var)->key != ft_strlen(new_var))
 		(*var)->value = ft_substr(new_var, index + (*var)->key, ft_strlen(new_var));
 }
-void	edit_excited_variable(char ***env, t_env_var *var, int index)
+void	edit_exsited_variable(char ***env, t_env_var *var, int index)
 {
-	int		i;
 	char	*last_value;
 	char	*tmp;
-
-	i = 0;
-	while((*env)[i])
+	if(var->key == 2)
 	{
-		if(i == index)
-		{
-			if(var->key == 2)
-			{
-				last_value = ft_strchr((*env)[i], '=');
-				tmp = var->value;
-				var->value = ft_strjoin((last_value + 1) , var->value);
-				free(tmp);
-				free(last_value);
-			}
-			free((*env)[i]);
-			(*env)[i] = ft_strjoin(var->name, "=");
-			tmp = (*env)[i];
-			(*env)[i] = ft_strjoin((*env)[i] , var->value);
-			free(tmp);
-			/*maybe i will edit strjoin*/
-		}
-		i++;
+		tmp = var->value;
+		if(!((*env)[index]))
+			var->value = ft_strjoin("", var->value);
+		else
+			var->value = ft_strjoin(ft_strchr((*env)[index], '=') + 1, var->value);
+		free(tmp);
+	}
+	free((*env)[index]);
+	(*env)[index] = ft_strdup(var->name);
+	if(var->value)
+	{
+		tmp = (*env)[index];
+		(*env)[index] = ft_strjoin((*env)[index], "=");
+		free(tmp);
+		tmp = (*env)[index];
+		(*env)[index] = ft_strjoin((*env)[index], var->value);
+		free(tmp);
 	}
 }
 
-void	add_var(char	***env, char *var)
+void	add_var(char	***env, t_env_var *var, int index)
 {
 	char	**new_env;
 	int		len;
 	int		i;
+	int		size;
 
 
 	len = double_pointer_len(*env);
-	new_env = (char **) malloc((len + 2) * sizeof(char *));
-	i = 0;
-	while((*env)[i])
-	{
+	size = (((index == -1) * (len + 1)) + ((index != -1) * len));
+	if(index == -1)
+		index = len;
+	new_env = (char **) malloc((size + 1) * sizeof(char *));
+	i = -1;
+	while(++i < len)
 		new_env[i] = ft_strdup((*env)[i]);
-		i++;
-	}
-	new_env[i] = ft_strdup(var);
-	new_env[i + 1] = NULL;
+	i--;
+	while(++i <= size)
+		new_env[i] = NULL;
+	edit_exsited_variable(&new_env , var, index);
 	free_double_char(*env, 0);
 	*env = new_env;
-	/*hena-*/
 }
 
+
+static void ft_free(t_env_var *var)
+{
+	free(var->name);
+	free(var->value);
+	free(var);
+}
 void	my_export(char ***env, char **new_var)
 {
 	int		j;
@@ -159,22 +165,9 @@ void	my_export(char ***env, char **new_var)
 				ft_setter(1);
 				printf_error("minishell : export: `': not a valid identifier\n", NULL, NULL);
 			}
-			else
-			{
-				if(index != -1 && var->key != 0)
-				{
-					if(var->key != 0)
-						edit_excited_variable(env, var, index);
-					else if(var->key == 0)
-						return ;
-				}
-				else
-					add_var(env, new_var[j]);
-			}
-			free(var->name);
-			if(var->key != 0)
-				free(var->value);
-			free(var);
+			else if(index == -1 || var->key != 0)
+				add_var(env, var, index);
+			ft_free(var);
 		}
 	}
 }

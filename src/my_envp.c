@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 21:27:46 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/01 12:16:18 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 01:00:14 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@ char	**my_envp(char **envp)
 	int		i;
 
 	i = 0;
-	while (envp[i])
-		i++;
-	my_envp = (char **)malloc((i  + 1)* sizeof(char *));
-	i = 0;
-	while (envp[i])
+	if(envp)
 	{
-		my_envp[i] = ft_strdup(envp[i]);
-		i++;
+		while (envp[i])
+			i++;
+		my_envp = (char **)malloc((i  + 1)* sizeof(char *));
+		i = 0;
+		while (envp[i])
+		{
+			my_envp[i] = ft_strdup(envp[i]);
+			i++;
+		}
+		my_envp[i] = NULL;
 	}
-	my_envp[i] = NULL;
 	return (my_envp);
 }

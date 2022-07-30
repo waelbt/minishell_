@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/26 00:34:18 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 02:42:51 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,15 @@ int	main(int argc, char **argv, char **envp)
 		{
 			signal(SIGINT, sig_handler);
 			signal(SIGQUIT, SIG_IGN);
-			str = readline("\033[0;35mminishell$ \033[0;37m");
+			//str = readline("\033[0;35mminishell$ \033[0;37m");
+			str = readline("mminishell$ ");
 			if(!str)
 				break;
 			add_history (str);
 			cmd = handler(init_lexer(str));
 			if (parsing(&cmd, env, &index))
 			{
+				//printf_node(cmd);
 				if (ft_lstsize(cmd) == 1)
 					execution_cmd(cmd, &env);
 				else

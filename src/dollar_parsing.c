@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/25 09:52:12 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 03:47:40 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,21 @@ char	*quotes(t_lexer *lexer, char **envp, int c)
 {
 	char	*value;
 	char	*s;
+	char	*tmp;
 
 	lexer_advance(lexer);
-	value = ft_calloc(1, sizeof(char));
+	value = (char *) malloc(sizeof(char));
+	value[0] = '\0';
 	while (lexer->c != c)
 	{
-		s = quotes_cases(lexer, envp, c);
+		s = lexer_get_current_char_as_string(lexer);
+		tmp = value;
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
+		free(tmp);
 		ft_strcat(value, s);
 		free(s);
+		lexer_advance(lexer);
 	}
 	lexer_advance(lexer);
 	return (value);
@@ -85,12 +90,15 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 	str = hard_code_norm(lexer, envp);
 	if (str)
 		return (str);
-	value = ft_calloc(1, sizeof(char));
+	value = (char *) malloc(sizeof(char));
+	value[0] = '\0';
 	while (ft_isalnum(lexer->c) || lexer->c == '_')
 	{
 		s = lexer_get_current_char_as_string(lexer);
+		str = value;
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
+		free(value);
 		ft_strcat(value, s);
 		free(s);
 		lexer_advance(lexer);
@@ -124,6 +132,5 @@ char	*dollar_value(char **envp, char *var)
 			envp++;
 		}
 	}
-	free(var);
 	return (ft_strdup(""));
 }

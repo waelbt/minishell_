@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:39:07 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/23 23:52:24 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 03:44:02 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,19 @@ char	**join_double_pointer(char **str, char **ptr)
 	j = 0;
 	len[0] = double_pointer_len(str);
 	len[1] = double_pointer_len(ptr);
-	len[2] = len[0] + len[1] + 1;
-	join = (char **) malloc(len[2] * sizeof(char *));
+	len[2] = len[0] + len[1];
+	join = (char **) ft_calloc((len[2] + 1) ,sizeof(char *));
 	if (!join)
 		return (NULL);
 	while (index < len[2])
 	{
 		if (index < len[0])
 			join[index] = str[index];
-		else if (index >= len[1])
+		else if (index >= len[0])
 			join[index] = ptr[j++];
 		index++;
 	}
+	join[index] = NULL;
 	free(str);
 	free(ptr);
 	return (join);
