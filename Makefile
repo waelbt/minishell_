@@ -6,7 +6,7 @@
 #    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 11:25:03 by yojoundi          #+#    #+#              #
-#    Updated: 2022/07/31 17:04:26 by waboutzo         ###   ########.fr        #
+#    Updated: 2022/07/31 17:11:00 by waboutzo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ INC = -I include
 RM = rm -rf
 MYDIR= objects_files
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include -g -fsanitize=address
 OBJ=$(SRCS:.c=.o)
 OBJBONUS=$(SRCBONUS:.c=.o)
 
