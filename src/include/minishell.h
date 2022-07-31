@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/31 12:27:45 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/31 16:15:39 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char		*ft_itoa(int n);
 void		dup_norm(int fildes1, int fildes2);
 char		**advanced_split(char *str);
 char		*quotes(t_lexer *lexer, int c);
-void		init_array(int *i, int size);
+int			*init_array(int size);
 int			double_pointer_len(char **str);
 char		*remove_qoutes(char *str);
 void		pure_after_expand(char **str);
@@ -174,7 +174,7 @@ int			ft_check_var_validition(char *s);
 int			get_index_of_double_char(char **envp, char *var);
 char 		*ft_strcat(char *dest, char *src);
 t_node		*handler(t_lexer *lexer);
-void	*ft_free(t_token *token, t_lexer *lexer, t_node *node, t_node *tmp);
-int	ft_pipe_check(t_token *token, t_token *previous);
-void ft_print_free(void *f);
+void		*ft_free(t_token *token, t_lexer *lexer, t_node *node, t_node *tmp);
+int			ft_pipe_check(t_token *token, t_token *previous);
+void 		ft_print_free(void *f);
 #endif

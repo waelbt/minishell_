@@ -6,19 +6,22 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:54:00 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/29 17:35:19 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/31 16:15:32 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	init_array(int *i, int size)
+int	*init_array(int size)
 {
+	int *i;
 	int	co;
 
+	i = malloc(sizeof(int) * size);
 	co = -1;
 	while (++co < size)
 		i[co] = 0;
+	return (i);
 }
 
 static int	intlen(int n)

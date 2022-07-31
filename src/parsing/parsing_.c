@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:21:35 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/30 10:57:16 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/31 17:07:38 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,18 @@ char	*string_cases(t_lexer *lexer, char **envp)
 	else if (lexer->c == '\'')
 		str = quotes_handler(lexer, envp, '\'');
 	else if (lexer->c == '$')
+	{
 		str = handle_env_var(lexer, envp);
+		int i= 0;
+		while(str[i])
+		{
+			if(str[i] == '\'')
+				str[i] = -1;
+			if(str[i] == '"')
+				str[i] = -2;
+			i++;
+		}
+	}
 	else
 	{
 		str = lexer_get_current_char_as_string(lexer);
@@ -44,10 +55,8 @@ char	*pure_arg(char *str, char **envp)
 	{
 		s = string_cases(lexer, envp);
 		tmp = value;
-		value = ft_realloc(value, (ft_strlen(value)
-					+ ft_strlen(s) + 1) * sizeof(char));
+		value = ft_strjoin(value, s);
 		free(tmp);
-		ft_strcat(value, s);
 		free(s);
 	}
 	free(str);
@@ -75,10 +84,8 @@ char	*remove_qoutes(char *str)
 			lexer_advance(lexer);
 		}
 		tmp = value;
-		value = ft_realloc(value, (ft_strlen(value)
-					+ ft_strlen(s) + 1) * sizeof(char));
+		value = ft_strjoin(value, s);
 		free(tmp);
-		ft_strcat(value, s);
 		free(s);
 	}
 	free(lexer);
@@ -95,6 +102,15 @@ void	pure_after_expand(char **str)
 	{
 		tmp = str[i];
 		str[i] = remove_qoutes(str[i]);
+		int j = 0;
+		while(str[i][j])
+		{
+			if(str[i][j] == -1)
+				str[i][j] = '\'';
+			if(str[i][j] == -2)
+				str[i][j] = '"';
+			j++;
+		}
 		free(tmp);
 		i++;
 	}

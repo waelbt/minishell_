@@ -154,3 +154,29 @@ char	*remove_qoutes(char *str)
 }
 
  ls | << $d | wc
+
+
+
+
+ minishell$ export d="'echo salam'"
+minishell$ $d
+minishell: 'echo: command not found
+minishell$ export d="salam  "
+minishell$ $d
+=================================================================
+==73412==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000076a0 at pc 0x000100b3c616 bp 0x7ffeef0d12b0 sp 0x7ffeef0d12a8
+WRITE of size 8 at 0x6020000076a0 thread T0
+    #0 0x100b3c615 in advanced_split advanced_split.c:95
+    #1 0x100b41a04 in parsing_args parsing.c:46
+    #2 0x100b4292d in parsing parsing.c:174
+    #3 0x100b47122 in main main.c:94
+    #4 0x7fff5b7ed3d4 in start (libdyld.dylib:x86_64+0x163d4)
+
+0x6020000076a0 is located 0 bytes to the right of 16-byte region [0x602000007690,0x6020000076a0)
+allocated by thread T0 here:
+    #0 0x100bf5793 in wrap_malloc (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x61793)
+    #1 0x100b3be88 in advanced_split advanced_split.c:79
+    #2 0x100b41a04 in parsing_args parsing.c:46
+    #3 0x100b4292d in parsing parsing.c:174
+    #4 0x100b47122 in main main.c:94
+    #5 0x7fff5b7ed3d4 in start (libdyld.dylib:x86_64+0x163d4)

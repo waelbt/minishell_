@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/31 13:54:19 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/31 17:07:22 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ char	*quotes(t_lexer *lexer, int c)
 	{
 		s = lexer_get_current_char_as_string(lexer);
 		tmp = value;
-		value = ft_realloc(value, (ft_strlen(value)
-					+ ft_strlen(s) + 1) * sizeof(char));
+		value = ft_strjoin(value, s);
 		free(tmp);
-		ft_strcat(value, s);
 		free(s);
 		lexer_advance(lexer);
 	}
@@ -97,10 +95,8 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 	{
 		s = lexer_get_current_char_as_string(lexer);
 		str = value;
-		value = ft_realloc(value, (ft_strlen(value)
-					+ ft_strlen(s) + 1) * sizeof(char));
+		value = ft_strjoin(value, s);
 		free(str);
-		ft_strcat(value, s);
 		free(s);
 		lexer_advance(lexer);
 	}
