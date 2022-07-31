@@ -1,31 +1,54 @@
-exec	=	minishell
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/03/14 11:25:03 by yojoundi          #+#    #+#              #
+#    Updated: 2022/07/31 10:05:33 by waboutzo         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-sources =	$(wildcard src/*.c) $(wildcard src/libft_tools/*.c)
+NAME = minishell
+INC = -I include
+RM = rm -rf
+MYDIR= objects_files
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include -g -fsanitize=address
+OBJ=$(SRCS:.c=.o)
+OBJBONUS=$(SRCBONUS:.c=.o)
 
-objects =	$(sources:.c=.o)
+ECECUTION = built_ins execute_single_command execution_tools exit_code my_envp \
+			execute execution_multi_commands exit export unset
 
-flags	=	-Wall -Wextra -Werror -lreadline -L /Users/waboutzo/.brew/opt/readline/lib -I /Users/waboutzo/.brew/opt/readline/include #-g -fsanitize=address
+UTILS = ft_atoi ft_isalpha ft_lstadd_back ft_lstdelone ft_lstsize ft_strcat ft_strdup \
+		ft_isdigit ft_lstadd_front ft_lstlast ft_realloc ft_strchr ft_strjoin ft_strncmp \
+		ft_calloc ft_itoa ft_lstclear ft_lstnew ft_split ft_strcmp ft_strlen ft_substr 
 
-CC		=	gcc
+PARSING = advanced_split  dollar_parsing lexer2 print_function token\
+		cmd  get_important_data parsing  quotes_parsing\
+		delimiter_parsing  lexer  parsing_  redirection_file
+SRCS =  $(addsuffix .c, $(addprefix src/libft_tools/, $(UTILS))) \
+		$(addsuffix .c, $(addprefix src/execution/, $(ECECUTION))) \
+		$(addsuffix .c, $(addprefix src/parsing/, $(PARSING))) \
+		src/free_node.c
+.c.o:
+	@$(CC)  $(CFLAGS) $(INC) -c $< -o $@
 
-RM		= 	rm -f
+all : $(NAME)
 
+$(NAME): $(OBJ)
+	@$(CC)  $(CFLAGS) $(OBJ) $(INC) main.c -L /Users/${USER}/.brew/opt/readline/lib  -lreadline  -o $(NAME)
+# @[ -d $(MYDIR) ] || mkdir -p $(MYDIR)
+# @mv $(OBJ) objects_files
 
-all :	$(exec)
-	$(RM) src/*.o
-
-$(exec)	: $(objects)
-	$(CC) $(objects) $(flags) -o $(exec)
-	@stty -echoctl
-
-%.o	: %.c include/minishell.h
-	$(CC) $(flags) -c %< -o $@
-
-clean	:
-	$(RM) src/*.o
-	$(RM) src/libft_tools/*.o
+clean :
+	@$(RM) $(OBJ) $(MYDIR)
 
 fclean : clean
-	$(RM) $(exec)
+	@$(RM) $(NAME) 
 
 re : fclean all
+
+.PHONY:			all clean fclean re bonus

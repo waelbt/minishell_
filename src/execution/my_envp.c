@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   my_envp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/06 18:04:04 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/30 08:55:47 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/06/22 21:27:46 by lchokri           #+#    #+#             */
+/*   Updated: 2022/07/30 09:05:59 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	**my_envp(char **envp)
 {
-	char	*ptr;
-	int		len;
+	char	**my_envp;
 	int		i;
 
 	i = 0;
-	if (!s1 || !s2)
-		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	ptr = (char *) malloc((len + 1) * sizeof(char));
-	if (!ptr)
+	my_envp = NULL;
+	if(envp)
 	{
-		return (0);
+		while (envp[i])
+			i++;
+		my_envp = (char **)malloc((i  + 1)* sizeof(char *));
+		i = 0;
+		while (envp[i])
+		{
+			my_envp[i] = ft_strdup(envp[i]);
+			i++;
+		}
+		my_envp[i] = NULL;
 	}
-	while (i < len)
-	{
-		if (i < ft_strlen(s1))
-			*(ptr + i) = *(s1 + i);
-		else if (i >= ft_strlen(s1))
-			*(ptr + i) = *(s2++);
-		i++;
-	}
-	*(ptr + i) = '\0';
-	return (ptr);
+	return (my_envp);
 }

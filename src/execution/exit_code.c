@@ -1,40 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   exit_code.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/06 18:04:04 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/30 08:55:47 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/07/21 11:42:47 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/07/30 09:00:21 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+void	printf_error(char *p, char *str, char *s)
 {
-	char	*ptr;
-	int		len;
-	int		i;
+	if(p)
+		write(2, p, ft_strlen(p));
+	if(str)
+		write(2, str, ft_strlen(str));
+	if(s)
+		write(2, s, ft_strlen(s));
+}
 
-	i = 0;
-	if (!s1 || !s2)
-		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	ptr = (char *) malloc((len + 1) * sizeof(char));
-	if (!ptr)
-	{
-		return (0);
-	}
-	while (i < len)
-	{
-		if (i < ft_strlen(s1))
-			*(ptr + i) = *(s1 + i);
-		else if (i >= ft_strlen(s1))
-			*(ptr + i) = *(s2++);
-		i++;
-	}
-	*(ptr + i) = '\0';
-	return (ptr);
+static int	*exit_code(void)
+{
+	static int c;
+
+	return (&c);
+}
+
+int ft_getter(void)
+{
+	int *i;
+
+	i = exit_code();
+	return (*i);
+}
+
+void ft_setter(int value)
+{
+	int *i;
+
+	i = exit_code();
+	*i = value;
 }

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 11:31:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 02:20:25 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 10:56:24 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	ft_no_25line(char *s, char c,	char **str, int start)
 {
 	int		t;
 	int		j;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	t = 0;

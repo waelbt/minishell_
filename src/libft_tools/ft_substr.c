@@ -6,17 +6,17 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:29:15 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/25 09:05:30 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 08:58:32 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, int start, int len)
 {
 	char	*p;
-	size_t	i;
-	size_t	slen;
+	int	i;
+	int	slen;
 
 	if (!s)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:07:27 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/03 16:12:23 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 08:55:34 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	double_pointer_len(char **str)
 
 char	*ft_strchr(char *s, int c)
 {
-	size_t		i;
+	int			i;
 	char		*p;
 
 	i = 0;
