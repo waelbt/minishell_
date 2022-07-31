@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/30 10:56:46 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/31 13:54:19 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 		str = value;
 		value = ft_realloc(value, (ft_strlen(value)
 					+ ft_strlen(s) + 1) * sizeof(char));
-		free(value);
+		free(str);
 		ft_strcat(value, s);
 		free(s);
 		lexer_advance(lexer);
@@ -117,14 +117,16 @@ char	*dollar_value(char **envp, char *var)
 		while (*envp)
 		{
 			tmp = ft_split(*envp, '=');
-			free(tmp[1]);
-			tmp[1] = ft_substr(*envp, ft_strlen(*tmp) + 1, ft_strlen(*envp));
 			if (!ft_strcmp(tmp[0], var))
 			{
 				if (!tmp[1])
 					str = ft_strdup("");
 				else
+				{
+					free(tmp[1]);
+					tmp[1] = ft_substr(*envp, ft_strlen(*tmp) + 1, ft_strlen(*envp));
 					str = ft_strdup(tmp[1]);
+				}
 				free(var);
 				free_double_char(tmp, 0);
 				return (str);

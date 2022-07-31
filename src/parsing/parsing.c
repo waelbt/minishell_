@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/31 12:29:15 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/31 12:30:41 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,9 +172,7 @@ void	*parsing(t_node **command, char **envp, int *index)
 	{
 		cmd = (t_cmd *)temporary->content;
 		parsing_args(&(cmd)->args, envp);
-		if (!parsing_redrection(
-				&(cmd)->redrec, envp, index))
-			return (NULL);
+		parsing_redrection(&(cmd)->redrec, envp, index);
 		ft_setter(0);
 		cmd->after_expand = join_args(cmd->args);
 		cmd->input	= get_output_input(cmd->redrec, 0);

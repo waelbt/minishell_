@@ -152,3 +152,5 @@ char	*remove_qoutes(char *str)
 	free(lexer);
 	return (value);
 }
+
+ ls | << $d | wc
