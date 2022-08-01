@@ -1,27 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/22 21:27:46 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/01 14:08:13 by waboutzo         ###   ########.fr       */
+/*   Created: 2022/08/01 14:23:31 by waboutzo          #+#    #+#             */
+/*   Updated: 2022/08/01 14:23:45 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	print_env(char **envp)
+void	set_to_defaults(char *str)
 {
-	int	i;
-	
-	i = 0;
-	ft_setter(0);
-	while(envp[i])
+	int j = 0;
+	while(str[j])
 	{
-		if (ft_strchr(envp[i], '='))
-			printf("%s\n", envp[i]);
+		if(str[j] == -1)
+			str[j] = '\'';
+		if(str[j] == -2)
+			str[j] = '"';
+		j++;
+	}
+}
+
+void 	quotes_replace(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		if(str[i] == '\'')
+			str[i] = -1;
+		if(str[i] == '"')
+			str[i] = -2;
 		i++;
 	}
 }

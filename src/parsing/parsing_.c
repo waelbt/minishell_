@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:21:35 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/31 22:37:26 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 14:23:39 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,7 @@ char	*string_cases(t_lexer *lexer, char **envp)
 	else if (lexer->c == '$')
 	{
 		str = handle_env_var(lexer, envp);
-		int i= 0;
-		while(str[i])
-		{
-			if(str[i] == '\'')
-				str[i] = -1;
-			if(str[i] == '"')
-				str[i] = -2;
-			i++;
-		}
+		quotes_replace(str);
 	}
 	else
 	{
@@ -102,15 +94,7 @@ void	pure_after_expand(char **str)
 	{
 		tmp = str[i];
 		str[i] = remove_qoutes(str[i]);
-		int j = 0;
-		while(str[i][j])
-		{
-			if(str[i][j] == -1)
-				str[i][j] = '\'';
-			if(str[i][j] == -2)
-				str[i][j] = '"';
-			j++;
-		}
+		set_to_defaults(str[i]);
 		free(tmp);
 		i++;
 	}

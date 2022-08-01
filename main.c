@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 12:40:16 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 14:09:51 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc == 1)
 	{
 		(void) argv;
-		env =  my_envp(envp);
+		env =  ft_strdup_double(envp);
 		while (1)
 		{
 			signal(SIGINT, sig_handler);

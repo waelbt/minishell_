@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 11:39:09 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 14:24:04 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ char 		*ft_strcat(char *dest, char *src);
 t_node		*handler(t_lexer *lexer);
 void		*ft_free(t_token *token, t_lexer *lexer, t_node *node, t_node *tmp);
 int			ft_pipe_check(t_token *token, t_token *previous);
-void 		ft_print_free(void *f);
-void		variadic_free(int num, ...);
+char		**join_double_pointer(char **str, char **ptr);
+void		set_to_defaults(char *str);
+void		quotes_replace(char *str);
 #endif
