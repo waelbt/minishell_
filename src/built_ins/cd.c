@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 12:57:39 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 14:27:54 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**add_to_env(char *str, char **env)
 
 	index = 0;
 	ptr = (char **) malloc((double_pointer_len(env) + 2) * sizeof(char *));
-	while(env[index])
+	while (env[index])
 	{
 		ptr[index] = ft_strdup(env[index]);
 		index++;
@@ -30,7 +30,7 @@ char	**add_to_env(char *str, char **env)
 	return (ptr);
 }
 
-void	OLDPWD(char ***env, char *old_path)
+void	oldpwd(char ***env, char *old_path)
 {
 	int		i;
 	int		index;
@@ -39,7 +39,7 @@ void	OLDPWD(char ***env, char *old_path)
 	i = 0;
 	str = NULL;
 	index = get_index_of_double_char(*env, "OLDPWD");
-	if(index == -1)
+	if (index == -1)
 		*env = add_to_env(old_path, *env);
 	else
 	{
@@ -49,7 +49,7 @@ void	OLDPWD(char ***env, char *old_path)
 			{
 				free((*env)[i]);
 				(*env)[i] = old_path;
-				break;
+				break ;
 			}
 		i++;
 		}
@@ -64,7 +64,7 @@ void	update_paths(char ***env)
 
 	i = 0;
 	old_path = NULL;
-	while((*env)[i])
+	while ((*env)[i])
 	{
 		if (!ft_strncmp((*env)[i], "PWD=", 4))
 		{
@@ -75,24 +75,24 @@ void	update_paths(char ***env)
 			str = getcwd(NULL, 0);
 			(*env)[i] = ft_strjoin("PWD=", str);
 			free(str);
-			break;
+			break ;
 		}
 		i++;
 	}
-	OLDPWD(env, strdup(old_path));
+	oldpwd(env, strdup(old_path));
 	free(old_path);
 }
 
 void	cd(char *path, char ***env)
 {
 	ft_setter(0);
-	if(!path)
+	if (!path)
 		return ;
 	if (!(chdir(path) == -1))
 		update_paths(env);
 	else
 	{
 		ft_setter(1);
-		printf_error("minishell: ", path , ": No such file or directory\n");
+		printf_error("minishell: ", path, ": No such file or directory\n");
 	}
 }

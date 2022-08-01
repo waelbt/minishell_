@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:03:03 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 12:47:46 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:34:25 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,13 @@ t_node	*handler(t_lexer *lexer)
 			return (ft_free(token[0], lexer, NULL, node[1]));
 	}
 	return (ft_free(token[0], lexer, node[1], NULL));
+}
+
+void	lexer_previous(t_lexer	*lexer)
+{
+	if (lexer->i != 0)
+	{
+		lexer->i -= 1;
+		lexer->c = lexer->contents[lexer->i];
+	}
 }

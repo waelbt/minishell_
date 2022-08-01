@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/31 17:07:22 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:31:59 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,33 @@ char	*dollar_value(char **envp, char *var)
 			envp++;
 		}
 	}
+	free(var);
 	return (ft_strdup(""));
 }
+
+// char	*dollar_value(char **envp, char *var)
+// {
+// 	char	*str;
+// 	int		i;
+// 	char	**tmp;
+
+// 	i = -1;
+// 	if (!(ft_strchr(var, '=')) && *var)
+// 	{
+// 		while (envp[++i])
+// 		{
+// 			tmp = env_split(envp, i);
+// 			if (!ft_strcmp(tmp[0], var))
+// 			{
+// 				if (!tmp[1])
+// 					str = ft_strdup("");
+// 				str = ft_strdup(tmp[1]);
+// 				free(var);
+// 				free_double_char(tmp, 0);
+// 				return (str);
+// 			}
+// 			free_double_char(tmp, 0);
+// 		}
+// 	}
+// 	return (ft_strdup(""));
+// }

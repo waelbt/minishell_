@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:02:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 14:02:32 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:34:05 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,6 @@ void	free_double_char(char **tmp, int t)
 	if (t == 0)
 	{
 		free(tmp);
-	}
-}
-
-void	lexer_previous(t_lexer	*lexer)
-{
-	if (lexer->i != 0)
-	{
-		lexer->i -= 1;
-		lexer->c = lexer->contents[lexer->i];
 	}
 }
 
@@ -100,4 +91,12 @@ void	free_node(t_node **head)
 		temporary = temporary->next;
 		free(s);
 	}
+}
+
+
+void	free_var(t_env_var *var)
+{
+	free((var)->name);
+	free(var->value);
+	free(var);
 }

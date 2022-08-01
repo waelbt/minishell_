@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 14:24:04 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:34:51 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,4 +179,8 @@ int			ft_pipe_check(t_token *token, t_token *previous);
 char		**join_double_pointer(char **str, char **ptr);
 void		set_to_defaults(char *str);
 void		quotes_replace(char *str);
+int			get_key(char *s, int index);
+char		**sorted_env(char **env);
+char		**env_split(char **envp, int i);
+void		free_var(t_env_var *var);
 #endif

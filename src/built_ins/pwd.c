@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:59 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 13:03:54 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:36:29 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,9 @@ char	*getpwd(char **env)
 
 	i = 0;
 	str = NULL;
-	while(env[i])
+	while (env[i])
 	{
-		tmp = ft_split(env[i], '=');
-		if(tmp[1])
-		{
-			free(tmp[1]);
-			tmp[1] = ft_substr(env[i], ft_strlen(*tmp) + 1, ft_strlen(env[i]));
-		}
+		tmp = env_split(env, i);
 		if (!ft_strcmp(tmp[0], "PWD"))
 			str = ft_strdup(tmp[1]);
 		i++;
@@ -47,7 +42,8 @@ void	pwd(char **env)
 	if (!str && !ptr)
 	{
 		ft_setter(127);
-		printf_error("failed to get the current working directory\n", NULL, NULL);
+		printf_error("failed to get the current working directory\n",
+			NULL, NULL);
 	}
 	else if (!str)
 		printf("%s\n", ptr);

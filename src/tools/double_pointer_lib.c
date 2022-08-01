@@ -6,11 +6,37 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 14:09:15 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 14:16:56 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:37:20 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+char	**sorted_env(char **env)
+{
+	int		i[2];
+	char	*temp;
+
+	i[0] = 0;
+	i[1] = 0;
+	while (env[i[0]])
+	{
+		i[1] = 0;
+		while (env[i[1] + i[0]])
+		{
+			if (ft_strcmp(env[i[0]], env[i[1] + i[0]]) > 0)
+			{
+				temp = env[i[0]];
+				env[i[0]] = env[i[1] + i[0]];
+				env[i[1] + i[0]] = temp;
+			}
+			i[1]++;
+		}
+		i[0]++;
+	}
+	env[i[0]] = NULL;
+	return (env);
+}
 
 char	**join_double_pointer(char **str, char **ptr)
 {
@@ -61,4 +87,41 @@ char 	**ft_strdup_double(char **ptr)
 	}
 	str[i] = NULL;
 	return (str);
+}
+
+char	**env_split(char **envp, int i)
+{
+	char	**line;
+
+	line = ft_split(envp[i], '=');
+	if (line[1])
+	{
+		free(line[1]);
+		line[1] = ft_substr(envp[i], ft_strlen(line[0]) + 1,
+				ft_strlen(envp[i]));
+	}
+	return (line);
+} 
+
+int	get_index_of_double_char(char **envp, char *var)
+{
+	int		i;
+	char	**tmp;
+
+	i = 0;
+	if (envp)
+	{
+		while (envp[i])
+		{
+			tmp = ft_split(envp[i], '=');
+			if (!ft_strcmp(tmp[0], var))
+			{
+				free_double_char(tmp, 0);
+				return (i);
+			}
+			free_double_char(tmp, 0);
+			i++;
+		}
+	}
+	return (-1);
 }

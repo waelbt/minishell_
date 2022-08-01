@@ -6,96 +6,74 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:04:40 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/30 09:00:30 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:38:03 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	get_index_of_double_char(char **envp, char *var)
+int	ft_check_var_validition(char *s)
 {
-	int i;
-	char **tmp;
+	int	index;
 
-	i = 0;
-	if(envp)
-	{
-		while(envp[i])
-		{
-			tmp = ft_split(envp[i], '=');
-			if(!ft_strcmp(tmp[0], var))
-			{
-				free_double_char(tmp, 0);
-				return (i);
-			}
-			free_double_char(tmp, 0);
-			i++;
-		}
-	}
-	return (-1);
-}
-
-int ft_check_var_validition(char *s)
-{
-	int index;
-
-	if(!ft_isalpha(s[0]) && s[0] != '_')
+	if (!ft_isalpha(s[0]) && s[0] != '_')
 		return (0);
 	index = 1;
-	while(s[index])
+	while (s[index])
 	{
-		if(!ft_isalnum(s[index]) && s[index] != '_')
+		if (!ft_isalnum(s[index]) && s[index] != '_')
 			return (0);
 		index++;
 	}
 	return (1);
 }
 
-void unset(char ***envp, char **var)
+void	delete_var(char ***envp, int index)
 {
-	int		d;
-	int 	len;
-	int		i;
-	int		j;
-	int		index;
+	int		i[3];
 	char	**new_env;
 
-	d = 0;
-	while(var[++d])
+	init_array(i, 3);
+	i[2] = double_pointer_len(*envp);
+	if (index == -1)
+		return ;
+	if (i[2] == 0)
 	{
-		i = 0;
-		j = 0;
-		len = double_pointer_len(*envp);
-		if(!ft_check_var_validition(var[d]))
+		new_env = (char **)malloc(1 * sizeof(char *));
+		new_env[0] = NULL;
+	}
+	else
+	{
+		new_env = (char **)malloc(i[2] * sizeof(char *));
+		while ((*envp)[i[0]])
+		{
+			if (index != i[0])
+				new_env[i[1]++] = ft_strdup((*envp)[i[0]]);
+			i[0]++;
+		}
+		new_env[i[1]] = NULL;
+	}
+	free_double_char(*envp, 0);
+	*envp = new_env;
+}
+
+void	unset(char ***envp, char **var)
+{
+	int	d;
+	int	index;
+
+	d = 0;
+	while (var[++d])
+	{
+		if (!ft_check_var_validition(var[d]))
 		{
 			ft_setter(1);
-			printf_error("minishell: unset: `", var[d], "': not a valid identifier\n");
-			continue;
+			printf_error("minishell: unset: `",
+				var[d], "': not a valid identifier\n");
+			continue ;
 		}
 		ft_setter(0);
 		index = get_index_of_double_char(*envp, var[d]);
-		new_env = NULL;
-		if(index != -1)
-		{
-			if(len == 0)
-			{
-				new_env = (char **)malloc(1 * sizeof(char *));
-				new_env[0] = NULL;
-			}
-			else
-			{
-				new_env = (char **)malloc(len * sizeof(char *));
-				while((*envp)[i])
-				{
-					if(index != i)
-						new_env[j++] = ft_strdup((*envp)[i]);
-					i++;				
-				}
-				new_env[j] = NULL;
-				free_double_char(*envp, 0);
-			}
-			*envp = new_env;
-		}
+		delete_var(envp, index);
 	}
-	
 }

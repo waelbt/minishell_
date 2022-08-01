@@ -180,3 +180,5 @@ allocated by thread T0 here:
     #3 0x100b4292d in parsing parsing.c:174
     #4 0x100b47122 in main main.c:94
     #5 0x7fff5b7ed3d4 in start (libdyld.dylib:x86_64+0x163d4)
+
+export d w z z q 

@@ -6,11 +6,22 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 10:50:43 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/06/13 07:21:56 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:07:29 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	ft_isalnum(int c)
+{
+	if (c <= '9' && c >= '0')
+		return (1);
+	if (c <= 122 && c >= 97)
+		return (1);
+	if (c <= 90 && c >= 65)
+		return (1);
+	return (0);
+}
 
 int	ft_isdigit(int c)
 {
