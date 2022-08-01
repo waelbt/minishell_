@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:02:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/30 10:55:41 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/31 19:01:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	lexer_previous(t_lexer	*lexer)
 	}
 }
 
-void	dda(t_node **head)
+void	free_args(t_node **head)
 {
 	t_node	*temporary;
 	t_args	*tmp;
@@ -58,7 +58,7 @@ void	dda(t_node **head)
 	}
 }
 
-void	fed(t_node **head)
+void	free_redirc(t_node **head)
 {
 	t_node		*temporary;
 	t_redirec	*tmp;
@@ -93,8 +93,8 @@ void	free_node(t_node **head)
 	{
 		cmd = (t_cmd *)temporary->content;
 		s = temporary;
-		dda(&cmd->args);
-		fed(&cmd->redrec);
+		free_args(&cmd->args);
+		free_redirc(&cmd->redrec);
 		free_double_char(cmd->after_expand, 0);
 		free(cmd);
 		temporary = temporary->next;

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 11:54:17 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/31 17:06:57 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 11:57:35 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ char	*delimiter(char *str)
 {
 	char	*value;
 	char	*s;
-	t_lexer	*lexer;
 	char	*tmp;
+	t_lexer	*lexer;
 
 	value = (char *) malloc(sizeof(char));
 	value[0] = '\0';
@@ -81,7 +81,6 @@ char	*delimiter(char *str)
 		tmp = value;
 		value = ft_strjoin(value, s);
 		free(tmp);
-		ft_strcat(value, s);
 		free(s);
 	}
 	free(lexer);

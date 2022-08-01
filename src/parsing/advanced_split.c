@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:48:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/31 17:03:53 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 11:38:24 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ int	norm_33(char *str, int *i)
 char	**advanced_split(char *str)
 {
 	char	**value;
-	int		*i;
+	int		i[4];
 
-	i = init_array(4);
+	init_array(i, 4);
 	value = (char **) malloc((ft_counter(str) + 1) * sizeof(char *));
 	if (!value)
 		return (NULL);
@@ -93,6 +93,5 @@ char	**advanced_split(char *str)
 		i[0]++;
 	}
 	value[i[1]] = NULL;
-	free(str);
 	return (value);
 }

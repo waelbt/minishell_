@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/31 12:30:41 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 11:52:21 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,15 @@ void	parsing_args(t_node **head, char **envp)
 {
 	t_node		*temporary;
 	t_args		*args;
+	char		*tmp;
 
 	temporary = *head;
 	while (temporary != NULL)
 	{
 		args = (t_args *) temporary->content;
-		args->after_expand = advanced_split(
-				pure_arg(ft_strdup(args->value), envp));
+		tmp = pure_arg(ft_strdup(args->value), envp);
+		args->after_expand = advanced_split(tmp);
+		free(tmp);
 		remove_vide_string(&args->after_expand);
 		pure_after_expand(args->after_expand);
 		temporary = temporary->next;
@@ -57,15 +59,17 @@ void	norm_redirection(t_redirec	*redrec, char **envp, int *index)
 
 	if (redrec->e_rtype != 3)
 	{
-		redrec->after_expand = advanced_split(
-				pure_arg(ft_strdup(redrec->file), envp));
+		str = pure_arg(ft_strdup(redrec->file), envp);
+		redrec->after_expand = advanced_split(str);
+		free(str);
 		redrec->path = NULL;
 	}
 	else
 	{
+		str = delimiter(redrec->file);
+		redrec->after_expand = advanced_split(str);
+		free(str);
 		str = ft_itoa(*index);
-		redrec->after_expand = advanced_split(
-				delimiter(redrec->file));
 		redrec->path = ft_strjoin("/var/TMP/her_doc", str);
 		free(str);
 		(*index)++;
@@ -160,13 +164,13 @@ void	*parsing_redrection(t_node **head, char **envp, int *index)
 }
 
 
-void	*parsing(t_node **command, char **envp, int *index)
+void	parsing(t_node **command, char **envp, int *index)
 {
 	t_node	*temporary;
 	t_cmd	*cmd;
 
-	if(!*command)
-		return (NULL);
+	// if(!*command)
+	// 	return (NULL);
 	temporary = *command;
 	while (temporary != NULL)
 	{
@@ -179,5 +183,4 @@ void	*parsing(t_node **command, char **envp, int *index)
 		cmd->output = get_output_input(cmd->redrec, 1);
 		temporary = temporary->next;
 	}
-	return ((void *)1);
 }

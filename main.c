@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/31 12:31:02 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:40:16 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			signal(SIGINT, sig_handler);
 			signal(SIGQUIT, SIG_IGN);
-			//str = readline("\033[0;35mminishell$ \033[0;37m");
 			str = readline("minishell$ ");
 			if(!str)
 				break;

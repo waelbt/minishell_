@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 14:47:52 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/30 09:00:22 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 13:05:36 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		is_num(char *str)
 	i = 0;
 	while(str[i])
 	{
-		if (str[i] > '9' || str[i] < '0')
+		if (!ft_isdigit(str[i]))
 			return (0);
 		i++;
 	}

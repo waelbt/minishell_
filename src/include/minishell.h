@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/31 16:15:39 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 11:39:09 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,11 @@ void		printf_node(t_node *head);
 char		*ft_strdup(const char *s1);
 void		free_node(t_node **head);
 t_cmd		*init_cmd(t_lexer *lexer, t_token **token);
-void		dda(t_node **head);
-void		fed(t_node **head);
+void		free_args(t_node **head);
+void		free_redirc(t_node **head);
 int			ft_isalpha(int c);
 char		*dollar_value(char **envp, char *var);
-void		*parsing(t_node **command, char **envp, int *index);
+void		parsing(t_node **command, char **envp, int *index);
 int			get_type(char *c);
 char		*ft_substr(char *s, int start, int len);
 char		*pure_arg(char *str, char **envp);
@@ -134,7 +134,7 @@ char		*ft_itoa(int n);
 void		dup_norm(int fildes1, int fildes2);
 char		**advanced_split(char *str);
 char		*quotes(t_lexer *lexer, int c);
-int			*init_array(int size);
+void		init_array(int *i, int size);
 int			double_pointer_len(char **str);
 char		*remove_qoutes(char *str);
 void		pure_after_expand(char **str);
@@ -177,4 +177,5 @@ t_node		*handler(t_lexer *lexer);
 void		*ft_free(t_token *token, t_lexer *lexer, t_node *node, t_node *tmp);
 int			ft_pipe_check(t_token *token, t_token *previous);
 void 		ft_print_free(void *f);
+void		variadic_free(int num, ...);
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd.c                                              :+:      :+:    :+:   */
+/*   get_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/30 10:57:55 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:47:40 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*init_cmd2(t_token **token, t_node **tmp1, t_cmd **cmd, t_lexer *lexer)
 		(*cmd)->redrec = ft_lstnew((void *)init_redirection(token, lexer));
 		if (((t_redirec *)(*cmd)->redrec->content)->e_rtype == ERROR)
 		{
-			fed(&(*cmd)->redrec);
+			free_redirc(&(*cmd)->redrec);
 			return (NULL);
 		}
 		ft_lstadd_back(tmp1, (*cmd)->redrec);
@@ -68,8 +68,8 @@ void	*init_cmd2(t_token **token, t_node **tmp1, t_cmd **cmd, t_lexer *lexer)
 
 void	*clear_error(t_cmd *cmd, t_node *tmp, t_node *tmp1)
 {
-	dda(&tmp);
-	fed(&tmp1);
+	free_args(&tmp);
+	free_redirc(&tmp1);
 	free(cmd);
 	return (NULL);
 }
@@ -104,33 +104,4 @@ t_cmd	*init_cmd(t_lexer *lexer, t_token **token)
 	cmd->args = tmp;
 	cmd->redrec = tmp1;
 	return (cmd);
-}
-
-t_node	*handler(t_lexer *lexer)
-{
-	t_token	*token[2];
-	t_node	*node[2];
-
-	node[1] = NULL;
-	token[0] = lexer_get_next_token(lexer);
-	if (!ft_strcmp(token[0]->value, "|"))
-	{
-		ft_setter(258);
-		printf_error(NULL, "parse error near `|'\n", NULL);
-		return (ft_free(token[0], lexer, NULL, node[1]));
-	}
-	while (token[0]->e_type != TOKEN_EOF)
-	{
-		if (token[0]->e_type == TOKEN_ERROR)
-			return (ft_free(token[0], lexer, NULL, node[1]));
-		node[0] = ft_lstnew((void *) init_cmd(lexer, &token[0]));
-		if (!node[0])
-			return (ft_free(token[0], lexer, NULL, node[1]));
-		ft_lstadd_back(&node[1], node[0]);
-		token[1] = token[0];
-		token[0] = lexer_get_next_token(lexer);
-		if (!ft_pipe_check(token[0], token[1]))
-			return (ft_free(token[0], lexer, NULL, node[1]));
-	}
-	return (ft_free(token[0], lexer, node[1], NULL));
 }

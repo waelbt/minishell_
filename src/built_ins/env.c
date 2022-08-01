@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_envp.c                                          :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 21:27:46 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/30 09:05:59 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:58:16 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,18 @@ char	**my_envp(char **envp)
 		my_envp[i] = NULL;
 	}
 	return (my_envp);
+}
+
+void	print_env(char **envp)
+{
+	int	i;
+	
+	i = 0;
+	ft_setter(0);
+	while(envp[i])
+	{
+		if (ft_strchr(envp[i], '='))
+			printf("%s\n", envp[i]);
+		i++;
+	}
 }
