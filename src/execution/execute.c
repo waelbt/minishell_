@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 01:25:25 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/30 09:00:13 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 18:22:19 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int		execute(char **after_expand, char ***env)
+int	execute(char **after_expand, char ***env)
 {
 	if (!(ft_strcmp(after_expand[0], "echo")))
 		echo(after_expand);

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 14:16:21 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/02 15:40:25 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	parsing_args(t_node **head, char **envp)
 		args->after_expand = advanced_split(tmp);
 		free(tmp);
 		remove_vide_string(&args->after_expand);
-		pure_after_expand(args->after_expand);
+		pure_after_expand(args->after_expand, envp);
 		temporary = temporary->next;
 	}
 }
@@ -66,7 +66,7 @@ void	norm_redirection(t_redirec	*redrec, char **envp, int *index)
 	}
 	else
 	{
-		str = delimiter(redrec->file);
+		str = delimiter(redrec->file, envp);
 		redrec->after_expand = advanced_split(str);
 		free(str);
 		str = ft_itoa(*index);
@@ -111,7 +111,7 @@ void	*fill_her_doc_in_fork(t_node **head, char **envp)
 	if (id != 0)
 	{
 		signal(SIGINT, SIG_IGN);
-		wait(&status);
+		waitpid(id, &status, 0);
 		if(WIFEXITED(status))
 			open_here_doc(head);
 		if(WIFSIGNALED(status))
@@ -147,7 +147,7 @@ void	*parsing_redrection(t_node **head, char **envp, int *index)
 		redrec = (t_redirec *) temporary->content;
 		norm_redirection(redrec, envp, index);
 		remove_vide_string(&redrec->after_expand);
-		pure_after_expand(redrec->after_expand);
+		pure_after_expand(redrec->after_expand, envp);
 		if (double_pointer_len(redrec->after_expand) != 1)
 		{
 			ft_setter(1);
@@ -175,7 +175,6 @@ void	parsing(t_node **command, char **envp, int *index)
 		cmd = (t_cmd *)temporary->content;
 		parsing_args(&(cmd)->args, envp);
 		parsing_redrection(&(cmd)->redrec, envp, index);
-		ft_setter(0);
 		cmd->after_expand = join_args(cmd->args);
 		cmd->input	= get_output_input(cmd->redrec, 0);
 		cmd->output = get_output_input(cmd->redrec, 1);

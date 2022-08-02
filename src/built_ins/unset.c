@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:04:40 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/01 16:38:03 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:45:27 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	unset(char ***envp, char **var)
 	int	index;
 
 	d = 0;
+	ft_setter(0);
 	while (var[++d])
 	{
 		if (!ft_check_var_validition(var[d]))
@@ -72,7 +73,6 @@ void	unset(char ***envp, char **var)
 				var[d], "': not a valid identifier\n");
 			continue ;
 		}
-		ft_setter(0);
 		index = get_index_of_double_char(*envp, var[d]);
 		delete_var(envp, index);
 	}

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 14:27:54 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/02 14:50:56 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	oldpwd(char ***env, char *old_path)
 		}
 	}		
 }
-
+ 
 void	update_paths(char ***env)
 {
 	int		i;

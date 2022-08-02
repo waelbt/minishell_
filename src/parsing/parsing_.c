@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:21:35 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 14:23:39 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/02 11:38:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*pure_arg(char *str, char **envp)
 	return (value);
 }
 
-char	*remove_qoutes(char *str)
+char	*remove_qoutes(char *str, char **envp)
 {
 	char	*value;
 	char	*s;
@@ -69,7 +69,7 @@ char	*remove_qoutes(char *str)
 	while (lexer->c != '\0')
 	{
 		if (lexer->c == '"' || lexer->c == '\'')
-			s = quotes(lexer,lexer->c);
+			s = quotes(lexer, envp,lexer->c);
 		else
 		{
 			s = lexer_get_current_char_as_string(lexer);
@@ -84,7 +84,7 @@ char	*remove_qoutes(char *str)
 	return (value);
 }
 
-void	pure_after_expand(char **str)
+void	pure_after_expand(char **str, char **envp)
 {
 	int	i;
 	char	*tmp;
@@ -93,7 +93,7 @@ void	pure_after_expand(char **str)
 	while (str[i])
 	{
 		tmp = str[i];
-		str[i] = remove_qoutes(str[i]);
+		str[i] = remove_qoutes(str[i], envp);
 		set_to_defaults(str[i]);
 		free(tmp);
 		i++;

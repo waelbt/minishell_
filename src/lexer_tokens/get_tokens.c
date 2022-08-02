@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 12:47:40 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/02 16:12:22 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_redirec	*init_redirection(t_token **token, t_lexer *lexer)
 		redrec->file = ft_strdup((*token)->value);
 	else
 	{
-		printf_error("parse error 'missing redirection file'\n", NULL, NULL);
+		printf_error("minishell: syntax error near unexpected token `", (*token)->value, "'\n");
 		redrec->e_rtype = ERROR;
 	}
 	return (redrec);

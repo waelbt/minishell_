@@ -6,14 +6,14 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 15:31:59 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/02 11:41:29 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 
-char	*quotes(t_lexer *lexer, int c)
+char	*quotes(t_lexer *lexer, char **envp,int c)
 {
 	char	*value;
 	char	*s;
@@ -24,12 +24,11 @@ char	*quotes(t_lexer *lexer, int c)
 	value[0] = '\0';
 	while (lexer->c != c)
 	{
-		s = lexer_get_current_char_as_string(lexer);
+		s =  quotes_cases(lexer, envp, c);
 		tmp = value;
 		value = ft_strjoin(value, s);
 		free(tmp);
 		free(s);
-		lexer_advance(lexer);
 	}
 	lexer_advance(lexer);
 	return (value);
@@ -66,14 +65,14 @@ char	*ft_norm(t_lexer *lexer)
 	return (NULL);
 }
 
-char	*hard_code_norm(t_lexer *lexer)
+char	*hard_code_norm(t_lexer *lexer, char **envp)
 {
 	if (lexer->c == '$')
 		return (ft_strdup("$"));
 	if (lexer->c == 34)
-		return (quotes(lexer, 34));
+		return (quotes(lexer, envp,34));
 	if (lexer->c == 39)
-		return (quotes(lexer, 39));
+		return (quotes(lexer, envp,39));
 	else
 		return (ft_norm(lexer));
 	return (NULL);
@@ -86,7 +85,7 @@ char	*handle_env_var(t_lexer *lexer, char **envp)
 	char	*str;
 
 	lexer_advance(lexer);
-	str = hard_code_norm(lexer);
+	str = hard_code_norm(lexer, envp);
 	if (str)
 		return (str);
 	value = (char *) malloc(sizeof(char));

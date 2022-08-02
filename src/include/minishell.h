@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 15:34:51 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/02 15:00:17 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ char		*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c);
 char		*quotes_handler(t_lexer *lexer, char **envp, int c);
 char		*quotes_cases(t_lexer *lexer, char **envp, int c);
 char		*ft_norm(t_lexer *lexer);
-char		*delimiter(char *str);
+char		*delimiter(char *str, char **envp);
 int			ft_strncmp(const char *s1, const char *s2, int n);
 void		*open_file_descriptor(t_node **head);
 void		free_double_char(char **tmp, int t);
@@ -133,11 +133,11 @@ void		free_double_char(char **tmp, int t);
 char		*ft_itoa(int n);
 void		dup_norm(int fildes1, int fildes2);
 char		**advanced_split(char *str);
-char		*quotes(t_lexer *lexer, int c);
+char		*quotes(t_lexer *lexer, char **envp,int c);
 void		init_array(int *i, int size);
 int			double_pointer_len(char **str);
-char		*remove_qoutes(char *str);
-void		pure_after_expand(char **str);
+char		*remove_qoutes(char *str, char **envp);
+void		pure_after_expand(char **str, char **envp);
 int			ft_counte_novide(char **str);
 t_redirec	*get_output_input(t_node *head, int t);
 void		check_acces(char **cmd, char **envp);

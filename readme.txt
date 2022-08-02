@@ -182,3 +182,23 @@ allocated by thread T0 here:
     #5 0x7fff5b7ed3d4 in start (libdyld.dylib:x86_64+0x163d4)
 
 export d w z z q 
+
+
+//// echo $"PATH"
+
+/// export d=h  E"C""$d"'o' hhhhh
+
+///// exit dont exitwith flags
+
+
+minishell$ <<f <<g
+>fff
+>ff
+>f
+minishell$ exit
+
+cat > out1 < Makefile < dfjkhgs > 8  << l | echo > out hello << l | wc -l > 9  < dksjjksad
+
+at > out1 < Makefile < dfjkhgs > 8  << l | echo > out hello << l | wc -l > 9  < dksjjksad | cat
+
+cat > out1 < Makefile < dfjkhgs > 8  << l | echo > out hello << l | wc -l > 9  < dksjjksad > 15 | cat

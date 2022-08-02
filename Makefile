@@ -6,7 +6,7 @@
 #    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 11:25:03 by yojoundi          #+#    #+#              #
-#    Updated: 2022/08/01 16:30:53 by waboutzo         ###   ########.fr        #
+#    Updated: 2022/08/02 15:03:49 by waboutzo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,11 +44,13 @@ SRCS =  $(addsuffix .c, $(addprefix src/libft/, $(LIBFT))) \
 		$(addsuffix .c, $(addprefix src/tools/, $(TOOLS)))
 .c.o:
 	@$(CC)  $(CFLAGS) $(INC) -c $< -o $@
+	@stty -echoctl
 
 all : $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC)  $(CFLAGS) $(OBJ) $(INC) main.c -L /Users/${USER}/.brew/opt/readline/lib  -lreadline  -o $(NAME)
+	@stty -echoctl
 # @[ -d $(MYDIR) ] || mkdir -p $(MYDIR)
 # @mv $(OBJ) objects_files
 
