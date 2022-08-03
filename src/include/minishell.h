@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/02 15:00:17 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/02 18:30:14 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ typedef struct args
 
 typedef struct cmd
 {
+	enum
+	{
+		VALID,
+		NOT_VALID,
+	}e_rtype;
 	t_redirec	*input;
 	t_redirec	*output;
 	char		**after_expand;
@@ -110,7 +115,7 @@ void		free_args(t_node **head);
 void		free_redirc(t_node **head);
 int			ft_isalpha(int c);
 char		*dollar_value(char **envp, char *var);
-void		parsing(t_node **command, char **envp, int *index);
+void		*parsing(t_node **command, char **envp, int *index);
 int			get_type(char *c);
 char		*ft_substr(char *s, int start, int len);
 char		*pure_arg(char *str, char **envp);

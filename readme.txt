@@ -201,4 +201,5 @@ cat > out1 < Makefile < dfjkhgs > 8  << l | echo > out hello << l | wc -l > 9  <
 
 at > out1 < Makefile < dfjkhgs > 8  << l | echo > out hello << l | wc -l > 9  < dksjjksad | cat
 
-cat > out1 < Makefile < dfjkhgs > 8  << l | echo > out hello << l | wc -l > 9  < dksjjksad > 15 | cat
+leaks in herdoc
+

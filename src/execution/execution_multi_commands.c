@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/02 15:01:37 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:12:13 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,20 +91,23 @@ void	execution_multi_cmds(t_node *head, char **env)
 	{
 		cmd = (t_cmd *)head->content;
 		pipe(pipe_fd);
+		if (cmd->e_rtype == VALID)
+		{
 		id = fork();
-		if (id == 0)
-		{
-			signal(SIGINT, SIG_DFL);
-			child_work(head, env, pipe_fd, last_fd);
-		}
-		else
-		{
-			ft_setter(0);
-			if (head->next != NULL)
-				close(pipe_fd[1]);
-			if (last_fd != -1)
-				close(last_fd);
-			last_fd = pipe_fd[0];
+			if (id == 0)
+			{
+				signal(SIGINT, SIG_DFL);
+				child_work(head, env, pipe_fd, last_fd);
+			}
+			else
+			{
+				ft_setter(0);
+				if (head->next != NULL)
+					close(pipe_fd[1]);
+				if (last_fd != -1)
+					close(last_fd);
+				last_fd = pipe_fd[0];
+			}
 		}
 		head = head->next;
 	}

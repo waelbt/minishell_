@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/02 15:40:25 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/02 18:58:20 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,68 +72,9 @@ void	norm_redirection(t_redirec	*redrec, char **envp, int *index)
 		str = ft_itoa(*index);
 		redrec->path = ft_strjoin("/var/TMP/her_doc", str);
 		free(str);
-		(*index)++;
 	}
 }
 
-
-void	*open_here_doc(t_node **head)
-{
-	t_node		*temporary;
-	t_redirec	*redrec;
-
-	temporary = *head;
-	while (temporary != NULL)
-	{
-		redrec = (t_redirec *) temporary->content;
-		if(redrec->e_rtype == 3)
-		{
-			redrec->fd = open(redrec->path, O_RDONLY, 0666);
-			if(redrec->fd < 0)
-			{
-				ft_setter(1);
-				printf_error("minishell: no such file or directory: ", redrec->path, "\n");
-				return (NULL);
-			}
-		}
-		temporary = temporary->next;
-	}
-	return ((void *)1);
-}
-void	*fill_her_doc_in_fork(t_node **head, char **envp)
-{
-	t_node		*temporary;
-	t_redirec	*redrec;
-	int			status;
-	int			id;
-
-	id = fork();
-	if (id != 0)
-	{
-		signal(SIGINT, SIG_IGN);
-		waitpid(id, &status, 0);
-		if(WIFEXITED(status))
-			open_here_doc(head);
-		if(WIFSIGNALED(status))
-		{
-			signal(SIGINT, sig_handler);
-			return (NULL);
-		}
-	}
-	else
-	{
-		temporary = *head;
-		while (temporary != NULL)
-		{
-			redrec = (t_redirec *) temporary->content;
-			if(redrec->e_rtype == 3)
-				here_doc(redrec, envp);
-			temporary = temporary->next;
-		}
-		exit(0);
-	}
-	return ((void *)1);
-}
 void	*parsing_redrection(t_node **head, char **envp, int *index)
 {
 	t_node		*temporary;
@@ -148,23 +89,100 @@ void	*parsing_redrection(t_node **head, char **envp, int *index)
 		norm_redirection(redrec, envp, index);
 		remove_vide_string(&redrec->after_expand);
 		pure_after_expand(redrec->after_expand, envp);
-		if (double_pointer_len(redrec->after_expand) != 1)
+		(*index)++;
+		// if (double_pointer_len(redrec->after_expand) != 1)
+		// {
+		// 	ft_setter(1);
+		//ft_setter(1);
+		// 	printf_error("minishell: ", redrec->file, ": ambiguous redirect\n");
+		// 	return (NULL);
+		// }
+		temporary = temporary->next;
+	}
+	return ((void *)1);
+}
+
+void	open_heredoc_in_signle_cmd(t_node **head, char **envp)
+{
+	t_node		*temporary;
+	t_redirec	*redric;
+
+	temporary = *head;
+	while(temporary)
+	{
+		redric = (t_redirec *)temporary->content;
+		if(redric->e_rtype == HERE_DOC)
+		{
+			here_doc(redric, envp);
+		}
+		temporary = temporary->next;
+	}
+}
+void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
+{
+	t_node	*temporary;
+	t_cmd	*cmd;
+	int		id;
+	int		status;
+
+	temporary = *head;
+	id = fork();
+	if (!id)
+	{
+		while (temporary != NULL)
+		{
+			cmd = (t_cmd *)temporary->content;
+			open_heredoc_in_signle_cmd(&cmd->redrec, envp);
+			temporary = temporary->next;
+		}
+		exit(0);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(id, &status, 0);
+		if(WIFEXITED(status))
+			ft_setter(0);
+		if(WIFSIGNALED(status))
 		{
 			ft_setter(1);
-			printf_error("minishell: ", redrec->file, ": ambiguous redirect\n");
+			signal(SIGINT, sig_handler);
+			return (NULL);
+		}
+	}
+	return ((void *)1);
+}
+
+void	*open_file_descriptor(t_node **head)
+{
+	t_node		*temporary;
+	t_redirec	*redrec;
+
+	temporary = *head;
+
+	while (temporary != NULL)
+	{
+		redrec = (t_redirec *) temporary->content;
+		if (redrec->e_rtype == INPUT)
+			redrec->fd = open(redrec->after_expand[0], O_RDONLY, 0666);
+		else if (redrec->e_rtype == OUTPUT)
+			redrec->fd = open(redrec->after_expand[0], O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		else if (redrec->e_rtype == APPEND)
+			redrec->fd = open(redrec->after_expand[0], O_WRONLY | O_APPEND | O_CREAT, 0666);
+		else if (redrec->e_rtype == HERE_DOC)
+			redrec->fd = open(redrec->path, O_RDONLY, 0666);
+		if(redrec->fd < 0)
+		{
+			ft_setter(1);
+			printf_error("minishell: no such file or directory: ", redrec->after_expand[0], "\n");
 			return (NULL);
 		}
 		temporary = temporary->next;
 	}
-	if(!fill_her_doc_in_fork(head, envp))
-		return (NULL);
-	if(!open_file_descriptor(head))
-		return (NULL);
 	return ((void *)1);
 }
 
-
-void	parsing(t_node **command, char **envp, int *index)
+void	*parsing(t_node **command, char **envp, int *index)
 {
 	t_node	*temporary;
 	t_cmd	*cmd;
@@ -176,8 +194,21 @@ void	parsing(t_node **command, char **envp, int *index)
 		parsing_args(&(cmd)->args, envp);
 		parsing_redrection(&(cmd)->redrec, envp, index);
 		cmd->after_expand = join_args(cmd->args);
+		(*index)++;
+		cmd->e_rtype = VALID;
+		temporary = temporary->next;
+	}
+	if(!open_heredoc_in_all_pipe_lines(command, envp))
+		return (NULL);
+	temporary = *command;
+	while (temporary != NULL)
+	{
+		cmd = (t_cmd *)temporary->content;
+		if (!open_file_descriptor(&cmd->redrec))
+			cmd->e_rtype = NOT_VALID;
 		cmd->input	= get_output_input(cmd->redrec, 0);
 		cmd->output = get_output_input(cmd->redrec, 1);
 		temporary = temporary->next;
 	}
+	return ((void *)1);
 }
