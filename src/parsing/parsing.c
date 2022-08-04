@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/02 18:58:20 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/04 03:45:50 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,33 @@ void	open_heredoc_in_signle_cmd(t_node **head, char **envp)
 	{
 		redric = (t_redirec *)temporary->content;
 		if(redric->e_rtype == HERE_DOC)
-		{
 			here_doc(redric, envp);
-		}
 		temporary = temporary->next;
 	}
 }
+
+int here_doc_counter(t_node *head)
+{
+	t_redirec	*redrec;
+	t_node		*red;
+	int			counter;
+
+	counter = 0;
+	while (head != NULL)
+	{
+		red = ((t_cmd *)head->content)->redrec;
+		while (red != NULL)
+		{
+			redrec = (t_redirec *)red->content;
+			if(redrec->e_rtype == HERE_DOC)
+				counter++;
+			red = red->next;
+		}
+		head = head->next;
+	}
+	return (counter);
+}
+
 void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
 {
 	t_node	*temporary;
@@ -126,6 +147,11 @@ void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
 	int		status;
 
 	temporary = *head;
+	if (here_doc_counter(*head) >= 17)
+	{
+		printf_error("minishell: maximum ", "here-document ", "count exceeded\n");
+		exit(258);
+	}
 	id = fork();
 	if (!id)
 	{
@@ -206,8 +232,8 @@ void	*parsing(t_node **command, char **envp, int *index)
 		cmd = (t_cmd *)temporary->content;
 		if (!open_file_descriptor(&cmd->redrec))
 			cmd->e_rtype = NOT_VALID;
-		cmd->input	= get_output_input(cmd->redrec, 0);
-		cmd->output = get_output_input(cmd->redrec, 1);
+		cmd->input	= get_input(cmd->redrec);
+		cmd->output = get_output(cmd->redrec);
 		temporary = temporary->next;
 	}
 	return ((void *)1);

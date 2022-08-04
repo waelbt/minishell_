@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/02 18:30:14 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/04 03:21:50 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ int			double_pointer_len(char **str);
 char		*remove_qoutes(char *str, char **envp);
 void		pure_after_expand(char **str, char **envp);
 int			ft_counte_novide(char **str);
-t_redirec	*get_output_input(t_node *head, int t);
 void		check_acces(char **cmd, char **envp);
 char		*invalid_command_error(char *cmd, char *path, char **paths);
 char		*get_path(char **envp);
@@ -188,4 +187,6 @@ int			get_key(char *s, int index);
 char		**sorted_env(char **env);
 char		**env_split(char **envp, int i);
 void		free_var(t_env_var *var);
+t_redirec	*get_input(t_node *head);
+t_redirec	*get_output(t_node *head);
 #endif

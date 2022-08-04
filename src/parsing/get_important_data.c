@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:39:07 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 14:09:39 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/04 03:26:54 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,43 @@ char	**join_args(t_node *head)
 	return (str);
 }
 
-t_redirec	*get_output_input(t_node *head, int t)
+t_redirec	*get_input(t_node *head)
 {
 	t_redirec	*redrec;
 	t_redirec	*tmp;
 	int			last_fd;
 
 	redrec = NULL;
-	last_fd = -1;
+	last_fd = 0;
 	while (head != NULL)
 	{
 		tmp = (t_redirec *) head->content;
-		if (t == 1 && (tmp->e_rtype == OUTPUT || tmp->e_rtype == APPEND))
+		if (tmp->e_rtype == INPUT || tmp->e_rtype == HERE_DOC)
 		{
-			if(last_fd != -1)
+			if(last_fd != 0)
 				close(last_fd);
 			last_fd = tmp->fd;
 			redrec = tmp;
 		}
-		if (t == 0 && (tmp->e_rtype == INPUT || tmp->e_rtype == HERE_DOC))
+		head = head->next;
+	}
+	return (redrec);
+}
+
+t_redirec	*get_output(t_node *head)
+{
+	t_redirec	*redrec;
+	t_redirec	*tmp;
+	int			last_fd;
+
+	redrec = NULL;
+	last_fd = 1;
+	while (head != NULL)
+	{
+		tmp = (t_redirec *) head->content;
+		if (tmp->e_rtype == OUTPUT || tmp->e_rtype == APPEND)
 		{
-			if(last_fd != -1)
+			if(last_fd != 1)
 				close(last_fd);
 			last_fd = tmp->fd;
 			redrec = tmp;
