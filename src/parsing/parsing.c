@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/04 03:45:50 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/04 18:38:29 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ void	norm_redirection(t_redirec	*redrec, char **envp, int *index)
 {
 	char		*str;
 
+	redrec->fd = 0;
 	if (redrec->e_rtype != 3)
 	{
+		if (redrec->e_rtype == OUTPUT || redrec->e_rtype == APPEND)
+			redrec->fd = 1;
 		str = pure_arg(ft_strdup(redrec->file), envp);
 		redrec->after_expand = advanced_split(str);
 		free(str);
@@ -90,13 +93,6 @@ void	*parsing_redrection(t_node **head, char **envp, int *index)
 		remove_vide_string(&redrec->after_expand);
 		pure_after_expand(redrec->after_expand, envp);
 		(*index)++;
-		// if (double_pointer_len(redrec->after_expand) != 1)
-		// {
-		// 	ft_setter(1);
-		//ft_setter(1);
-		// 	printf_error("minishell: ", redrec->file, ": ambiguous redirect\n");
-		// 	return (NULL);
-		// }
 		temporary = temporary->next;
 	}
 	return ((void *)1);
@@ -167,8 +163,8 @@ void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(id, &status, 0);
-		if(WIFEXITED(status))
-			ft_setter(0);
+		// if(WIFEXITED(status))
+		// 	ft_setter(WEXITSTATUS(status)); //error
 		if(WIFSIGNALED(status))
 		{
 			ft_setter(1);
@@ -179,6 +175,22 @@ void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
 	return ((void *)1);
 }
 
+static int	ft_check(t_redirec *redirc)
+{
+	if (double_pointer_len(redirc->after_expand) != 1)
+	{
+		ft_setter(1);
+		printf_error("minishell: ", redirc->file, ": ambiguous redirect\n");
+		return (1);
+	}
+	if(redirc->fd < 0)
+	{
+		ft_setter(1);
+		printf_error("minishell: no such file or directory: ", redirc->after_expand[0], "\n");
+		return (1);
+	}
+	return (0);	
+}
 void	*open_file_descriptor(t_node **head)
 {
 	t_node		*temporary;
@@ -197,12 +209,8 @@ void	*open_file_descriptor(t_node **head)
 			redrec->fd = open(redrec->after_expand[0], O_WRONLY | O_APPEND | O_CREAT, 0666);
 		else if (redrec->e_rtype == HERE_DOC)
 			redrec->fd = open(redrec->path, O_RDONLY, 0666);
-		if(redrec->fd < 0)
-		{
-			ft_setter(1);
-			printf_error("minishell: no such file or directory: ", redrec->after_expand[0], "\n");
+		if (ft_check(redrec))
 			return (NULL);
-		}
 		temporary = temporary->next;
 	}
 	return ((void *)1);

@@ -203,3 +203,70 @@ at > out1 < Makefile < dfjkhgs > 8  << l | echo > out hello << l | wc -l > 9  < 
 
 leaks in herdoc
 
+bash: $lsfw: ambiguous redirect
+◦ env with no options or arguments
+
+
+
+-x _="/Users/waboutzo/Desktop/mini/./minishell"
+declare -x d=""
+declare -x x="rwrw"
+declare -x x1="242"
+declare -x x2="wjrwlj"
+minishell$ export x=1
+minishell$ ]\
+minishell: ]\: command not found
+minishell$ export x="ls"
+minishell$ $x
+Makefile        main.c          readme.txt      src
+a               minishell       ruin_my_code.c
+minishell$ export x="ls -a"
+minishell$ $x
+.               .vscode         main.c          ruin_my_code.c
+..              Makefile        minishell       src
+.git            a               readme.txt
+minishell$ ./3a
+minishell: ./3a: command not found
+minishell$ ./a
+minishell: ./a: command not found
+minishell$ 
+
+
+leaks Report Version: 4.0
+Process 7571: 588 nodes malloced for 319 KB
+Process 7571: 7 leaks for 176 total leaked bytes.
+
+    7 (176 bytes) ROOT LEAK: 0x7fded6d00c60 [32]
+       5 (128 bytes) 0x7fded6d00c20 [32]
+          3 (80 bytes) 0x7fded6d00c00 [32]
+             1 (32 bytes) 0x7fded6f00440 [32]
+             1 (16 bytes) 0x7fded6d00b20 [16]  length: 1  " "
+          1 (16 bytes) 0x7fded6d00b60 [16]  length: 1  "s"
+       1 (16 bytes) 0x7fded6d00c40 [16]  length: 1  "l"
+
+minishell$ cat << lim
+>'$USER'
+>lim
+'$USER'
+
+bash-3.2$ cat << lim
+> '$USER'
+> lim
+'waboutzo'
+
+
+
+minishell$ mkdir p
+minishell$ cd p/
+minishell$ pwd
+/Users/waboutzo/Desktop/mini/p
+minishell$ rm -rf ../p/
+minishell$ pwd
+/Users/waboutzo/Desktop/mini/p
+minishell$ unset PWD
+minishell$ pwd
+failed to get the current working directory
+minishell$ cd ..
+AddressSanitizer:DEADLYSIGNAL
+
+use chdir, fchdir -- change current working director

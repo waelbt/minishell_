@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 01:25:25 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/01 18:22:19 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/04 18:19:18 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	execute(char **after_expand, char ***env)
+int	execute(char **after_expand, char ***env, int flag)
 {
 	if (!(ft_strcmp(after_expand[0], "echo")))
 		echo(after_expand);
@@ -25,9 +25,9 @@ int	execute(char **after_expand, char ***env)
 	else if (!(ft_strcmp(after_expand[0], "unset")))
 		unset(env, after_expand);
 	else if (!(ft_strcmp(after_expand[0], "env")))
-		print_env(*env);
+		print_env(*env, after_expand);
 	else if (!(ft_strcmp(after_expand[0], "exit")))
-		my_exit(after_expand);
+		my_exit(after_expand, flag);
 	else
 		return (0);
 	return (1);

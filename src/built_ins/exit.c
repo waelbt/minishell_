@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 14:47:52 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/02 11:46:22 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/04 18:19:36 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_num(char *str)
 	int	i;
 
 	i = 0;
+	if (str[0] == '+' || str[0] == '-')
+		i++;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -26,12 +28,13 @@ int	is_num(char *str)
 	return (1);
 }
 
-void	my_exit(char **str)
+void	my_exit(char **str, int flag)
 {
 	int		len;
 
 	len = double_pointer_len(str);
-	printf_error("exit\n", NULL, NULL);
+	if(flag)
+		printf_error("exit\n", NULL, NULL);
 	if (len >= 2 && !is_num(str[1]))
 	{
 		printf_error("minishell: exit: ",

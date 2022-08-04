@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/04 03:22:09 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/04 18:20:31 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 	if (cmd->input != NULL)
 		dup_norm(cmd->input->fd, 0);
 	close(pipe_fd[0]);
-	if (cmd->after_expand && cmd->after_expand)
+	if (cmd->after_expand && cmd->after_expand && cmd->e_rtype == VALID)
 	{
-		if (!execute(cmd->after_expand, &env))
+		if (!execute(cmd->after_expand, &env, 0))
 		{
 			check_acces(&cmd->after_expand[0], env);
 			if (cmd->after_expand[0])
@@ -91,23 +91,20 @@ void	execution_multi_cmds(t_node *head, char **env)
 	{
 		cmd = (t_cmd *)head->content;
 		pipe(pipe_fd);
-		if (cmd->e_rtype == VALID)
-		{
 		id = fork();
-			if (id == 0)
-			{
-				signal(SIGINT, SIG_DFL);
-				child_work(head, env, pipe_fd, last_fd);
-			}
-			else
-			{
-				ft_setter(0);
-				if (head->next != NULL)
-					close(pipe_fd[1]);
-				if (last_fd != -1)
-					close(last_fd);
-				last_fd = pipe_fd[0];
-			}
+		if (id == 0)
+		{
+			signal(SIGINT, SIG_DFL);
+			child_work(head, env, pipe_fd, last_fd);
+		}
+		else
+		{
+			ft_setter(0);
+			if (head->next != NULL)
+				close(pipe_fd[1]);
+			if (last_fd != -1)
+				close(last_fd);
+			last_fd = pipe_fd[0];
 		}
 		head = head->next;
 	}
