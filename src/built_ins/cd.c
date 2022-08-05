@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/02 14:50:56 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/05 11:24:20 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,17 @@ void	update_paths(char ***env)
 
 void	cd(char *path, char ***env)
 {
+	int	index;
+
 	ft_setter(0);
 	if (!path)
 		return ;
+	index = get_index_of_double_char(*env, "PWD");
 	if (!(chdir(path) == -1))
-		update_paths(env);
+	{
+		if(index != -1)
+			update_paths(env);
+	}
 	else
 	{
 		ft_setter(1);

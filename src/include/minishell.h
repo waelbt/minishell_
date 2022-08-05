@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/04 18:19:59 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/05 11:00:21 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ char		**join_args(t_node *head);
 char		*check_cmd(char *cmd, char **envp);
 void		execution(t_node *head, char ***env);
 int			get_index_of_double_char(char **envp, char *var);
-char		**my_envp(char **envp);
 void		rl_replace_line (const char *text, int clear_undo);
 void		sig_handler(int sig);
 char		**ft_strdup_double(char **ptr);
@@ -164,7 +163,6 @@ void		print_env(char **envp, char **after_expand);
 void		cd(char *path, char ***env);
 void		echo(char **after_expand);
 void		my_export(char ***env, char **vars);
-char		**my_envp(char **envp);
 int			ft_atoi(const char *ptr);
 void		unset(char ***envp, char **var);
 void		rl_replace_line (const char *text, int clear_undo);
