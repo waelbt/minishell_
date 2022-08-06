@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/04 18:38:29 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/06 13:01:00 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ static int	ft_check(t_redirec *redirc)
 	if(redirc->fd < 0)
 	{
 		ft_setter(1);
-		printf_error("minishell: no such file or directory: ", redirc->after_expand[0], "\n");
+		perror("minishell");
 		return (1);
 	}
 	return (0);	
@@ -225,6 +225,8 @@ void	*parsing(t_node **command, char **envp, int *index)
 	while (temporary != NULL)
 	{
 		cmd = (t_cmd *)temporary->content;
+		if (temporary != *command)
+			ft_setter(0);
 		parsing_args(&(cmd)->args, envp);
 		parsing_redrection(&(cmd)->redrec, envp, index);
 		cmd->after_expand = join_args(cmd->args);

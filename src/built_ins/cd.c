@@ -6,99 +6,78 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/05 11:24:20 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/05 16:34:37 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**add_to_env(char *str, char **env)
+void	update_pwd(char ***env)
 {
-	char	**ptr;
-	int		index;
-
-	index = 0;
-	ptr = (char **) malloc((double_pointer_len(env) + 2) * sizeof(char *));
-	while (env[index])
-	{
-		ptr[index] = ft_strdup(env[index]);
-		index++;
-	}
-	ptr[index++] = str;
-	ptr[index] = NULL;
-	free_double_char(env, 0);
-	return (ptr);
-}
-
-void	oldpwd(char ***env, char *old_path)
-{
-	int		i;
 	int		index;
 	char	*str;
 
-	i = 0;
+	index = get_index_of_double_char(*env, "PWD");
+	if (index != -1)
+	{
+		free((*env)[index]);
+		str = getcwd(NULL, 0);
+		(*env)[index] = ft_strjoin("PWD=", str);
+		free(str);
+	}
+}
+
+void	update_oldpwd(char ***env, char *get_cwd,char *cwd_env)
+{
+	int		index;
+	char	*str;
+	char	*tmp;
+
 	str = NULL;
+	if (cwd_env)
+		str = cwd_env;
+	(void) get_cwd;
 	index = get_index_of_double_char(*env, "OLDPWD");
-	if (index == -1)
-		*env = add_to_env(old_path, *env);
-	else
+	if (index != -1)
 	{
-		while ((*env)[i])
+		free((*env)[index]);
+		(*env)[index] = ft_strdup("OLDPWD");
+		if(str)
 		{
-			if (i == index)
-			{
-				free((*env)[i]);
-				(*env)[i] = old_path;
-				break ;
-			}
-		i++;
+			tmp = (*env)[index];
+			(*env)[index] = ft_strjoin((*env)[index], "=");
+			free(tmp);
+			tmp = (*env)[index];
+			(*env)[index] = ft_strjoin((*env)[index], str);
+			free(tmp);
 		}
-	}		
-}
- 
-void	update_paths(char ***env)
-{
-	int		i;
-	char	*str;
-	char	*old_path;
-
-	i = 0;
-	old_path = NULL;
-	while ((*env)[i])
-	{
-		if (!ft_strncmp((*env)[i], "PWD=", 4))
-		{
-			str = ft_substr((*env)[i], 4, ft_strlen((*env)[i]));
-			old_path = ft_strjoin("OLDPWD=", str);
-			free((*env)[i]);
-			free(str);
-			str = getcwd(NULL, 0);
-			(*env)[i] = ft_strjoin("PWD=", str);
-			free(str);
-			break ;
-		}
-		i++;
 	}
-	oldpwd(env, strdup(old_path));
-	free(old_path);
 }
 
 void	cd(char *path, char ***env)
 {
-	int	index;
+	char	*cwd_env;
+	char	*get_cwd;
 
+	
 	ft_setter(0);
 	if (!path)
+	{
+		printf_error("minishell: ","cd: path is required","\n");
+		ft_setter(1);
 		return ;
-	index = get_index_of_double_char(*env, "PWD");
+	}
+	get_cwd = getcwd(NULL, 0);
+	cwd_env = getpwd(*env);
 	if (!(chdir(path) == -1))
 	{
-		if(index != -1)
-			update_paths(env);
+		update_pwd(env);
+		update_oldpwd(env, get_cwd,cwd_env);
 	}
 	else
 	{
 		ft_setter(1);
 		printf_error("minishell: ", path, ": No such file or directory\n");
 	}
+	free (cwd_env);
 }

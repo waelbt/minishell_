@@ -2,7 +2,6 @@ make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/waboutzo/Desktop/mini'
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_atoi.c -o src/libft/ft_atoi.o
 stty -echoctl
- 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_isalpha.c -o src/libft/ft_isalpha.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_lstadd_back.c -o src/libft/ft_lstadd_back.o
@@ -19,7 +18,6 @@ cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsan
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_lstadd_front.c -o src/libft/ft_lstadd_front.o
 stty -echoctl
- 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_lstlast.c -o src/libft/ft_lstlast.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_strchr.c -o src/libft/ft_strchr.o
@@ -46,7 +44,6 @@ cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsan
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/execution/execute_single_command.c -o src/execution/execute_single_command.o
 stty -echoctl
- 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/execution/execution_tools.c -o src/execution/execution_tools.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/execution/execute.c -o src/execution/execute.o
@@ -59,6 +56,7 @@ cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsan
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/parsing/quotes_parsing.c -o src/parsing/quotes_parsing.o
 stty -echoctl
+ 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/parsing/redirection_file.c -o src/parsing/redirection_file.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/parsing/get_important_data.c -o src/parsing/get_important_data.o

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/05 11:00:21 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/05 19:14:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "token.h"
 # include <signal.h>
 # include <fcntl.h>
+# 	include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -187,4 +188,6 @@ char		**env_split(char **envp, int i);
 void		free_var(t_env_var *var);
 t_redirec	*get_input(t_node *head);
 t_redirec	*get_output(t_node *head);
+char		*getpwd(char **env);
+char		**my_envp(char **envp);
 #endif

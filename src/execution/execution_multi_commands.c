@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/04 18:20:31 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/06 16:03:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	execution_multi_cmds(t_node *head, char **env)
 	t_cmd		*cmd;
 
 	last_fd = -1;
+	res = 0;
 	while (head != NULL)
 	{
 		cmd = (t_cmd *)head->content;
@@ -95,6 +96,7 @@ void	execution_multi_cmds(t_node *head, char **env)
 		if (id == 0)
 		{
 			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			child_work(head, env, pipe_fd, last_fd);
 		}
 		else
@@ -109,16 +111,15 @@ void	execution_multi_cmds(t_node *head, char **env)
 		head = head->next;
 	}
 	signal(SIGINT, SIG_IGN);
-	res = waitpid(-1, &status, 0);
 	while (res != -1)
 	{
+		res = waitpid(-1, &status, 0);
 		if (res == id)
 		{
 			ft_setter(WEXITSTATUS(status));
 			if (WIFSIGNALED(status))
 				ft_setter(WTERMSIG(status) + 128);
 		}
-		res = waitpid(-1, &status, 0);
 	}
 	signal(SIGINT, sig_handler);
 }

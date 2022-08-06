@@ -270,3 +270,9 @@ minishell$ cd ..
 AddressSanitizer:DEADLYSIGNAL
 
 use chdir, fchdir -- change current working director
+
+
+/// unset PWD; cd dir; OLDPWD=""
+/// unset PWD; cd dir; cd ..; OLDPWD="dirPAth"
+/// unset PWD OLDPWD; ....
+/// cd to home

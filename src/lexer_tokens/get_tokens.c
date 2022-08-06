@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/04 03:23:34 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/05 19:40:15 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_redirec	*init_redirection(t_token **token, t_lexer *lexer)
 			free((*token)->value);
 			(*token)->value = ft_strdup("newline");
 		}
+		ft_setter(258);
 		printf_error("minishell: syntax error near unexpected token `", (*token)->value, "'\n");
 		redrec->e_rtype = ERROR;
 	}
