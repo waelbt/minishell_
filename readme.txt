@@ -279,3 +279,26 @@ use chdir, fchdir -- change current working director
 
 
 i fix pipe leaks (tay i3awd itssti liya chi wa7d fe darari)
+
+
+cd src/
+unset PWD
+mkdir p
+cd p
+rm -rf ../p
+cd
+cd ..
+export
+export | grep PWD
+
+
+    10 (256 bytes) ROOT LEAK: 0x7fb17df00120 [32]
+       8 (208 bytes) 0x7fb17df000e0 [32]
+          6 (160 bytes) 0x7fb17dc044e0 [32]
+             4 (112 bytes) 0x7fb17dc044b0 [32]
+                3 (80 bytes) 0x7fb17de00130 [32]
+                   1 (32 bytes) 0x7fb17de00100 [32]
+                   1 (16 bytes) 0x7fb17de00120 [16]  length: 1  "l"
+             1 (16 bytes) 0x7fb17dc044d0 [16]  length: 1  "p"
+          1 (16 bytes) 0x7fb17df00110 [16]  length: 1  "x"
+       1 (16 bytes) 0x7fb17df00100 [16]  length: 1  "e"

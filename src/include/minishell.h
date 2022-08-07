@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/06 18:59:34 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/07 17:30:37 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
+# define BUFFER_SIZE 1
 typedef struct redirection
 {
 	int		fd;
@@ -87,6 +87,7 @@ typedef struct env_var
 	char	*value;
 }	t_env_var;
 
+char		*cwd_saver;
 int			ft_strlen(char *str);
 void		*ft_calloc(int count, int size);
 void		ft_bzero(void *s, int n);
@@ -189,4 +190,7 @@ t_redirec	*get_input(t_node *head);
 t_redirec	*get_output(t_node *head);
 char		*getpwd(char **env);
 char		**my_envp(char **envp);
+char		*get_next_line(int fd);
+char		*ft_strldup(const char *s1, int len);
+char		*ft_strjoin_beta(char *s1, char *s2);
 #endif

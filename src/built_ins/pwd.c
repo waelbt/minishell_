@@ -6,11 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:59 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 15:36:29 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/07 19:23:08 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+extern char *cwd_saver;
 
 char	*getpwd(char **env)
 {
@@ -24,7 +26,12 @@ char	*getpwd(char **env)
 	{
 		tmp = env_split(env, i);
 		if (!ft_strcmp(tmp[0], "PWD"))
-			str = ft_strdup(tmp[1]);
+		{
+			if (!tmp[1])
+				str = ft_strdup("");
+			else
+				str = ft_strdup(tmp[1]);
+		}
 		i++;
 		free_double_char(tmp, 0);
 	}
@@ -40,11 +47,7 @@ void	pwd(char **env)
 	ptr = getcwd(NULL, 0);
 	ft_setter(0);
 	if (!str && !ptr)
-	{
-		ft_setter(127);
-		printf_error("failed to get the current working directory\n",
-			NULL, NULL);
-	}
+		printf("%s\n", cwd_saver);
 	else if (!str)
 		printf("%s\n", ptr);
 	else

@@ -6,11 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/07 16:22:09 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/07 18:47:05 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+extern char *cwd_saver;
 
 char	*check_cmd(char *cmd, char **envp)
 {
@@ -85,6 +87,7 @@ void	execution_multi_cmds(t_node *head, char **env)
 	int			res;
 	int			status;
 	t_cmd		*cmd;
+	char		*tmp;
 
 	last_fd = -1;
 	res = 0;
@@ -92,6 +95,12 @@ void	execution_multi_cmds(t_node *head, char **env)
 	{
 		cmd = (t_cmd *)head->content;
 		pipe(pipe_fd);
+		tmp = getcwd(NULL, 0);
+		if(ft_strcmp(cmd->after_expand[0], "pwd") && tmp)
+		{
+			free(cwd_saver);
+			cwd_saver = tmp;
+		}
 		id = fork();
 		if (id == 0)
 		{

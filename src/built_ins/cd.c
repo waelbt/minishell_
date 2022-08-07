@@ -6,11 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/06 18:46:59 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/07 19:02:24 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+extern char *cwd_saver;
 
 void	update_pwd(char ***env)
 {
@@ -36,13 +38,14 @@ void	update_oldpwd(char ***env, char *get_cwd,char *cwd_env)
 	str = NULL;
 	if (cwd_env)
 		str = cwd_env;
-	(void) get_cwd;
+	else if (get_cwd)
+		str = get_cwd;
 	index = get_index_of_double_char(*env, "OLDPWD");
 	if (index != -1)
 	{
 		free((*env)[index]);
 		(*env)[index] = ft_strdup("OLDPWD");
-		if(str)
+		if(str && !access(cwd_saver, X_OK))
 		{
 			tmp = (*env)[index];
 			(*env)[index] = ft_strjoin((*env)[index], "=");

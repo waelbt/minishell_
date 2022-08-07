@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:23:51 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/05 15:45:56 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/07 16:26:12 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ void	here_doc(t_redirec *redirc, char **envp)
 		perror("minishell");
 		return ;
 	}
-	write(1, ">", 1);
-	str = readline("\033[0;35> \033[0;37m");
+	str = readline("> ");
 	while (str && ft_strcmp(str, redirc->after_expand[0]))
 	{
 		if (!ft_strchr(redirc->file, '\'')
@@ -70,8 +69,7 @@ void	here_doc(t_redirec *redirc, char **envp)
 			write(fd, str, ft_strlen(str));
 		write(fd, "\n", 1);
 		free(str);
-		write(1, ">", 1);
-		str = readline("\033[0;35> \033[0;37m");
+		str = readline("> ");
 	}
 	free(str);
 	close(fd);

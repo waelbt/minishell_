@@ -6,11 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 21:43:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/07 15:21:14 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/07 18:46:28 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+extern char *cwd_saver;
 
 void	ft_execve(t_cmd *cmd, char ***env)
 {
@@ -46,8 +48,15 @@ void	ft_execve(t_cmd *cmd, char ***env)
 void	execution_cmd(t_node *head, char ***env)
 {
 	t_cmd		*cmd;
+	char		*tmp;
 
 	cmd = (t_cmd *)head->content;
+	tmp = getcwd(NULL, 0);
+	if(ft_strcmp(cmd->after_expand[0], "pwd") && tmp)
+	{
+		free(cwd_saver);
+		cwd_saver = tmp;
+	}
 	if(cmd->e_rtype == VALID)
 	{
 		if (!(cmd->after_expand && cmd->after_expand[0]))

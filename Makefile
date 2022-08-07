@@ -6,7 +6,7 @@
 #    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 11:25:03 by yojoundi          #+#    #+#              #
-#    Updated: 2022/08/06 18:44:31 by waboutzo         ###   ########.fr        #
+#    Updated: 2022/08/07 19:19:33 by waboutzo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,14 @@ INC = -I include
 RM = rm -rf
 MYDIR= objects_files
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include -g -fsanitize=address
 OBJ=$(SRCS:.c=.o)
 OBJBONUS=$(SRCBONUS:.c=.o)
 
 BUILT_INS	=	cd echo env exit export pwd unset
 
-TOOLS		=	advanced_split double_pointer_lib free_node print_function tools
+TOOLS		=	advanced_split double_pointer_lib free_node print_function tools\
+				get_next_line_utils get_next_line
 
 ECECUTION	=	execute_single_command execution_tools\
 				execute execution_multi_commands exit_code
