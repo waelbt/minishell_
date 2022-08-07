@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/05 16:34:37 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/06 18:46:59 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,5 @@ void	cd(char *path, char ***env)
 		printf_error("minishell: ", path, ": No such file or directory\n");
 	}
 	free (cwd_env);
+	free (get_cwd);
 }

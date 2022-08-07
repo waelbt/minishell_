@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 14:47:52 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/06 18:27:04 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/06 18:42:36 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	is_num(char *str)
 void	my_exit(char **str, int flag)
 {
 	int		len;
-	long	i;
 
 	len = double_pointer_len(str);
 	if(flag)

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/05 19:14:07 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/06 18:59:34 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "token.h"
 # include <signal.h>
 # include <fcntl.h>
-# 	include <errno.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -86,7 +86,6 @@ typedef struct env_var
 	char	*name;
 	char	*value;
 }	t_env_var;
-
 
 int			ft_strlen(char *str);
 void		*ft_calloc(int count, int size);

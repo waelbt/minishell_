@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 21:43:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/05 19:44:36 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/07 15:21:14 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_execve(char **after_expand, char ***env)
+void	ft_execve(t_cmd *cmd, char ***env)
 {
 	int	id;
 	int	status;
@@ -20,12 +20,16 @@ void	ft_execve(char **after_expand, char ***env)
 	id = fork();
 	if (id == 0)
 	{
-		check_acces(&after_expand[0], *env);
-		if (after_expand[0])
+		if (cmd->output != NULL)
+			dup_norm(cmd->output->fd, 1);
+		if (cmd->input != NULL)
+			dup_norm(cmd->input->fd, 0);
+		check_acces(&cmd->after_expand[0], *env);
+		if (cmd->after_expand[0])
 		{
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
-			execve(after_expand[0], after_expand, *env);
+			execve(cmd->after_expand[0], cmd->after_expand, *env);
 		}
 		exit(127);
 	}
@@ -42,7 +46,6 @@ void	ft_execve(char **after_expand, char ***env)
 void	execution_cmd(t_node *head, char ***env)
 {
 	t_cmd		*cmd;
-	int			fd[2];
 
 	cmd = (t_cmd *)head->content;
 	if(cmd->e_rtype == VALID)
@@ -52,15 +55,7 @@ void	execution_cmd(t_node *head, char ***env)
 			ft_setter(0);
 			return ;
 		}
-		fd[1] = dup(1);
-		fd[0] = dup(0);
-		if (cmd->output != NULL)
-			dup_norm(cmd->output->fd, 1);
-		if (cmd->input != NULL)
-			dup_norm(cmd->input->fd, 0);
 		if (!execute(cmd->after_expand, env, 1))
-			ft_execve(cmd->after_expand, env);
-		dup_norm(fd[1], 1);
-		dup_norm(fd[0], 0);
+			ft_execve(cmd, env);
 	}
 }

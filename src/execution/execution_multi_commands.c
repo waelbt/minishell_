@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/06 16:03:07 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/07 16:02:25 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 	if (cmd->input != NULL)
 		dup_norm(cmd->input->fd, 0);
 	close(pipe_fd[0]);
-	if (cmd->after_expand && cmd->after_expand && cmd->e_rtype == VALID)
+	if (cmd->after_expand[0] && cmd->after_expand && cmd->e_rtype == VALID)
 	{
 		if (!execute(cmd->after_expand, &env, 0))
 		{
@@ -102,10 +102,11 @@ void	execution_multi_cmds(t_node *head, char **env)
 		else
 		{
 			ft_setter(0);
-			if (head->next != NULL)
-				close(pipe_fd[1]);
 			if (last_fd != -1)
 				close(last_fd);
+			if (!head->next)
+				close(pipe_fd[0]);
+			close(pipe_fd[1]);
 			last_fd = pipe_fd[0];
 		}
 		head = head->next;
