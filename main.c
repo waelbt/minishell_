@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/06 18:55:57 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/07 16:20:28 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	sig_handler(int sig)
 	(void) sig;
 	ft_setter(1);
 	write(1, "\n", 1);
-	rl_on_new_line();
 	rl_replace_line("", 0);
+	rl_on_new_line();
 	rl_redisplay();
 }
 

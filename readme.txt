@@ -276,3 +276,6 @@ use chdir, fchdir -- change current working director
 /// unset PWD; cd dir; cd ..; OLDPWD="dirPAth"
 /// unset PWD OLDPWD; ....
 /// cd to home
+
+
+i fix pipe leaks (tay i3awd itssti liya chi wa7d fe darari)
