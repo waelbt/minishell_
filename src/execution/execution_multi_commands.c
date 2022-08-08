@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/07 18:47:05 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/08 19:03:36 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,10 @@
 
 extern char *cwd_saver;
 
-char	*check_cmd(char *cmd, char **envp)
-{
-	char	**paths;
-	char	*tmp[3];
-	int		i;
-
-	i = 0;
-	tmp[2] = NULL;
-	paths = ft_split(get_path(envp), ':');
-	if (paths)
-	{
-		while (paths[i++])
-		{
-			tmp[0] = paths[i];
-			tmp[1] = ft_strdup(cmd);
-			paths[i] = ft_strjoin(tmp[0], tmp[1]);
-			if (access(paths[i], X_OK) == 0)
-				tmp[2] = ft_strdup(paths[i]);
-			free(paths[i]);
-			free(tmp[0]);
-			free(tmp[1]);
-		}
-	}
-	if (!invalid_command_error(cmd, tmp[2], paths))
-		return (NULL);
-	free(paths);
-	free(cmd);
-	return (tmp[2]);
-}
+// char	*check_cmd(char *cmd, char **envp)
+// {
+	
+// }
 
 void	dup_norm(int fildes1, int fildes2)
 {
@@ -68,10 +43,9 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 	{
 		if (!execute(cmd->after_expand, &env, 0))
 		{
-			check_acces(&cmd->after_expand[0], env);
-			if (cmd->after_expand[0])
-				execve(cmd->after_expand[0], cmd->after_expand, env);
-			ft_setter(127);
+			check_cmd(&cmd->after_expand[0], env);
+			execve(cmd->after_expand[0], cmd->after_expand, env);
+			error_handling(cmd->after_expand[0], 1);
 		}
 	}
 	else

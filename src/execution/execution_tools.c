@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/05 19:31:47 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:57:48 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,44 @@ char	*get_path(char **envp)
 	return (NULL);
 }
 
-char	*invalid_command_error(char *cmd, char *path, char **paths)
+
+char *cmd_with_path(char *cmd, char **envp)
 {
-	if (paths == NULL)
-		printf_error("minishell: ", (cmd + 1), ": No such file or directory\n");
-	else if (!ft_strcmp(cmd, "/"))
-		printf_error("minishell: ", NULL, ": command not found\n");
-	else if (path == NULL)
-		printf_error("minishell: ", (cmd + 1), ": command not found\n");
-	else
-		return ((void *)1);
-	free(cmd);
-	return (NULL);
-}
-void check_acces(char **cmd, char **envp)
-{
-	if (access(*cmd, X_OK))
+	char	**paths;
+	char	*tmp[3];
+	int		i;
+
+	i = -1;
+	tmp[2] = NULL;
+	paths = split_path(get_path(envp), ':');
+	if (!paths)
+		return (cmd);
+	while (paths[++i])
 	{
-		if (ft_strchr(*cmd, '/'))
-		{
-			printf_error("minishell: ", *cmd, ": command not found\n");
-			free(*cmd);
-			*cmd = NULL;
-			return ;
-		}
-		*cmd = ft_strjoin("/", *cmd);
-		*cmd = check_cmd(*cmd, envp);
+		tmp[0] = paths[i];
+		tmp[1] = ft_strdup(cmd);
+		paths[i] = ft_strjoin(tmp[0], tmp[1]);
+		if (access(paths[i], X_OK) == 0)
+			tmp[2] = ft_strdup(paths[i]);
+		free(paths[i]);
+		free(tmp[0]);
+		free(tmp[1]);
+	}
+	free(paths);
+	free(cmd);
+	return tmp[2];
+}
+
+void check_cmd(char **cmd, char **envp)
+{
+	char	*absolute_cmd;
+
+	absolute_cmd = NULL;
+	if (!ft_strchr(*cmd, '/'))
+		absolute_cmd = cmd_with_path(ft_strjoin("/", *cmd), envp);
+	if (absolute_cmd && ft_strcmp(*cmd, "") && ft_strcmp(*cmd, "/"))
+	{
+		free(*cmd);
+		*cmd = absolute_cmd;
 	}
 }

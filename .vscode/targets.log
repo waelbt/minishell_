@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Sun Aug  7 22:14:35 2022
+# Make data base, printed on Mon Aug  8 16:46:31 2022
 
 # Variables
 
@@ -43,7 +43,7 @@ SRCS = $(addsuffix .c, $(addprefix src/libft/, $(LIBFT))) $(addsuffix .c, $(addp
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.XBrDYN2Mti/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.LXuzkgH53j/Render
 # environment
 PATH = /Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # makefile (from `Makefile', line 16)
@@ -57,7 +57,7 @@ ELECTRON_RUN_AS_NODE = 1
 # makefile (from `Makefile', line 36)
 PARSING = dollar_parsing quotes_parsing redirection_file get_important_data parsing delimiter_parsing parsing_ 
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.m46IUye1LE/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.CKfAKQ1R5j/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -93,7 +93,6 @@ MAKECMDGOALS := all
 # environment
 HOMEBREW_CACHE = /tmp/waboutzo/Homebrew/Caches
 # environment
- 
 SHLVL = 1
 # makefile (from `Makefile', line 32)
 LIBFT = ft_atoi ft_isalpha ft_lstadd_back ft_lstdelone ft_lstsize ft_strcat ft_strdup ft_isdigit ft_lstadd_front ft_lstlast ft_strchr ft_strjoin ft_strncmp ft_calloc ft_itoa ft_lstclear ft_lstnew ft_split ft_strcmp ft_strlen ft_substr 
@@ -136,7 +135,7 @@ MFLAGS = -Rrqp
 # makefile (from `Makefile', line 30)
 LEXER = get_tokens lexer lexer2 token
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000002.Electron
+XPC_SERVICE_NAME = com.microsoft.VSCode.4392
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -145,8 +144,6 @@ XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000002.Electron
 OBJBONUS = $(SRCBONUS:.c=.o)
 # environment
 __CF_USER_TEXT_ENCODING = 0x10C2:0x0:0x0
-# environment
-COMMAND_MODE = unix2003
 # default
 MAKEFILES := 
 # automatic
@@ -155,8 +152,6 @@ MAKEFILES :=
 PAGER = less
 # environment
 LC_ALL = C
-# environment
-SECURITYSESSIONID = 186aa
 # automatic
 ^F = $(notdir $^)
 # default
@@ -168,13 +163,13 @@ BUILT_INS = cd echo env exit export pwd unset
 # environment
 MAKELEVEL := 0
 # makefile (from `Makefile', line 24)
-TOOLS = advanced_split double_pointer_lib free_node print_function tools get_next_line_utils get_next_line
+TOOLS = advanced_split double_pointer_lib free_node print_function tools get_next_line_utils get_next_line path_split
 # environment
 LANG = C
 # environment
-VSCODE_PID = 6672
+VSCODE_PID = 60848
 # variable set hash-table stats:
-# Load=80/1024=8%, Rehash=0, Collisions=7/114=6%
+# Load=78/1024=8%, Rehash=0, Collisions=7/112=6%
 
 # Pattern-specific Variable Values
 
@@ -182,9 +177,9 @@ VSCODE_PID = 6672
 
 # Directories
 
-# . (device 16777227, inode 5270276): 14 files, no impossibilities.
+# . (device 16777227, inode 5270276): 15 files, no impossibilities.
 
-# 14 files, no impossibilities in 1 directories.
+# 15 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -195,7 +190,8 @@ VSCODE_PID = 6672
 # Not a target:
 src/parsing/parsing.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:52
+ 
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -204,7 +200,7 @@ src/parsing/parsing.o:
 # Not a target:
 src/libft/ft_strncmp.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -213,7 +209,7 @@ src/libft/ft_strncmp.o:
 # Not a target:
 src/parsing/delimiter_parsing.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -222,7 +218,7 @@ src/parsing/delimiter_parsing.o:
 # Not a target:
 src/parsing/get_important_data.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -231,7 +227,7 @@ src/parsing/get_important_data.o:
 # Not a target:
 src/libft/ft_strcmp.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -250,7 +246,7 @@ all: minishell
 # Not a target:
 src/libft/ft_lstadd_front.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -259,7 +255,7 @@ src/libft/ft_lstadd_front.o:
 # Not a target:
 src/lexer_tokens/lexer2.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -268,7 +264,7 @@ src/lexer_tokens/lexer2.o:
 # Not a target:
 src/libft/ft_strdup.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -277,7 +273,7 @@ src/libft/ft_strdup.o:
 # Not a target:
 src/libft/ft_lstdelone.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -291,7 +287,7 @@ src/libft/ft_lstdelone.o:
 # Not a target:
 src/execution/execution_tools.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -300,7 +296,7 @@ src/execution/execution_tools.o:
 # Not a target:
 src/tools/advanced_split.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -309,7 +305,7 @@ src/tools/advanced_split.o:
 # Not a target:
 src/built_ins/pwd.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -318,7 +314,7 @@ src/built_ins/pwd.o:
 # Not a target:
 src/libft/ft_strchr.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -327,7 +323,7 @@ src/libft/ft_strchr.o:
 # Not a target:
 src/built_ins/exit.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -336,7 +332,7 @@ src/built_ins/exit.o:
 # Not a target:
 src/built_ins/cd.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -345,7 +341,7 @@ src/built_ins/cd.o:
 # Not a target:
 src/parsing/redirection_file.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -354,7 +350,7 @@ src/parsing/redirection_file.o:
 # Not a target:
 src/built_ins/echo.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -369,7 +365,7 @@ src/built_ins/echo.o:
 # Not a target:
 src/lexer_tokens/get_tokens.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -378,7 +374,7 @@ src/lexer_tokens/get_tokens.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:19:33
+#  Last modified 2022-08-08 16:16:47
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -387,7 +383,16 @@ Makefile:
 # Not a target:
 src/built_ins/export.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+src/tools/path_split.o:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-08 16:41:54
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -396,17 +401,16 @@ src/built_ins/export.o:
 # Not a target:
 src/libft/ft_atoi.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
- 
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 src/tools/get_next_line_utils.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:13
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -415,7 +419,7 @@ src/tools/get_next_line_utils.o:
 # Not a target:
 src/execution/execution_multi_commands.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -424,7 +428,7 @@ src/execution/execution_multi_commands.o:
 # Not a target:
 src/libft/ft_lstadd_back.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -433,7 +437,7 @@ src/libft/ft_lstadd_back.o:
 # Not a target:
 src/parsing/dollar_parsing.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -442,15 +446,16 @@ src/parsing/dollar_parsing.o:
 # Not a target:
 src/parsing/parsing_.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-minishell: src/libft/ft_atoi.o src/libft/ft_isalpha.o src/libft/ft_lstadd_back.o src/libft/ft_lstdelone.o src/libft/ft_lstsize.o src/libft/ft_strcat.o src/libft/ft_strdup.o src/libft/ft_isdigit.o src/libft/ft_lstadd_front.o src/libft/ft_lstlast.o src/libft/ft_strchr.o src/libft/ft_strjoin.o src/libft/ft_strncmp.o src/libft/ft_calloc.o src/libft/ft_itoa.o src/libft/ft_lstclear.o src/libft/ft_lstnew.o src/libft/ft_split.o src/libft/ft_strcmp.o src/libft/ft_strlen.o src/libft/ft_substr.o src/execution/execute_single_command.o src/execution/execution_tools.o src/execution/execute.o src/execution/execution_multi_commands.o src/execution/exit_code.o src/parsing/dollar_parsing.o src/parsing/quotes_parsing.o src/parsing/redirection_file.o src/parsing/get_important_data.o src/parsing/parsing.o src/parsing/delimiter_parsing.o src/parsing/parsing_.o src/lexer_tokens/get_tokens.o src/lexer_tokens/lexer.o src/lexer_tokens/lexer2.o src/lexer_tokens/token.o src/built_ins/cd.o src/built_ins/echo.o src/built_ins/env.o src/built_ins/exit.o src/built_ins/export.o src/built_ins/pwd.o src/built_ins/unset.o src/tools/advanced_split.o src/tools/double_pointer_lib.o src/tools/free_node.o src/tools/print_function.o src/tools/tools.o src/tools/get_next_line_utils.o src/tools/get_next_line.o
+minishell: src/libft/ft_atoi.o src/libft/ft_isalpha.o src/libft/ft_lstadd_back.o src/libft/ft_lstdelone.o src/libft/ft_lstsize.o src/libft/ft_strcat.o src/libft/ft_strdup.o src/libft/ft_isdigit.o src/libft/ft_lstadd_front.o src/libft/ft_lstlast.o src/libft/ft_strchr.o src/libft/ft_strjoin.o src/libft/ft_strncmp.o src/libft/ft_calloc.o src/libft/ft_itoa.o src/libft/ft_lstclear.o src/libft/ft_lstnew.o src/libft/ft_split.o src/libft/ft_strcmp.o src/libft/ft_strlen.o src/libft/ft_substr.o src/execution/execute_single_command.o src/execution/execution_tools.o src/execution/execute.o src/execution/execution_multi_commands.o src/execution/exit_code.o src/parsing/dollar_parsing.o src/parsing/quotes_parsing.o src/parsing/redirection_file.o src/parsing/get_important_data.o src/parsing/parsing.o src/parsing/delimiter_parsing.o src/parsing/parsing_.o src/lexer_tokens/get_tokens.o src/lexer_tokens/lexer.o src/lexer_tokens/lexer2.o src/lexer_tokens/token.o src/built_ins/cd.o src/built_ins/echo.o src/built_ins/env.o src/bui 
+lt_ins/exit.o src/built_ins/export.o src/built_ins/pwd.o src/built_ins/unset.o src/tools/advanced_split.o src/tools/double_pointer_lib.o src/tools/free_node.o src/tools/print_function.o src/tools/tools.o src/tools/get_next_line_utils.o src/tools/get_next_line.o src/tools/path_split.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-08-07 19:23:13
+#  Last modified 2022-08-08 16:41:54
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -463,7 +468,7 @@ minishell: src/libft/ft_atoi.o src/libft/ft_isalpha.o src/libft/ft_lstadd_back.o
 # Not a target:
 src/execution/execute.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -478,7 +483,7 @@ bonus:
 # Not a target:
 src/libft/ft_itoa.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -496,7 +501,7 @@ src/libft/ft_itoa.o:
 # Not a target:
 src/execution/execute_single_command.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -505,7 +510,7 @@ src/execution/execute_single_command.o:
 # Not a target:
 src/libft/ft_strlen.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -523,7 +528,7 @@ fclean: clean
 # Not a target:
 src/libft/ft_isdigit.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -532,7 +537,7 @@ src/libft/ft_isdigit.o:
 # Not a target:
 src/libft/ft_lstlast.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -541,7 +546,7 @@ src/libft/ft_lstlast.o:
 # Not a target:
 src/built_ins/env.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -550,7 +555,7 @@ src/built_ins/env.o:
 # Not a target:
 src/execution/exit_code.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -565,7 +570,7 @@ src/execution/exit_code.o:
 # Not a target:
 src/libft/ft_strjoin.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -574,7 +579,7 @@ src/libft/ft_strjoin.o:
 # Not a target:
 src/libft/ft_split.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -583,7 +588,7 @@ src/libft/ft_split.o:
 # Not a target:
 src/tools/tools.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:13
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -592,7 +597,7 @@ src/tools/tools.o:
 # Not a target:
 src/libft/ft_lstclear.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -607,7 +612,7 @@ re: fclean all
 # Not a target:
 src/lexer_tokens/lexer.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -625,7 +630,7 @@ clean:
 # Not a target:
 src/tools/get_next_line.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:13
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -634,7 +639,7 @@ src/tools/get_next_line.o:
 # Not a target:
 src/libft/ft_strcat.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -643,7 +648,7 @@ src/libft/ft_strcat.o:
 # Not a target:
 src/built_ins/unset.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -652,17 +657,16 @@ src/built_ins/unset.o:
 # Not a target:
 src/tools/print_function.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:13
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
- 
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 src/tools/double_pointer_lib.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -671,7 +675,7 @@ src/tools/double_pointer_lib.o:
 # Not a target:
 src/libft/ft_lstnew.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -680,7 +684,7 @@ src/libft/ft_lstnew.o:
 # Not a target:
 src/parsing/quotes_parsing.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -689,7 +693,7 @@ src/parsing/quotes_parsing.o:
 # Not a target:
 src/libft/ft_calloc.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -698,7 +702,7 @@ src/libft/ft_calloc.o:
 # Not a target:
 src/libft/ft_substr.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:11
+#  Last modified 2022-08-08 16:41:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -707,7 +711,7 @@ src/libft/ft_substr.o:
 # Not a target:
 src/tools/free_node.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -716,7 +720,7 @@ src/tools/free_node.o:
 # Not a target:
 src/libft/ft_isalpha.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -725,7 +729,7 @@ src/libft/ft_isalpha.o:
 # Not a target:
 src/libft/ft_lstsize.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:10
+#  Last modified 2022-08-08 16:41:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -734,14 +738,15 @@ src/libft/ft_lstsize.o:
 # Not a target:
 src/lexer_tokens/token.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 19:23:12
+#  Last modified 2022-08-08 16:41:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
+ 
 # files hash-table stats:
-# Load=62/1024=6%, Rehash=0, Collisions=4/135=3%
+# Load=63/1024=6%, Rehash=0, Collisions=4/137=3%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -753,6 +758,6 @@ src/lexer_tokens/token.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sun Aug  7 22:14:35 2022
+# Finished Make data base on Mon Aug  8 16:46:31 2022
 
  

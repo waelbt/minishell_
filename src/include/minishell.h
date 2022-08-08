@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/07 17:30:37 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/08 19:03:24 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/stat.h>
 # define BUFFER_SIZE 1
 typedef struct redirection
 {
@@ -150,7 +151,7 @@ char		*invalid_command_error(char *cmd, char *path, char **paths);
 char		*get_path(char **envp);
 void		ft_close(t_node *head);
 char		**join_args(t_node *head);
-char		*check_cmd(char *cmd, char **envp);
+void		check_cmd(char **cmd, char **envp);
 void		execution(t_node *head, char ***env);
 int			get_index_of_double_char(char **envp, char *var);
 void		rl_replace_line (const char *text, int clear_undo);
@@ -193,4 +194,7 @@ char		**my_envp(char **envp);
 char		*get_next_line(int fd);
 char		*ft_strldup(const char *s1, int len);
 char		*ft_strjoin_beta(char *s1, char *s2);
+char		**split_path(char *s, char c);
+void		error_handling(char *cmd, int flag);
+int 		is_directory(const char *path);
 #endif
