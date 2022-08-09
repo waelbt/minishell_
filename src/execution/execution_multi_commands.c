@@ -69,7 +69,7 @@ void	execution_multi_cmds(t_node *head, char **env)
 	int			res;
 	int			status;
 	t_cmd		*cmd;
-//	char		*tmp;
+	char		*tmp;
 
 	last_fd = -1;
 	res = 0;
