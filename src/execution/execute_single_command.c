@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 21:43:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 17:03:17 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 22:21:20 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,6 @@ void	ft_execve(t_cmd *cmd, char ***env)
 	id = fork();
 	if (id == 0)
 	{
-		if (cmd->output != NULL)
-			dup_norm(cmd->output->fd, 1);
-		if (cmd->input != NULL)
-			dup_norm(cmd->input->fd, 0);
 		error_handling(cmd->after_expand[0]);
 		path = check_cmd(cmd->after_expand[0], *env);
 		signal(SIGINT, SIG_DFL);
@@ -89,7 +85,8 @@ void	execution_cmd(t_node *head, char ***env)
 {
 	t_cmd		*cmd;
 	char		*tmp;
-
+	int			t[2];
+	
 	cmd = (t_cmd *)head->content;
 	if(cmd->e_rtype == VALID)
 	{
@@ -98,13 +95,24 @@ void	execution_cmd(t_node *head, char ***env)
 			ft_setter(0);
 			return ;
 		}
-		tmp = getcwd(NULL, 0);
-		if(ft_strcmp(cmd->after_expand[0], "pwd") && tmp)
+		if(ft_strcmp(cmd->after_expand[0], "pwd"))
 		{
-			free(cwd_saver);
-			cwd_saver = tmp;
+			tmp =  getcwd(NULL, 0);
+			if(tmp)
+			{
+				free(cwd_saver);
+				cwd_saver = tmp;
+			}
 		}
+		t[0] = dup(0);
+		t[1] = dup(1);
+		if (cmd->output != NULL)
+			dup_norm(cmd->output->fd, 1);
+		if (cmd->input != NULL)
+			dup_norm(cmd->input->fd, 0);
 		if (!execute(cmd->after_expand, env, 1))
 			ft_execve(cmd, env);
+		dup_norm(t[0], 0);
+		dup_norm(t[1], 1);
 	}
 }

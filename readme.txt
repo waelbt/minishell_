@@ -330,3 +330,42 @@ minishell: ../minishell: command not found
 bash-3.2$ cat << "$USER"
 
 close last file_descrp
+
+$ /bin//////////ls
+minishell: /bin//////////ls: command not found
+
+/bin/////////ls
+Makefile        ls              minishell       readme.txt      src
+a.out           main.c          minishell.dSYM  ruin_my_code.c
+
+<< $""
+cd Desktop
+
+
+minishell$ ls
+Makefile        minishell       out             ruin_my_code.c
+main.c          minishell.dSYM  readme.txt      src
+minishell$ echo $"$PATH"
+/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/bin
+minishell$ echo $$"$PATH"
+\$/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/bin
+minishell$ echo $$"$PATH"LL
+$/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/binLL
+minishell$ echo $$"$PATH"ll
+$/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/binll
+minishell$ echo $$"$PATH"$ll
+$/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/bin
+minishell$ echo $$"$PATH"$ll$USER
+$/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/binwaboutzo
+minishell$ cat << $USER
+> $USER
+minishell$ cat << $USER
+> $USE
+> $USER
+
+minishell$ cat << $USER
+> $USE
+> cat << $USER
+minishell$ cat << $USER
+
+echo $"$USER"$$

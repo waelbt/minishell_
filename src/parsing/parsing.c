@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 18:31:09 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 22:30:48 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,25 @@ char *simple(t_lexer *lexer, int c)
 	lexer_advance(lexer);
 	return (value);
 }
+
+char	*delimiter_cases(t_lexer *lexer)
+{
+	char *s;
+	if (lexer->c == '$')
+	{
+		if(lexer->contents[lexer->i + 1] == 34 ||
+			lexer->contents[lexer->i + 1] == 39)
+			lexer_advance(lexer);
+	}
+	if (lexer->c == '\'' || lexer->c == '"')
+		return (simple(lexer, lexer->c));
+	else
+	{
+		s = lexer_get_current_char_as_string(lexer);
+		lexer_advance(lexer);
+		return (s);
+	}
+}
 char	*get_value(char *str)
 {
 	t_lexer *lexer;
@@ -86,13 +105,7 @@ char	*get_value(char *str)
 	value[0] =  '\0';
 	while(lexer->c != '\0')
 	{
-		if (lexer->c == '\'' || lexer->c == '"')
-			s = simple(lexer, lexer->c);
-		else
-		{
-			s = lexer_get_current_char_as_string(lexer);
-			lexer_advance(lexer);
-		}
+		s = delimiter_cases(lexer);
 		tmp = value;
 		value = ft_strjoin(value, s);
 		free(tmp);

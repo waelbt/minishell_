@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 17:01:09 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 21:46:33 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ char *check_cmd(char *cmd, char **envp)
 	char	*absolute_cmd;
 	char	*tmp;
 
+	if(ft_strchr(cmd, '/') )
+		return cmd;
 	absolute_cmd = cmd_with_path(cmd, envp);
 	if (absolute_cmd)
 		return (absolute_cmd);
