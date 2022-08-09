@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:13:56 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/02 23:26:22 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/07/30 09:57:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 typedef struct LEXER_STRUCT
 {
 	char			c;
-	unsigned int	i;
+	int	i;
 	char			*contents;
 }	t_lexer;
   

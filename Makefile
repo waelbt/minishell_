@@ -1,31 +1,66 @@
-exec	=	minishell
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/03/14 11:25:03 by yojoundi          #+#    #+#              #
+#    Updated: 2022/08/08 19:13:24 by lchokri          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-sources =	$(wildcard src/*.c) $(wildcard src/libft_tools/*.c)
+NAME = minishell
+INC = -I include
+RM = rm -rf
+MYDIR= objects_files
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include -g -fsanitize=address
+OBJ=$(SRCS:.c=.o)
+OBJBONUS=$(SRCBONUS:.c=.o)
 
-objects =	$(sources:.c=.o)
+BUILT_INS	=	cd echo env exit export pwd unset
 
-flags	=	-Wall -Wextra -Werror -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include #-g -fsanitize=address
+TOOLS		=	advanced_split double_pointer_lib free_node print_function tools\
+				get_next_line_utils get_next_line path_split
 
-CC		=	gcc
+ECECUTION	=	execute_single_command execution_tools\
+				execute execution_multi_commands exit_code
 
-RM		= 	rm -f
+LEXER		=	get_tokens lexer lexer2 token
 
+LIBFT		=	ft_atoi ft_isalpha ft_lstadd_back ft_lstdelone ft_lstsize ft_strcat ft_strdup \
+				ft_isdigit ft_lstadd_front ft_lstlast ft_strchr ft_strjoin ft_strncmp \
+				ft_calloc ft_itoa ft_lstclear ft_lstnew ft_split ft_strcmp ft_strlen ft_substr 
 
-all :	$(exec)
-	make clean
+PARSING		=	dollar_parsing quotes_parsing redirection_file\
+		   		get_important_data parsing delimiter_parsing\
+				parsing_ 
 
-$(exec)	: $(objects)
+SRCS =  $(addsuffix .c, $(addprefix src/libft/, $(LIBFT))) \
+		$(addsuffix .c, $(addprefix src/execution/, $(ECECUTION))) \
+		$(addsuffix .c, $(addprefix src/parsing/, $(PARSING))) \
+		$(addsuffix .c, $(addprefix src/lexer_tokens/, $(LEXER))) \
+		$(addsuffix .c, $(addprefix src/built_ins/, $(BUILT_INS))) \
+		$(addsuffix .c, $(addprefix src/tools/, $(TOOLS)))
+.c.o:
+	@$(CC)  $(CFLAGS) $(INC) -c $< -o $@
 	@stty -echoctl
-	$(CC) $(objects) $(flags) -o $(exec)
 
-%.o	: %.c include/minishell.h
-	$(CC) $(flags) -c %< -o $@
+all : $(NAME)
 
-clean	:
-	$(RM) src/*.o
-	$(RM) src/libft_tools/*.o
+$(NAME): $(OBJ)
+	@$(CC)  $(CFLAGS) $(OBJ) $(INC) main.c -L /Users/${USER}/.brew/opt/readline/lib  -lreadline  -o $(NAME)
+	@stty -echoctl
+# @[ -d $(MYDIR) ] || mkdir -p $(MYDIR)
+# @mv $(OBJ) objects_files
+
+clean :
+	@$(RM) $(OBJ) $(MYDIR)
 
 fclean : clean
-	$(RM) $(exec)
+	@$(RM) $(NAME) 
 
 re : fclean all
+
+.PHONY:			all clean fclean re bonus
