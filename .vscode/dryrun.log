@@ -9,7 +9,6 @@ cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsan
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_lstdelone.c -o src/libft/ft_lstdelone.o
 stty -echoctl
- 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_lstsize.c -o src/libft/ft_lstsize.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_strcat.c -o src/libft/ft_strcat.o
@@ -24,6 +23,7 @@ cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsan
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_strchr.c -o src/libft/ft_strchr.o
 stty -echoctl
+ 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_strjoin.c -o src/libft/ft_strjoin.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_strncmp.c -o src/libft/ft_strncmp.o
@@ -36,6 +36,7 @@ cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsan
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_lstnew.c -o src/libft/ft_lstnew.o
 stty -echoctl
+ 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_split.c -o src/libft/ft_split.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_strcmp.c -o src/libft/ft_strcmp.o
@@ -50,6 +51,7 @@ cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsan
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/execution/execute.c -o src/execution/execute.o
 stty -echoctl
+ 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/execution/execution_multi_commands.c -o src/execution/execution_multi_commands.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/execution/exit_code.c -o src/execution/exit_code.o
@@ -66,6 +68,7 @@ cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsan
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/parsing/delimiter_parsing.c -o src/parsing/delimiter_parsing.o
 stty -echoctl
+ 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/parsing/parsing_.c -o src/parsing/parsing_.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/lexer_tokens/get_tokens.c -o src/lexer_tokens/get_tokens.o

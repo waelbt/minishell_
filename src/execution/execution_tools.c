@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 14:23:04 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 17:01:09 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,29 @@ char	*get_path(char **envp)
 	return (NULL);
 }
 
+void	procces_paths(char ***paths)
+{
+	int		i;
+	char	*tmp;
 
-char *cmd_with_path(char *cmd, char **envp)
+	i = 0;
+	while((*paths)[i])
+	{
+		if (!ft_strcmp((*paths)[i], ""))
+		{
+			free((*paths)[i]);
+			(*paths)[i] = ft_strdup("./");
+		}
+		else
+		{
+			tmp = (*paths)[i];
+			(*paths)[i] = ft_strjoin(tmp, "/");
+			free(tmp);
+		}
+		i++;
+	}
+}
+char	*cmd_with_path(char *cmd, char **envp)
 {
 	char	**paths;
 	char	*tmp[3];
@@ -49,38 +70,39 @@ char *cmd_with_path(char *cmd, char **envp)
 	paths = split_path(get_path(envp), ':');
 	if (!paths)
 		return (NULL);
+	procces_paths(&paths);
 	while (paths[++i])
 	{
-		if(ft_strcmp(paths[i], ""))
-		{
-			tmp[0] = paths[i];
-			paths[i] = ft_strjoin(paths[i], "/");
-			free(tmp[0]);
-		}
 		tmp[0] = paths[i];
 		paths[i] = ft_strjoin(tmp[0], cmd);
-		if (access(paths[i], X_OK) == 0)
-		{
-			if (!ft_strcmp(tmp[0], ""))
-				return (tmp[0]);
-			free(tmp[0]);
-			return (paths[i]);
-		}
-		free(paths[i]);
 		free(tmp[0]);
+		if (access(paths[i], X_OK) == 0)
+			return (paths[i]);
+		free(paths[i]);
 	}
 	free(paths);
+	tmp[2] = ": command not found\n";
+	printf_error("minishell: ", cmd, tmp[2]);
+	exit(127);
 	return (NULL);
 }
 
 char *check_cmd(char *cmd, char **envp)
 {
 	char	*absolute_cmd;
+	char	*tmp;
 
-	absolute_cmd = NULL;
-	if (!ft_strchr(cmd, '/'))
-		absolute_cmd = cmd_with_path(cmd, envp);
-	if (absolute_cmd && ft_strcmp(cmd, "") && ft_strcmp(cmd, "/"))
+	absolute_cmd = cmd_with_path(cmd, envp);
+	if (absolute_cmd)
 		return (absolute_cmd);
+	else
+	{
+		tmp = ft_strjoin("./", cmd);
+		if (!access(tmp , F_OK))
+		{
+			if(!access(tmp , X_OK))
+				return (tmp);
+		}
+	}
 	return (cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 12:27:35 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:29:40 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,6 @@ char		*get_next_line(int fd);
 char		*ft_strldup(const char *s1, int len);
 char		*ft_strjoin_beta(char *s1, char *s2);
 char		**split_path(char *s, char c);
-void		error_handling(char *cmd, int flag);
+void		error_handling(char *cmd);
 int 		is_directory(char *path);
 #endif

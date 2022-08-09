@@ -316,3 +316,7 @@ AddressSanitizer:DEADLYSIGNAL
     #2 0x103c359df in main main.c:97
     #3 0x7fff7fd493d4 in start (libd
 	
+/
+is director
+check PATH
+perror

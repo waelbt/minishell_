@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 13:14:06 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 17:04:22 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 		}
 		if (!execute(cmd->after_expand, &env, 0))
 		{
+			error_handling(cmd->after_expand[0]);
 			path = check_cmd(cmd->after_expand[0], env);
 			execve(path, cmd->after_expand, env);
-			error_handling(cmd->after_expand[0], 1);
+			perror("minishell");
+			ft_setter(127);
 		}
 	}
 	else
