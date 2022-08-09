@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
+#    By: waboutzo <waboutzo@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 11:25:03 by yojoundi          #+#    #+#              #
-#    Updated: 2022/08/09 18:28:33 by waboutzo         ###   ########.fr        #
+#    Updated: 2022/08/09 23:34:25 by waboutzo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ INC = -I include
 RM = rm -rf
 MYDIR= objects_files
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include -g -fsanitize=address
 OBJ=$(SRCS:.c=.o)
 OBJBONUS=$(SRCBONUS:.c=.o)
 
@@ -31,7 +31,7 @@ LEXER		=	get_tokens lexer lexer2 token
 
 LIBFT		=	ft_atoi ft_isalpha ft_lstadd_back ft_lstdelone ft_lstsize ft_strcat ft_strdup \
 				ft_isdigit ft_lstadd_front ft_lstlast ft_strchr ft_strjoin ft_strncmp \
-				ft_calloc ft_itoa ft_lstclear ft_lstnew ft_split ft_strcmp ft_strlen ft_substr 
+				ft_calloc ft_itoa ft_lstclear ft_lstnew ft_split ft_strcmp ft_strlen ft_substr
 
 PARSING		=	dollar_parsing quotes_parsing redirection_file\
 		   		get_important_data parsing parsing_ \
@@ -58,7 +58,7 @@ clean :
 	@$(RM) $(OBJ) $(MYDIR)
 
 fclean : clean
-	@$(RM) $(NAME) 
+	@$(RM) $(NAME)
 
 re : fclean all
 

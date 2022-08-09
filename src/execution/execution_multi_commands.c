@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_multi_commands.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 17:04:22 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 23:32:50 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern char *cwd_saver;
 
 // char	*check_cmd(char *cmd, char **envp)
 // {
-	
+
 // }
 
 void	dup_norm(int fildes1, int fildes2)
@@ -70,13 +70,11 @@ void	execution_multi_cmds(t_node *head, char **env)
 	int			id;
 	int			res;
 	int			status;
-	t_cmd		*cmd;
 
 	last_fd = -1;
 	res = 0;
 	while (head != NULL)
 	{
-		cmd = (t_cmd *)head->content;
 		pipe(pipe_fd);
 		id = fork();
 		if (id == 0)

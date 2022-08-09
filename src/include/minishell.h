@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 18:04:45 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 23:32:00 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # define BUFFER_SIZE 1
 typedef struct redirection
 {
