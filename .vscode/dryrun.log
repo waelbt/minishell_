@@ -2,12 +2,14 @@ make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/waboutzo/Desktop/mini'
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_atoi.c -o src/libft/ft_atoi.o
 stty -echoctl
+ 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_isalpha.c -o src/libft/ft_isalpha.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_lstadd_back.c -o src/libft/ft_lstadd_back.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_lstdelone.c -o src/libft/ft_lstdelone.o
 stty -echoctl
+ 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_lstsize.c -o src/libft/ft_lstsize.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/libft/ft_strcat.c -o src/libft/ft_strcat.o
@@ -92,7 +94,6 @@ cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsan
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/tools/double_pointer_lib.c -o src/tools/double_pointer_lib.o
 stty -echoctl
- 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/tools/free_node.c -o src/tools/free_node.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/tools/print_function.c -o src/tools/print_function.o
@@ -101,6 +102,7 @@ cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsan
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/tools/get_next_line_utils.c -o src/tools/get_next_line_utils.o
 stty -echoctl
+ 
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/tools/get_next_line.c -o src/tools/get_next_line.o
 stty -echoctl
 cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include -g -fsanitize=address -I include -c src/tools/path_split.c -o src/tools/path_split.o

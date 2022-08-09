@@ -302,3 +302,17 @@ export | grep PWD
              1 (16 bytes) 0x7fb17dc044d0 [16]  length: 1  "p"
           1 (16 bytes) 0x7fb17df00110 [16]  length: 1  "x"
        1 (16 bytes) 0x7fb17df00100 [16]  length: 1  "e"
+
+
+inishell$ export n="echo true | cat "
+minishell$ $m
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==33445==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x000103c1e2c2 bp 0x7ffeebfe4580 sp 0x7ffeebfe4500 T0)
+==33445==The signal is caused by a READ memory access.
+==33445==Hint: address points to the zero page.
+    #0 0x103c1e2c1 in ft_strcmp ft_strcmp.c
+    #1 0x103c1f50a in execution_cmd execute_single_command.c:86
+    #2 0x103c359df in main main.c:97
+    #3 0x7fff7fd493d4 in start (libd
+	

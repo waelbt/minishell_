@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/08 19:03:36 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 13:14:06 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	dup_norm(int fildes1, int fildes2)
 void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 {
 	t_cmd		*cmd;
+	char		*tmp;
+	char		*path;
 
 	cmd = (t_cmd *)head->content;
 	if (head->next != NULL)
@@ -41,10 +43,16 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 	close(pipe_fd[0]);
 	if (cmd->after_expand[0] && cmd->after_expand && cmd->e_rtype == VALID)
 	{
+		tmp = getcwd(NULL, 0);
+		if(ft_strcmp(cmd->after_expand[0], "pwd") && tmp)
+		{
+			free(cwd_saver);
+			cwd_saver = tmp;
+		}
 		if (!execute(cmd->after_expand, &env, 0))
 		{
-			check_cmd(&cmd->after_expand[0], env);
-			execve(cmd->after_expand[0], cmd->after_expand, env);
+			path = check_cmd(cmd->after_expand[0], env);
+			execve(path, cmd->after_expand, env);
 			error_handling(cmd->after_expand[0], 1);
 		}
 	}
@@ -61,7 +69,6 @@ void	execution_multi_cmds(t_node *head, char **env)
 	int			res;
 	int			status;
 	t_cmd		*cmd;
-	char		*tmp;
 
 	last_fd = -1;
 	res = 0;
@@ -69,12 +76,6 @@ void	execution_multi_cmds(t_node *head, char **env)
 	{
 		cmd = (t_cmd *)head->content;
 		pipe(pipe_fd);
-		tmp = getcwd(NULL, 0);
-		if(ft_strcmp(cmd->after_expand[0], "pwd") && tmp)
-		{
-			free(cwd_saver);
-			cwd_saver = tmp;
-		}
 		id = fork();
 		if (id == 0)
 		{
