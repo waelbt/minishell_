@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/07 22:18:47 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 19:49:15 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ void	edit_exsited_variable(char ***env, t_env_var *var)
 	char	*tmp;
 	char	*s;
 
-	tmp = (*env)[var->index];
-	(*env)[var->index] = ft_strdup(var->name);
 	if (var->key != 0)
 	{
+		tmp = (*env)[var->index];
+		(*env)[var->index] = ft_strdup(var->name);
 		value = ft_strdup(var->value);
 		if (var->e_type == CONCATENATE)
 		{

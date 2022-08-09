@@ -328,3 +328,5 @@ minishell: ../minishell: command not found
 
 
 bash-3.2$ cat << "$USER"
+
+close last file_descrp
