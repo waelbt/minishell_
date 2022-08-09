@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 16:29:40 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 18:04:45 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ char		*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c);
 char		*quotes_handler(t_lexer *lexer, char **envp, int c);
 char		*quotes_cases(t_lexer *lexer, char **envp, int c);
 char		*ft_norm(t_lexer *lexer);
-char		*delimiter(char *str, char **envp);
 int			ft_strncmp(const char *s1, const char *s2, int n);
 void		*open_file_descriptor(t_node **head);
 void		free_double_char(char **tmp, int t);

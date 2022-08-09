@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/06 13:01:00 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 18:31:09 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,68 @@ void	parsing_args(t_node **head, char **envp)
 	}
 }
 
+char *simple(t_lexer *lexer, int c)
+{
+	char	*value;
+	char	*s;
+	char	*tmp;
+
+	lexer_advance(lexer);
+	value = (char *) malloc(sizeof(char));
+	value[0] =  '\0';
+	while(lexer->c != c)
+	{
+		s = lexer_get_current_char_as_string(lexer);
+		tmp = value;
+		value = ft_strjoin(value, s);
+		free(tmp);
+		free(s);
+		lexer_advance(lexer);
+	}
+	lexer_advance(lexer);
+	return (value);
+}
+char	*get_value(char *str)
+{
+	t_lexer *lexer;
+	char	*value;
+	char	*s;
+	char	*tmp;
+
+	lexer = init_lexer(str);
+	value = (char *) malloc(sizeof(char));
+	value[0] =  '\0';
+	while(lexer->c != '\0')
+	{
+		if (lexer->c == '\'' || lexer->c == '"')
+			s = simple(lexer, lexer->c);
+		else
+		{
+			s = lexer_get_current_char_as_string(lexer);
+			lexer_advance(lexer);
+		}
+		tmp = value;
+		value = ft_strjoin(value, s);
+		free(tmp);
+		free(s);
+	}
+	free(lexer);
+	return (value);
+}
+void	remove_qoutes_delimiter(char	**str)
+{
+	int i;
+	char	*tmp;
+
+	i = 0;
+	while(str[i])
+	{
+		tmp = str[i];
+		str[i] = get_value(str[i]);
+		free(tmp);
+		i++;
+	}	
+}
 void	norm_redirection(t_redirec	*redrec, char **envp, int *index)
 {
 	char		*str;
@@ -64,14 +126,15 @@ void	norm_redirection(t_redirec	*redrec, char **envp, int *index)
 			redrec->fd = 1;
 		str = pure_arg(ft_strdup(redrec->file), envp);
 		redrec->after_expand = advanced_split(str);
+		remove_vide_string(&redrec->after_expand);
+		pure_after_expand(redrec->after_expand, envp);
 		free(str);
 		redrec->path = NULL;
 	}
 	else
 	{
-		str = delimiter(redrec->file, envp);
-		redrec->after_expand = advanced_split(str);
-		free(str);
+		redrec->after_expand = advanced_split(redrec->file);
+		remove_qoutes_delimiter(redrec->after_expand);
 		str = ft_itoa(*index);
 		redrec->path = ft_strjoin("/var/TMP/her_doc", str);
 		free(str);
@@ -90,8 +153,6 @@ void	*parsing_redrection(t_node **head, char **envp, int *index)
 	{
 		redrec = (t_redirec *) temporary->content;
 		norm_redirection(redrec, envp, index);
-		remove_vide_string(&redrec->after_expand);
-		pure_after_expand(redrec->after_expand, envp);
 		(*index)++;
 		temporary = temporary->next;
 	}

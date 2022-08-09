@@ -6,7 +6,7 @@
 #    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 11:25:03 by yojoundi          #+#    #+#              #
-#    Updated: 2022/08/08 16:16:47 by waboutzo         ###   ########.fr        #
+#    Updated: 2022/08/09 18:28:33 by waboutzo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ INC = -I include
 RM = rm -rf
 MYDIR= objects_files
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include #-g -fsanitize=address
 OBJ=$(SRCS:.c=.o)
 OBJBONUS=$(SRCBONUS:.c=.o)
 
@@ -34,8 +34,7 @@ LIBFT		=	ft_atoi ft_isalpha ft_lstadd_back ft_lstdelone ft_lstsize ft_strcat ft_
 				ft_calloc ft_itoa ft_lstclear ft_lstnew ft_split ft_strcmp ft_strlen ft_substr 
 
 PARSING		=	dollar_parsing quotes_parsing redirection_file\
-		   		get_important_data parsing delimiter_parsing\
-				parsing_ 
+		   		get_important_data parsing parsing_ \
 
 SRCS =  $(addsuffix .c, $(addprefix src/libft/, $(LIBFT))) \
 		$(addsuffix .c, $(addprefix src/execution/, $(ECECUTION))) \

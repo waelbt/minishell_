@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/05 19:40:15 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 18:38:40 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ t_redirec	*init_redirection(t_token **token, t_lexer *lexer)
 	free((*token)->value);
 	free((*token));
 	*token = lexer_get_next_token(lexer);
-	if ((*token)->e_type == TOKEN_STRING)
+	if((*token)->e_type)
+		redrec->e_rtype = ERROR;
+	else if ((*token)->e_type == TOKEN_STRING)
 		redrec->file = ft_strdup((*token)->value);
 	else
 	{

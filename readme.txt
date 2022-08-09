@@ -320,3 +320,11 @@ AddressSanitizer:DEADLYSIGNAL
 is director
 check PATH
 perror
+
+
+minishell$ cd l
+minishell$ ../minishell
+minishell: ../minishell: command not found
+
+
+bash-3.2$ cat << "$USER"
