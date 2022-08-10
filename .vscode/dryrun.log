@@ -1,9 +1,5 @@
 make --dry-run --keep-going --print-directory
 make: Entering directory `/Users/waboutzo/Desktop/minishell_'
-cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include  -I include -c src/built_ins/export.c -o src/built_ins/export.o
-stty -echoctl
- 
-cc  -Wall -Wextra -Werror -I /Users/waboutzo/.brew/opt/readline/include  src/libft/ft_atoi.o src/libft/ft_isalpha.o src/libft/ft_lstadd_back.o src/libft/ft_lstdelone.o src/libft/ft_lstsize.o src/libft/ft_strcat.o src/libft/ft_strdup.o src/libft/ft_isdigit.o src/libft/ft_lstadd_front.o src/libft/ft_lstlast.o src/libft/ft_strchr.o src/libft/ft_strjoin.o src/libft/ft_strncmp.o src/libft/ft_calloc.o src/libft/ft_itoa.o src/libft/ft_lstclear.o src/libft/ft_lstnew.o src/libft/ft_split.o src/libft/ft_strcmp.o src/libft/ft_strlen.o src/libft/ft_substr.o src/execution/execute_single_command.o src/execution/execution_tools.o src/execution/execute.o src/execution/execution_multi_commands.o src/execution/exit_code.o src/parsing/dollar_parsing.o src/parsing/quotes_parsing.o src/parsing/redirection_file.o src/parsing/get_important_data.o src/parsing/parsing.o src/parsing/parsing_.o src/lexer_tokens/get_tokens.o src/lexer_tokens/lexer.o src/lexer_tokens/lexer2.o src/lexer_tokens/token.o src/built_ins/cd.o src/built_ins/echo.o src/built_ins/env.o src/built_ins/exit.o src/built_ins/export.o src/built_ins/pwd.o src/built_ins/unset.o src/tools/advanced_split.o src/tools/double_pointer_lib.o src/tools/free_node.o src/tools/print_function.o src/tools/tools.o src/tools/get_next_line_utils.o src/tools/get_next_line.o src/tools/path_split.o -I include main.c -L /Users/waboutzo/.brew/opt/readline/lib  -lreadline  -o minishell
-stty -echoctl
+make: Nothing to be done for `all'.
 make: Leaving directory `/Users/waboutzo/Desktop/minishell_'
  

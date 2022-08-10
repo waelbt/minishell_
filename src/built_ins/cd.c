@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/07 19:02:24 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/10 22:27:10 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,19 @@ void	cd(char *path, char ***env)
 {
 	char	*cwd_env;
 	char	*get_cwd;
+	char	*str;
 
 	
 	ft_setter(0);
 	if (!path)
 	{
-		printf_error("minishell: ","cd: path is required","\n");
-		ft_setter(1);
-		return ;
+		path = getenv("HOME");
+		if(!path)
+		{
+			str = dollar_value(*env, ft_strdup("USER"));
+			path = ft_strjoin("/Users/", str);
+			free(str);
+		}
 	}
 	get_cwd = getcwd(NULL, 0);
 	cwd_env = getpwd(*env);
@@ -80,7 +85,10 @@ void	cd(char *path, char ***env)
 	else
 	{
 		ft_setter(1);
-		printf_error("minishell: ", path, ": No such file or directory\n");
+		str = ": No such file or directory\n";
+		if(!access(path, F_OK) && access(path, X_OK) != 0)
+			str  = ": Permission denied\n";
+		printf_error("minishell: ", path, str);
 	}
 	free (cwd_env);
 	free (get_cwd);

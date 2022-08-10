@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_multi_commands.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waboutzo <waboutzo@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 23:32:50 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 00:34:51 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 	if (cmd->input != NULL)
 		dup_norm(cmd->input->fd, 0);
 	close(pipe_fd[0]);
-	if (cmd->after_expand[0] && cmd->after_expand && cmd->e_rtype == VALID)
+	if (cmd->after_expand && cmd->after_expand[0] && cmd->e_rtype == VALID)
 	{
 		tmp = getcwd(NULL, 0);
 		if(ft_strcmp(cmd->after_expand[0], "pwd") && tmp)
@@ -65,6 +65,7 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 
 void	execution_multi_cmds(t_node *head, char **env)
 {
+	t_cmd		*cmd;
 	int			last_fd;
 	int			pipe_fd[2];
 	int			id;
@@ -85,11 +86,16 @@ void	execution_multi_cmds(t_node *head, char **env)
 		}
 		else
 		{
+			cmd = (t_cmd *)head->content;
 			ft_setter(0);
 			if (last_fd != -1)
 				close(last_fd);
 			if (!head->next)
 				close(pipe_fd[0]);
+			if (cmd->output != NULL)
+				close(cmd->output->fd);
+			if (cmd->input != NULL)
+				close(cmd->input->fd);
 			close(pipe_fd[1]);
 			last_fd = pipe_fd[0];
 		}
