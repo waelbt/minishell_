@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/10 01:42:33 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/08/10 01:59:10 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	cd(char *path, char ***env)
 	char	*cwd_env;
 	char	*get_cwd;
 
-	
+
 	ft_setter(0);
 	if (!path)
 		path = getenv("HOME");
@@ -76,7 +76,10 @@ void	cd(char *path, char ***env)
 	else
 	{
 		ft_setter(1);
-		printf_error("minishell: ", path, ": No such file or directory\n");
+		if (!path)
+			printf_error("minishell: ", NULL, "cd: HOME not set\n");
+		else
+			printf_error("minishell: ", path, ": No such file or directory\n");
 	}
 	free (cwd_env);
 	free (get_cwd);
