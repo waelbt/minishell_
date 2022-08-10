@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: waboutzo <waboutzo@student.1337.ma>        +#+  +:+       +#+         #
+#    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 11:25:03 by yojoundi          #+#    #+#              #
-#    Updated: 2022/08/09 23:34:25 by waboutzo         ###   ########.fr        #
+#    Updated: 2022/08/10 21:09:18 by waboutzo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ INC = -I include
 RM = rm -rf
 MYDIR= objects_files
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include #-g -fsanitize=address
 OBJ=$(SRCS:.c=.o)
 OBJBONUS=$(SRCBONUS:.c=.o)
 
