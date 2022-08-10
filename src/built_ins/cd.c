@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/07 19:02:24 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/10 01:42:33 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,7 @@ void	cd(char *path, char ***env)
 	
 	ft_setter(0);
 	if (!path)
-	{
-		printf_error("minishell: ","cd: path is required","\n");
-		ft_setter(1);
-		return ;
-	}
+		path = getenv("HOME");
 	get_cwd = getcwd(NULL, 0);
 	cwd_env = getpwd(*env);
 	if (!(chdir(path) == -1))
