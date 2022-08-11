@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 18:21:27 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/08/11 19:14:21 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,35 @@ void	ft_unlik(int *index)
 	*index = 0;
 }
 
-void	sig_handler(int sig)
-{
-	(void) sig;
-	ft_setter(1);
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-int	main(int argc, char **argv, char **envp)
+int	minishell(char ***env)
 {
 	char	*str;
 	t_node	*cmd;
 	int		index;
+
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
+	str = readline("minishell$ ");
+	if (!str)
+		return (0);
+	if (ft_strcmp(str, ""))
+		add_history (str);
+	cmd = handler(init_lexer(str));
+	if (parsing(&cmd, *env, &index))
+	{
+		if (ft_lstsize(cmd) == 1)
+			execution_cmd(cmd, env);
+		else
+			execution_multi_cmds(cmd, *env);
+	}
+	ft_unlik(&index);
+	free_node(&cmd);
+	free(str);
+	return (1);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
 	char	**env;
 
 	if (argc == 1)
@@ -83,24 +97,8 @@ int	main(int argc, char **argv, char **envp)
 		env = my_envp(envp);
 		while (1)
 		{
-			signal(SIGINT, sig_handler);
-			signal(SIGQUIT, SIG_IGN);
-			str = readline("minishell$ ");
-			if (!str)
+			if (!minishell(&env))
 				break ;
-			if (ft_strcmp(str, ""))
-				add_history (str);
-			cmd = handler(init_lexer(str));
-			if (parsing(&cmd, env, &index))
-			{
-				if (ft_lstsize(cmd) == 1)
-					execution_cmd(cmd, &env);
-				else
-					execution_multi_cmds(cmd, env);
-			}
-			ft_unlik(&index);
-			free_node(&cmd);
-			free(str);
 		}
 		free(g_cwd_saver);
 		write(1, "exit\n", 5);

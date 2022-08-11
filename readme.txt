@@ -501,3 +501,6 @@ minishell$ unset adwa
 minishell$ echo $dawdaw
 
 minishell$ echo $d
+
+
+export d+

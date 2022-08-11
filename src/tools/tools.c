@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 14:23:31 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 02:46:14 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/08/11 19:04:12 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_to_defaults(char *str)
 	}
 }
 
-void 	quotes_replace(char *str)
+void	quotes_replace(char *str)
 {
 	int	i;
 
@@ -46,11 +46,10 @@ int	get_key(char *s, int index)
 {
 	int	key;
 
-	if (!s[index])
-		key = 0;
+	key = 0;
 	if (s[index] == '=')
 		key = 1;
-	if (s[index] == '+')
+	if (s[index] == '+' && s[index + 1] == '=')
 		key = 2;
 	return (key);
 }

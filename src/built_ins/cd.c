@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 01:34:43 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/08/11 18:33:21 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	update_oldpwd(char ***env, char *get_cwd, char *cwd_env)
 	{
 		free((*env)[index]);
 		(*env)[index] = ft_strdup("OLDPWD");
-		if (str && !access(cwd_saver, X_OK))
+		if (str && !access(g_cwd_saver, X_OK))
 		{
 			tmp = (*env)[index];
 			(*env)[index] = ft_strjoin((*env)[index], "=");
@@ -57,29 +57,28 @@ void	update_oldpwd(char ***env, char *get_cwd, char *cwd_env)
 
 void	cd(char *path, char ***env)
 {
-	char	*cwd_env;
-	char	*get_cwd;
-	char	*str;
+	char	*ptr[3];
 
 	ft_setter(0);
 	if (!path)
 		path = getenv("HOME");
-	get_cwd = getcwd(NULL, 0);
-	cwd_env = getpwd(*env);
+	ptr[1] = getcwd(NULL, 0);
+	ptr[2] = getpwd(*env);
 	if (!(chdir(path) == -1))
 	{
 		update_pwd(env);
-		update_oldpwd(env, get_cwd, cwd_env);
+		update_oldpwd(env, ptr[1], ptr[2]);
 	}
 	else
 	{
 		ft_setter(1);
-		str = ": No such file or directory\n";
+		ptr[0] = ": No such file or directory\n";
 		if (!path)
-			str = "cd: HOME not set\n";
+			ptr[0] = "cd: HOME not set\n";
 		if (!access(path, F_OK) && access(path, X_OK))
-			str = ": Permission denied\n";
-		printf_error("minishell: ", path, str);
+			ptr[0] = ": Permission denied\n";
+		printf_error("minishell: ", path, ptr[0]);
 	}
-	free (cwd_env), free (get_cwd);
+	free(ptr[2]);
+	free(ptr[1]);
 }

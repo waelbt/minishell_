@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 14:09:15 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 02:09:31 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/08/11 18:30:02 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,33 @@ char	**sorted_env(char **env)
 char	**join_double_pointer(char **str, char **ptr)
 {
 	char	**join;
-	int		len[3];
-	int		index;
-	int		j;
+	int		len[2];
+	int		index[2];
 
 	if (!ptr)
 		return (str);
-	index = 0;
-	j = 0;
+	index[0] = 0;
+	index[1] = 0;
 	len[0] = double_pointer_len(str);
-	len[1] = double_pointer_len(ptr);
-	len[2] = len[0] + len[1];
-	join = (char **) ft_calloc((len[2] + 1), sizeof(char *));
+	len[1] = len[0] + double_pointer_len(ptr);
+	join = (char **) ft_calloc((len[1] + 1), sizeof(char *));
 	if (!join)
 		return (NULL);
-	while (index < len[2])
+	while (index[0] < len[1])
 	{
-		if (index < len[0])
-			join[index] = str[index];
-		else if (index >= len[0])
-			join[index] = ptr[j++];
-		index++;
+		if (index[0] < len[0])
+			join[index[0]] = str[index[0]];
+		else if (index[0] >= len[0])
+			join[index[0]] = ptr[index[1]++];
+		index[0]++;
 	}
-	join[index] = NULL, free(str), free(ptr);
+	join[index[0]] = NULL;
+	free(str);
+	free(ptr);
 	return (join);
 }
 
-char 	**ft_strdup_double(char **ptr)
+char	**ft_strdup_double(char **ptr)
 {
 	char	**str;
 	int		i;

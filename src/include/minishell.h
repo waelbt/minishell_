@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 17:06:51 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 19:06:41 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct env_var
 	{
 		EXISTED,
 		NOT,
-	} t_stat;
+	} e_stat;
 	enum
 	{
 		SET_VALUE,
@@ -91,7 +91,6 @@ typedef struct env_var
 }	t_env_var;
 
 char		*g_cwd_saver;
-
 int			ft_strlen(char *str);
 void		*ft_calloc(int count, int size);
 void		ft_bzero(void *s, int n);
@@ -117,7 +116,7 @@ int			get_type(char *c);
 int			ft_strncmp(const char *s1, const char *s2, int n);
 char		*ft_itoa(int n);
 int			ft_atoi(const char *ptr);
-char 		*ft_strcat(char *dest, char *src);
+char		*ft_strcat(char *dest, char *src);
 char		**ft_strdup_double(char **ptr);
 char		**join_double_pointer(char **str, char **ptr);
 int			ft_counte_novide(char **str);
@@ -129,7 +128,6 @@ int			get_key(char *s, int index);
 char		**env_split(char **envp, int i);
 void		init_array(int *i, int size);
 
-
 char		*quotes_cases(t_lexer *lexer, char **envp, int c);
 char		*dollar_value(char **envp, char *var);
 char		*ft_norm(t_lexer *lexer);
@@ -138,7 +136,7 @@ char		*handle_env_var(t_lexer *lexer, char **envp);
 char		*pure_arg(char *str, char **envp);
 void		here_doc(t_redirec *redirc, char **envp);
 char		*quotes_handler(t_lexer *lexer, char **envp, int c);
-char		*quotes(t_lexer *lexer, char **envp,int c);
+char		*quotes(t_lexer *lexer, char **envp, int c);
 void		set_to_defaults(char *str);
 void		quotes_replace(char *str);
 int			closed_qoutes(t_lexer *lexer, char c, int *bool);
@@ -149,17 +147,16 @@ void		remove_qoutes_delimiter(char **str);
 void		parsing_args(t_node **head, char **envp);
 int			here_doc_counter(t_node *head);
 void		*parsing_redrection(t_node **head, char **envp, int *index);
-void	open_heredoc_in_signle_cmd(t_node **head, char **envp);
-
+void		open_heredoc_in_signle_cmd(t_node **head, char **envp);
 
 t_redirec	*get_input(t_node *head);
 t_redirec	*get_output(t_node *head);
 void		ft_setter(int value);
 void		error_handling(char *cmd);
-char 		*check_cmd(char *cmd, char **envp);
+char		*check_cmd(char *cmd, char **envp);
 void		dup_norm(int fildes1, int fildes2);
 int			execute(char **after_expand, char ***env, int flag);
-int 		is_directory(char *path);
+int			is_directory(char *path);
 void		printf_error(char *p, char *str, char *s);
 char		**split_path(char *s, char c);
 void		save_pwd(char *s);
@@ -178,7 +175,6 @@ int			ft_check_ambiguous(t_redirec *redirc);
 void		open_all_redrec(t_node **command);
 char		*get_value(char *str);
 void		*open_file_descriptor(t_node **head);
-
 
 char		**my_envp(char **envp);
 void		my_exit(char **str, int flag);
