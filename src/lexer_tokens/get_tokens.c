@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 19:57:21 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 16:00:46 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,22 @@ t_redirec	*init_redirection(t_token **token, t_lexer *lexer)
 	if (!redrec)
 		return (NULL);
 	redrec->e_rtype = get_type((*token)->value);
-	redrec->after_expand = NULL;
-	free((*token)->value);
-	free((*token));
+	ft_free(*token, NULL, NULL, NULL);
 	*token = lexer_get_next_token(lexer);
-	if((*token)->e_type == TOKEN_ERROR)
+	if ((*token)->e_type == TOKEN_ERROR)
 		redrec->e_rtype = ERROR;
 	else if ((*token)->e_type == TOKEN_STRING)
 		redrec->file = ft_strdup((*token)->value);
 	else
 	{
-		if(!ft_strcmp((*token)->value, ""))
+		if (!ft_strcmp((*token)->value, ""))
 		{
 			free((*token)->value);
 			(*token)->value = ft_strdup("newline");
 		}
 		ft_setter(258);
-		printf_error("minishell: syntax error near unexpected token `", (*token)->value, "'\n");
+		printf_error("minishell: syntax error near unexpected token `",
+			(*token)->value, "'\n");
 		redrec->e_rtype = ERROR;
 	}
 	return (redrec);
@@ -90,13 +89,9 @@ t_cmd	*init_cmd(t_lexer *lexer, t_token **token)
 
 	tmp = NULL;
 	tmp1 = NULL;
-	
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	cmd->after_expand = NULL;
-	cmd->output = NULL;
-	cmd->input = NULL;
 	while ((*token) && (*token)->e_type != TOKEN_EOF
 		&& (*token)->e_type != TOKEN_PIPE)
 	{

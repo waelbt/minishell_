@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:27:16 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/04 14:29:17 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 16:05:47 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 {
 	t_token	*token;
 
-	if(!lexer)
+	if (!lexer)
 		return (init_token(TOKEN_EOF, ft_strdup("")));
 	while (lexer->c != '\0' && lexer->i < ft_strlen(lexer->contents))
 	{
@@ -75,8 +75,7 @@ t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 	char	*s;
 	char	*tmp;
 
-	value = (char *) malloc(sizeof(char));
-	value[0] = '\0';
+	value = (char *) ft_calloc(1, sizeof(char));
 	if (lexer->c == '\0')
 		return (init_token(TOKEN_EOF, value));
 	while (lexer->c != 32 && lexer->c != '\0'
@@ -86,7 +85,8 @@ t_token	*lexer_collect_string(t_lexer *lexer, int e_type)
 		if (!s)
 		{
 			ft_setter(258);
-			printf_error(NULL, "'Error: [$parse:lexer] Lexer Error: Unclosed qoutes'\n", NULL);
+			printf_error("'Error: [$parse:lexer] ",
+				"Lexer Error: Unclosed", " qoutes'\n");
 			return (init_token(TOKEN_ERROR, value));
 		}
 		tmp = value;

@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:54:00 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 11:38:54 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 16:07:06 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void init_array(int *i, int size)
+void	init_array(int *i, int size)
 {
 	int	co;
 

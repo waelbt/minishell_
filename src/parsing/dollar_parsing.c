@@ -6,14 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:12:20 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/02 11:41:29 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:06:39 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-char	*quotes(t_lexer *lexer, char **envp,int c)
+char	*quotes(t_lexer *lexer, char **envp, int c)
 {
 	char	*value;
 	char	*s;
@@ -24,7 +23,7 @@ char	*quotes(t_lexer *lexer, char **envp,int c)
 	value[0] = '\0';
 	while (lexer->c != c)
 	{
-		s =  quotes_cases(lexer, envp, c);
+		s = quotes_cases(lexer, envp, c);
 		tmp = value;
 		value = ft_strjoin(value, s);
 		free(tmp);
@@ -41,14 +40,12 @@ char	*ft_norm(t_lexer *lexer)
 
 	if (!ft_isalnum(lexer->c) && lexer->c != '_')
 	{
-		if(lexer->c == '?')
+		str = lexer_get_current_char_as_string(lexer);
+		if (lexer->c == '?')
 			tmp = ft_itoa(ft_getter());
 		else
-		{
-			str = lexer_get_current_char_as_string(lexer);
 			tmp = ft_strjoin("$", str);
-			free(str);
-		}
+		free(str);
 		lexer_advance(lexer);
 		return (tmp);
 	}
@@ -70,9 +67,9 @@ char	*hard_code_norm(t_lexer *lexer, char **envp)
 	if (lexer->c == '$')
 		return (ft_strdup("$"));
 	if (lexer->c == 34)
-		return (quotes(lexer, envp,34));
+		return (quotes(lexer, envp, 34));
 	if (lexer->c == 39)
-		return (quotes(lexer, envp,39));
+		return (quotes(lexer, envp, 39));
 	else
 		return (ft_norm(lexer));
 	return (NULL);
@@ -107,56 +104,26 @@ char	*dollar_value(char **envp, char *var)
 	char	*str;
 	char	**tmp;
 
+	str = ft_strdup("");
 	if (!(ft_strchr(var, '=')) && *var)
 	{
 		while (*envp)
 		{
 			tmp = ft_split(*envp, '=');
-			if (!ft_strcmp(tmp[0], var))
+			if (!ft_strcmp(tmp[0], var) && tmp[1])
 			{
-				if (!tmp[1])
-					str = ft_strdup("");
-				else
-				{
-					free(tmp[1]);
-					tmp[1] = ft_substr(*envp, ft_strlen(*tmp) + 1, ft_strlen(*envp));
-					str = ft_strdup(tmp[1]);
-				}
-				free(var);
+				free(tmp[1]);
+				tmp[1] = ft_substr(*envp,
+						ft_strlen(*tmp) + 1, ft_strlen(*envp));
+				free(str);
+				str = ft_strdup(tmp[1]);
 				free_double_char(tmp, 0);
-				return (str);
+				break ;
 			}
 			free_double_char(tmp, 0);
 			envp++;
 		}
 	}
 	free(var);
-	return (ft_strdup(""));
+	return (str);
 }
-
-// char	*dollar_value(char **envp, char *var)
-// {
-// 	char	*str;
-// 	int		i;
-// 	char	**tmp;
-
-// 	i = -1;
-// 	if (!(ft_strchr(var, '=')) && *var)
-// 	{
-// 		while (envp[++i])
-// 		{
-// 			tmp = env_split(envp, i);
-// 			if (!ft_strcmp(tmp[0], var))
-// 			{
-// 				if (!tmp[1])
-// 					str = ft_strdup("");
-// 				str = ft_strdup(tmp[1]);
-// 				free(var);
-// 				free_double_char(tmp, 0);
-// 				return (str);
-// 			}
-// 			free_double_char(tmp, 0);
-// 		}
-// 	}
-// 	return (ft_strdup(""));
-// }

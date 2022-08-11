@@ -6,22 +6,26 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 03:37:15 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 15:16:30 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	dup_norm(int fildes1, int fildes2)
+static void	ft_execve(t_cmd *cmd, char **env)
 {
-	dup2(fildes1, fildes2);
-	close(fildes1);
+	char		*path;
+
+	error_handling(cmd->after_expand[0]);
+	path = check_cmd(cmd->after_expand[0], env);
+	execve(path, cmd->after_expand, env);
+	perror("minishell");
+	ft_setter(127);
 }
 
 void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 {
 	t_cmd		*cmd;
-	char		*path;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -39,13 +43,7 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 	{
 		save_pwd(cmd->after_expand[0]);
 		if (!execute(cmd->after_expand, &env, 0))
-		{
-			error_handling(cmd->after_expand[0]);
-			path = check_cmd(cmd->after_expand[0], env);
-			execve(path, cmd->after_expand, env);
-			perror("minishell");
-			ft_setter(127);
-		}
+			ft_execve(cmd, env);
 	}
 	else
 		ft_setter(0);
@@ -69,48 +67,17 @@ void	parent_work(t_node *head, int *last_fd, int *pipe_fd)
 	*last_fd = pipe_fd[0];
 }
 
-void	fork_failed(int *i, int index)
+void	wait_children(pid_t last_pid)
 {
-	ft_setter(1);
-	perror("minishell: fork");
-	while (--index != -1)
-		kill(i[index], SIGKILL);
-}
+	pid_t			res;
+	int				status;
 
-void	execution_multi_cmds(t_node *head, char **env)
-{
-	int			last_fd;
-	int			pipe_fd[2];
-	int			*id;
-	int			res;
-	int			status;
-	int			i;
-
-	last_fd = -1;
 	res = 0;
-	i = 0;
-	id = (int *) malloc(ft_lstsize(head) * sizeof(int));
-	while (head != NULL)
-	{
-		pipe(pipe_fd);
-		id[i] = fork();
-		if (id[i] == -1)
-		{
-			fork_failed(id, i);
-			break;
-		}
-		if (id[i] == 0)
-			child_work(head, env, pipe_fd, last_fd);
-		else
-			parent_work(head, &last_fd, pipe_fd);
-		i++;
-		head = head->next;
-	}
 	signal(SIGINT, SIG_IGN);
 	while (res != -1)
 	{
 		res = waitpid(-1, &status, 0);
-		if (res == id[i - 1])
+		if (res == last_pid)
 		{
 			ft_setter(WEXITSTATUS(status));
 			if (WIFSIGNALED(status))
@@ -118,4 +85,33 @@ void	execution_multi_cmds(t_node *head, char **env)
 		}
 	}
 	signal(SIGINT, sig_handler);
+}
+
+void	execution_multi_cmds(t_node *head, char **env)
+{
+	int			last_fd;
+	int			pipe_fd[2];
+	pid_t		*id;
+	int			i;
+
+	last_fd = -1;
+	i = 0;
+	id = (pid_t *) malloc(ft_lstsize(head) * sizeof(pid_t));
+	while (head != NULL)
+	{
+		pipe(pipe_fd);
+		id[i] = fork();
+		if (id[i] == -1)
+		{
+			fork_failed(id, i);
+			break ;
+		}
+		else if (id[i++] == 0)
+			child_work(head, env, pipe_fd, last_fd);
+		else
+			parent_work(head, &last_fd, pipe_fd);
+		head = head->next;
+	}
+	wait_children(id[i - 1]);
+	free(id);
 }

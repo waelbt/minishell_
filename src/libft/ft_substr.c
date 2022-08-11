@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:29:15 by lchokri           #+#    #+#             */
-/*   Updated: 2022/07/30 08:58:32 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 16:09:41 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*ft_substr(char *s, int start, int len)
 {
 	char	*p;
-	int	i;
-	int	slen;
+	int		i;
+	int		slen;
 
 	if (!s)
 		return (NULL);

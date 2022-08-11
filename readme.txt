@@ -369,3 +369,135 @@ minishell$ cat << $USER
 minishell$ cat << $USER
 
 echo $"$USER"$$
+
+
+<< <
+<< |
+<<
+
+
+pid_t
+
+
+
+void		error_handler(char *str);
+t_redirec	*init_redirection(t_token **token, t_lexer *lexer);
+void		printf_args(t_node *head);
+void		printf_redrection(t_node *head);
+void		printf_node(t_node *head);
+char		*handle_env_var_case(t_lexer *lexer, char **envp);
+char		*hard_code(t_lexer *lexer, int next_qoutes);
+char		*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c);
+void		*open_file_descriptor(t_node **head);
+void		free_double_char(char **tmp, int t);
+// void		execution(t_cmd *cmd);
+char		*remove_qoutes(char *str, char **envp);
+void		check_acces(char **cmd, char **envp);
+char		*invalid_command_error(char *cmd, char *path, char **paths);
+char		*get_path(char **envp);
+void		ft_close(t_node *head);
+void		rl_replace_line (const char *text, int clear_undo);
+void		rl_replace_line (const char *text, int clear_undo);
+int			execve(const char *path, char *const argv[], char *const envp[]);
+int			get_index_of_double_char(char **envp, char *var);
+lexer_collect_string
+
+*****************************************************************************************************************************
+*****************************************************************************************************************************
+
+void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
+{
+//	t_node	*temporary;
+//	t_cmd	*cmd;
+	pid_t	id;
+	int		status;
+
+//	temporary = *head;
+	if (here_doc_counter(*head) >= 17)
+	{
+	//	printf("test");
+		printf_error("minishell: maximum ",
+			"here-document ", "count exceeded\n");
+		exit(258);
+	}
+	id = fork();
+	if (id == -1)
+	{
+		perror("minishell: fork");
+		ft_setter(1);
+	}
+	else if (!id)
+	{
+		/*while (temporary != NULL)
+		{
+			cmd = (t_cmd *)temporary->content;
+			open_heredoc_in_signle_cmd(&cmd->redrec, envp);
+			temporary = temporary->next;
+		}*/
+		parent(head, envp);
+		exit(0);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(id, &status, 0);
+		if (WIFSIGNALED(status))
+		{
+			ft_setter(1);
+			signal(SIGINT, sig_handler);
+			return (NULL);
+		}
+	}
+	return ((void *)1);
+}
+
+*****************************************************************************************************************************3
+****************************************************************
+
+
+char	*dollar_value(char **envp, char *var)
+{
+	char	*str;
+	char	**tmp;
+
+	if (!(ft_strchr(var, '=')) && *var)
+	{
+		while (*envp)
+		{
+			tmp = ft_split(*envp, '=');
+			if (!ft_strcmp(tmp[0], var))
+			{
+				if (!tmp[1])
+					str = ft_strdup("");
+				else
+				{
+					free(tmp[1]);
+					tmp[1] = ft_substr(*envp,
+							ft_strlen(*tmp) + 1, ft_strlen(*envp));
+					str = ft_strdup(tmp[1]);
+				}
+				free(var);
+				free_double_char(tmp, 0);
+				return (str);
+			}
+			free_double_char(tmp, 0);
+			envp++;
+		}
+	}
+	free(var);
+	return (ft_strdup(""));
+}
+
+
+/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/bin
+minishell$ export d
+minishell$ echo  $d
+
+minishell$ export adwa
+minishell$ export adwa
+minishell$ nset adwa
+minishell: nset: command not found
+minishell$ unset adwa
+minishell$ echo $dawdaw
+
+minishell$ echo $d

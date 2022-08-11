@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:39:07 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/04 18:38:36 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:12:39 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_redirec	*get_input(t_node *head)
 		tmp = (t_redirec *) head->content;
 		if (tmp->e_rtype == INPUT || tmp->e_rtype == HERE_DOC)
 		{
-			if(last_fd != 0)
+			if (last_fd != 0)
 				close(last_fd);
 			last_fd = tmp->fd;
 			redrec = tmp;
@@ -66,7 +66,7 @@ t_redirec	*get_output(t_node *head)
 		tmp = (t_redirec *) head->content;
 		if (tmp->e_rtype == OUTPUT || tmp->e_rtype == APPEND)
 		{
-			if(last_fd != 1)
+			if (last_fd != 1)
 				close(last_fd);
 			last_fd = tmp->fd;
 			redrec = tmp;

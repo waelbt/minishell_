@@ -6,18 +6,17 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 19:16:39 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/31 17:07:25 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 16:02:05 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
 t_lexer	*init_lexer(char *contents)
 {
 	t_lexer	*lexer;
 
-	if(!contents)
+	if (!contents)
 		return (NULL);
 	lexer = ft_calloc(1, sizeof(t_lexer));
 	if (!lexer)
@@ -37,7 +36,7 @@ void	lexer_advance(t_lexer	*lexer)
 	}
 }
 
-void	lexer_skip_whitespace(t_lexer	*lexer)
+void	lexer_skip_whitespace(t_lexer *lexer)
 {
 	while (lexer->c == 32)
 		lexer_advance(lexer);

@@ -6,7 +6,7 @@
 #    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 11:25:03 by yojoundi          #+#    #+#              #
-#    Updated: 2022/08/11 01:17:11 by waboutzo         ###   ########.fr        #
+#    Updated: 2022/08/11 17:04:57 by waboutzo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ BUILT_INS	=	cd echo env exit export pwd unset
 TOOLS		=	advanced_split double_pointer_lib free_node print_function tools\
 				path_split
 
-ECECUTION	=	execute_single_command execution_tools\
+ECECUTION	=	execute_single_command tools toolsII\
 				execute execution_multi_commands exit_code
 
 LEXER		=	get_tokens lexer lexer2 token
@@ -33,8 +33,8 @@ LIBFT		=	ft_atoi ft_isalpha ft_lstadd_back ft_lstdelone ft_lstsize ft_strcat ft_
 				ft_isdigit ft_lstadd_front ft_lstlast ft_strchr ft_strjoin ft_strncmp \
 				ft_calloc ft_itoa ft_lstclear ft_lstnew ft_split ft_strcmp ft_strlen ft_substr
 
-PARSING		=	dollar_parsing quotes_parsing redirection_file\
-		   		get_important_data parsing parsing_ \
+PARSING		=	dollar_parsing quotes_parsing redirection_file  parsing_ii \
+		   		get_important_data parsing_i parsing_iv parsing_v parsing_iii\
 
 SRCS =  $(addsuffix .c, $(addprefix src/libft/, $(LIBFT))) \
 		$(addsuffix .c, $(addprefix src/execution/, $(ECECUTION))) \
