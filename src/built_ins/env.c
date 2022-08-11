@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 21:27:46 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/11 18:34:28 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:44:44 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**my_envp(char **envp)
 	int		i;
 
 	i = 0;
-	my_envp = (char **)malloc((double_pointer_len(envp) + 1) * sizeof(char *));
+	my_envp = (char **)ft_calloc(double_pointer_len(envp) + 1, sizeof(char *));
 	while (envp[i])
 	{
 		if (!ft_strncmp(envp[i], "OLDPWD", 6))

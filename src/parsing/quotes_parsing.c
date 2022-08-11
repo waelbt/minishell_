@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:52:38 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 18:12:59 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:50:04 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c)
 	str = hard_code(lexer, next_qoutes);
 	if (str)
 		return (str);
-	value = (char *) malloc(sizeof(char));
+	value = (char *) ft_calloc(1, sizeof(char));
 	value[0] = '\0';
 	while (lexer->i != next_qoutes
 		&& (ft_isalnum(lexer->c) || lexer->c == '_'))
@@ -84,7 +84,7 @@ char	*quotes_handler(t_lexer *lexer, char **envp, int c)
 	char	*tmp;
 
 	stop_point = get_end(*lexer, c);
-	value = (char *) malloc(sizeof(char));
+	value = (char *) ft_calloc(1, sizeof(char));
 	value[0] = '\0';
 	while (lexer->i < stop_point)
 	{

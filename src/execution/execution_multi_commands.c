@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 15:16:30 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:45:52 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	execution_multi_cmds(t_node *head, char **env)
 
 	last_fd = -1;
 	i = 0;
-	id = (pid_t *) malloc(ft_lstsize(head) * sizeof(pid_t));
+	id = (pid_t *) ft_calloc(ft_lstsize(head), sizeof(pid_t));
 	while (head != NULL)
 	{
 		pipe(pipe_fd);

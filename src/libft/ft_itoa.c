@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:54:00 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 16:07:06 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:46:29 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*negative_n(int n, char *str)
 	w = (unsigned int) n * (-1);
 	s = intlen(n) + 1;
 	i = s;
-	str = (char *) malloc((s + 1) * sizeof(char));
+	str = (char *) ft_calloc(s + 1, sizeof(char));
 	if (!str)
 		return (0);
 	while (s > 1)
@@ -72,7 +72,7 @@ char	*ft_itoa(int n)
 	{
 		s = intlen(n);
 		i = s;
-		str = (char *) malloc((s + 1) * sizeof(char));
+		str = (char *) ft_calloc(s + 1, sizeof(char));
 		if (!str)
 			return (0);
 		while (s > 0)

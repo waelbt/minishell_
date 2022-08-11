@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 16:25:14 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 17:04:02 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:49:47 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	remove_vide_string(char ***s)
 
 	i = 0;
 	j = 0;
-	ptr = (char **)malloc((ft_counte_novide(*s) + 1) * sizeof(char *));
+	ptr = (char **)ft_calloc(ft_counte_novide(*s) + 1, sizeof(char *));
 	while ((*s)[i])
 	{
 		if ((*s)[i][0] != '\0')
@@ -58,7 +58,7 @@ char	*simple(t_lexer *lexer, int c)
 	char	*tmp;
 
 	lexer_advance(lexer);
-	value = (char *) malloc(sizeof(char));
+	value = (char *) ft_calloc(1, sizeof(char));
 	value[0] = '\0';
 	while (lexer->c != c)
 	{

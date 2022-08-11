@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:29:15 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/11 16:09:41 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:47:58 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ char	*ft_substr(char *s, int start, int len)
 		len = 0;
 	i = 0;
 	if (len < slen)
-		p = (char *)malloc((len + 1) * sizeof(char));
+		p = (char *)ft_calloc(len + 1, sizeof(char));
 	else
-		p = (char *)malloc((slen + 1) * sizeof(char));
+		p = (char *)ft_calloc(slen + 1, sizeof(char));
 	if (!p)
 		return (NULL);
 	while (s[start] && i < len)

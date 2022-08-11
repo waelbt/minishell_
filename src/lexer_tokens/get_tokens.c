@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:41:25 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 16:00:46 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:43:14 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ t_redirec	*init_redirection(t_token **token, t_lexer *lexer)
 	t_redirec	*redrec;
 
 	redrec = ft_calloc(1, sizeof(t_redirec));
-	if (!redrec)
-		return (NULL);
 	redrec->e_rtype = get_type((*token)->value);
 	ft_free(*token, NULL, NULL, NULL);
 	*token = lexer_get_next_token(lexer);
@@ -48,8 +46,6 @@ void	*init_cmd1(t_token **token, t_node **tmp, t_cmd **cmd)
 	if ((*token)->e_type == TOKEN_STRING)
 	{
 		arg = ft_calloc(1, sizeof(t_args));
-		if (!arg)
-			return (NULL);
 		arg->value = ft_strdup((*token)->value);
 		arg->after_expand = NULL;
 		(*cmd)->args = ft_lstnew((void *)arg);
@@ -90,8 +86,6 @@ t_cmd	*init_cmd(t_lexer *lexer, t_token **token)
 	tmp = NULL;
 	tmp1 = NULL;
 	cmd = ft_calloc(1, sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
 	while ((*token) && (*token)->e_type != TOKEN_EOF
 		&& (*token)->e_type != TOKEN_PIPE)
 	{

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:48:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 11:38:24 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:50:17 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**advanced_split(char *str)
 	int		i[4];
 
 	init_array(i, 4);
-	value = (char **) malloc((ft_counter(str) + 1) * sizeof(char *));
+	value = (char **) ft_calloc(ft_counter(str) + 1, sizeof(char *));
 	if (!value)
 		return (NULL);
 	while (i[0] <= ft_strlen(str))

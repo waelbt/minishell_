@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:04:40 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/11 18:41:06 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:45:40 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	delete_var(char ***envp, int index)
 		return ;
 	if (i[2] == 0)
 	{
-		new_env = (char **)malloc(1 * sizeof(char *));
+		new_env = (char **)ft_calloc(1, sizeof(char *));
 		new_env[0] = NULL;
 	}
 	else
 	{
-		new_env = (char **)malloc(i[2] * sizeof(char *));
+		new_env = (char **)ft_calloc(i[2], sizeof(char *));
 		while ((*envp)[i[0]])
 		{
 			if (index != i[0])

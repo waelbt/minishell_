@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/11 19:05:02 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:45:20 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	add_var(char ***env, t_env_var *var)
 	size = (((var->e_stat == NOT) * (len + 1)) + ((var->e_stat != NOT) * len));
 	if (var->e_stat == NOT)
 		var->index = len;
-	new_env = (char **) malloc((size + 1) * sizeof(char *));
+	new_env = (char **) ft_calloc((size + 1), sizeof(char *));
 	i = -1;
 	while (++i < len)
 		new_env[i] = ft_strdup((*env)[i]);
@@ -130,7 +130,7 @@ void	my_export(char ***env, char **new_var)
 	{
 		while (new_var[++j])
 		{
-			var = (t_env_var *) malloc(sizeof(t_env_var));
+			var = (t_env_var *) ft_calloc(1, sizeof(t_env_var));
 			var->value = NULL;
 			init_var(new_var[j], &var, *env);
 			if (!ft_check_var_validition(var->name))

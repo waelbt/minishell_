@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:21:35 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 16:35:43 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:48:31 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*pure_arg(char *str, char **envp)
 	t_lexer	*lexer;
 	char	*tmp;
 
-	value = (char *) malloc(sizeof(char));
+	value = (char *) ft_calloc(1, sizeof(char));
 	value[0] = '\0';
 	lexer = init_lexer(str);
 	while (lexer->c != '\0')
@@ -64,7 +64,7 @@ char	*remove_qoutes(char *str, char **envp)
 	char	*tmp;
 
 	lexer = init_lexer(str);
-	value = (char *) malloc(sizeof(char));
+	value = (char *) ft_calloc(1, sizeof(char));
 	value[0] = '\0';
 	while (lexer->c != '\0')
 	{

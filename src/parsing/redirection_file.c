@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:23:51 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 18:23:32 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/08/11 20:50:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*here_doc_expand(char *str, char **envp)
 	char	*tmp;
 
 	lexer = init_lexer(str);
-	value = (char *) malloc(sizeof(char));
+	value = (char *) ft_calloc(1, sizeof(char));
 	value[0] = '\0';
 	while (lexer->c != '\0')
 	{
