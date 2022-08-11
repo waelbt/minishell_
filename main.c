@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/08 17:01:00 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 01:12:36 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int argc, char **argv, char **envp)
 			free_node(&cmd);
 			free(str);
 		}
-		free(cwd_saver);
+		free(g_cwd_saver);
 		write(1, "exit\n", 5);
 		free(env);
 	}

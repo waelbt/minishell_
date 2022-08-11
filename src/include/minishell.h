@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waboutzo <waboutzo@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 23:32:00 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 01:47:36 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# define BUFFER_SIZE 1
+
 typedef struct redirection
 {
 	int		fd;
@@ -90,7 +90,7 @@ typedef struct env_var
 	char	*value;
 }	t_env_var;
 
-char		*cwd_saver;
+char		*g_cwd_saver;
 int			ft_strlen(char *str);
 void		*ft_calloc(int count, int size);
 void		ft_bzero(void *s, int n);
@@ -198,4 +198,5 @@ char		*ft_strjoin_beta(char *s1, char *s2);
 char		**split_path(char *s, char c);
 void		error_handling(char *cmd);
 int 		is_directory(char *path);
+void		save_pwd(char *s);
 #endif

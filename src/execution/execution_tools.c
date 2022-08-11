@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 21:46:33 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 03:15:37 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	ft_close(t_node *head)
 
 char	*get_path(char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp && envp[i])
 	{
-		if ((ft_strncmp("PATH",  envp[i], 4)) == 0)
+		if (!ft_strncmp("PATH", envp[i], 4))
 			return (&(envp[i][5]));
 		i++;
 	}
@@ -44,7 +44,7 @@ void	procces_paths(char ***paths)
 	char	*tmp;
 
 	i = 0;
-	while((*paths)[i])
+	while ((*paths)[i])
 	{
 		if (!ft_strcmp((*paths)[i], ""))
 		{
@@ -60,6 +60,7 @@ void	procces_paths(char ***paths)
 		i++;
 	}
 }
+
 char	*cmd_with_path(char *cmd, char **envp)
 {
 	char	**paths;
@@ -87,24 +88,21 @@ char	*cmd_with_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-char *check_cmd(char *cmd, char **envp)
+char	*check_cmd(char *cmd, char **envp)
 {
 	char	*absolute_cmd;
 	char	*tmp;
 
-	if(ft_strchr(cmd, '/') )
-		return cmd;
+	if (ft_strchr(cmd, '/'))
+		return (cmd);
 	absolute_cmd = cmd_with_path(cmd, envp);
 	if (absolute_cmd)
 		return (absolute_cmd);
 	else
 	{
 		tmp = ft_strjoin("./", cmd);
-		if (!access(tmp , F_OK))
-		{
-			if(!access(tmp , X_OK))
-				return (tmp);
-		}
+		if (!access(tmp, F_OK) && !access(tmp, X_OK))
+			return (tmp);
 	}
 	return (cmd);
 }

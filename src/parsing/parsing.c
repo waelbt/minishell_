@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 22:30:48 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 03:14:07 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,9 @@ void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
 		exit(258);
 	}
 	id = fork();
-	if (!id)
+	if (id == -1)
+		ft_setter(1), perror("minishell: fork");
+	else if (!id)
 	{
 		while (temporary != NULL)
 		{
@@ -237,8 +239,6 @@ void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(id, &status, 0);
-		// if(WIFEXITED(status))
-		// 	ft_setter(WEXITSTATUS(status)); //error
 		if(WIFSIGNALED(status))
 		{
 			ft_setter(1);

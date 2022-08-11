@@ -6,13 +6,11 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/10 22:27:10 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 01:31:51 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-extern char *cwd_saver;
 
 void	update_pwd(char ***env)
 {
@@ -45,7 +43,7 @@ void	update_oldpwd(char ***env, char *get_cwd,char *cwd_env)
 	{
 		free((*env)[index]);
 		(*env)[index] = ft_strdup("OLDPWD");
-		if(str && !access(cwd_saver, X_OK))
+		if(str && !access(g_cwd_saver, F_OK)) /*TAN3AWD NETSTI X_OK*/
 		{
 			tmp = (*env)[index];
 			(*env)[index] = ft_strjoin((*env)[index], "=");
@@ -66,15 +64,7 @@ void	cd(char *path, char ***env)
 	
 	ft_setter(0);
 	if (!path)
-	{
 		path = getenv("HOME");
-		if(!path)
-		{
-			str = dollar_value(*env, ft_strdup("USER"));
-			path = ft_strjoin("/Users/", str);
-			free(str);
-		}
-	}
 	get_cwd = getcwd(NULL, 0);
 	cwd_env = getpwd(*env);
 	if (!(chdir(path) == -1))
@@ -86,7 +76,9 @@ void	cd(char *path, char ***env)
 	{
 		ft_setter(1);
 		str = ": No such file or directory\n";
-		if(!access(path, F_OK) && access(path, X_OK) != 0)
+		if(!path)
+			str = "cd: HOME not set\n";
+		if(!access(path, F_OK) && access(path, X_OK))
 			str  = ": Permission denied\n";
 		printf_error("minishell: ", path, str);
 	}

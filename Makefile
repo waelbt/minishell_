@@ -6,7 +6,7 @@
 #    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 11:25:03 by yojoundi          #+#    #+#              #
-#    Updated: 2022/08/10 22:25:10 by waboutzo         ###   ########.fr        #
+#    Updated: 2022/08/11 01:17:11 by waboutzo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJBONUS=$(SRCBONUS:.c=.o)
 BUILT_INS	=	cd echo env exit export pwd unset
 
 TOOLS		=	advanced_split double_pointer_lib free_node print_function tools\
-				get_next_line_utils get_next_line path_split
+				path_split
 
 ECECUTION	=	execute_single_command execution_tools\
 				execute execution_multi_commands exit_code

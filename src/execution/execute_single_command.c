@@ -6,32 +6,29 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 21:43:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/10 22:01:33 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 03:15:42 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-extern char *cwd_saver;
-
-
-int is_directory(char *path)
+int	is_directory(char *path)
 {
-    struct stat path_stat;
-	
+	struct stat	path_stat;
+
 	if (!path)
 		return (0);
-	if(!ft_strchr(path, '/'))
+	if (!ft_strchr(path, '/'))
 		return (0);
-    stat(path, &path_stat);
-    return (S_ISDIR(path_stat.st_mode));
+	stat(path, &path_stat);
+	return (S_ISDIR(path_stat.st_mode));
 }
 
 void	error_handling(char *cmd)
 {
-	char *str;
+	char	*str;
 
- 	if (ft_strchr(cmd, '/'))
+	if (ft_strchr(cmd, '/'))
 	{
 		if (is_directory(cmd))
 		{
@@ -39,7 +36,7 @@ void	error_handling(char *cmd)
 			printf_error("minishell: ", cmd, str);
 			exit(126);
 		}
-		else if (access(cmd , F_OK))
+		else if (access(cmd, F_OK))
 		{
 			str = ": No such file or directory\n";
 			printf_error("minishell: ", cmd, str);
@@ -56,12 +53,17 @@ void	error_handling(char *cmd)
 
 void	ft_execve(t_cmd *cmd, char ***env)
 {
-	int	id;
-	int	status;
-	char *path;
+	int		var[2];
+	char	*path;
 
-	id = fork();
-	if (id == 0)
+	var[0] = fork();
+	if (var[0] == -1)
+	{
+		ft_setter(1);
+		perror("minishell: fork");
+		return ;
+	}
+	else if (var[0] == 0)
 	{
 		error_handling(cmd->after_expand[0]);
 		path = check_cmd(cmd->after_expand[0], *env);
@@ -71,48 +73,47 @@ void	ft_execve(t_cmd *cmd, char ***env)
 		perror("minishell");
 		exit(127);
 	}
-	else
+	waitpid(var[0], &var[1], 0);
+	ft_setter(WEXITSTATUS(var[1]));
+	if (WIFSIGNALED(var[1]))
+		ft_setter(WTERMSIG(var[1]) + 128);
+}
+
+void	save_pwd(char *s)
+{
+	char	*tmp;
+
+	tmp = getcwd(NULL, 0);
+	if (ft_strcmp(s, "pwd") && tmp)
 	{
-		while (waitpid(id, &status, 0) != -1)
-			;
-		ft_setter(WEXITSTATUS(status));
-		if (WIFSIGNALED(status))
-			ft_setter(WTERMSIG(status) + 128);
+		free(g_cwd_saver);
+		g_cwd_saver = tmp;
 	}
 }
 
 void	execution_cmd(t_node *head, char ***env)
 {
 	t_cmd		*cmd;
-	char		*tmp;
-	int			t[2];
-	
+	int			save_std[2];
+
 	cmd = (t_cmd *)head->content;
-	if(cmd->e_rtype == VALID)
+	if (cmd->e_rtype == VALID)
 	{
 		if (!(cmd->after_expand && cmd->after_expand[0]))
 		{
 			ft_setter(0);
 			return ;
 		}
-		if(ft_strcmp(cmd->after_expand[0], "pwd"))
-		{
-			tmp =  getcwd(NULL, 0);
-			if(tmp)
-			{
-				free(cwd_saver);
-				cwd_saver = tmp;
-			}
-		}
-		t[0] = dup(0);
-		t[1] = dup(1);
+		save_pwd(cmd->after_expand[0]);
+		save_std[0] = dup(0);
+		save_std[1] = dup(1);
 		if (cmd->output != NULL)
 			dup_norm(cmd->output->fd, 1);
 		if (cmd->input != NULL)
 			dup_norm(cmd->input->fd, 0);
 		if (!execute(cmd->after_expand, env, 1))
 			ft_execve(cmd, env);
-		dup_norm(t[0], 0);
-		dup_norm(t[1], 1);
+		dup_norm(save_std[0], 0);
+		dup_norm(save_std[1], 1);
 	}
 }
