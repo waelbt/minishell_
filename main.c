@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 13:23:29 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:21:27 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,18 @@ int	main(int argc, char **argv, char **envp)
 	if (argc == 1)
 	{
 		(void) argv;
-		env =  my_envp(envp);
+		env = my_envp(envp);
 		while (1)
 		{
 			signal(SIGINT, sig_handler);
 			signal(SIGQUIT, SIG_IGN);
 			str = readline("minishell$ ");
-			if(!str)
-				break;
+			if (!str)
+				break ;
 			if (ft_strcmp(str, ""))
 				add_history (str);
 			cmd = handler(init_lexer(str));
-			if(parsing(&cmd, env, &index))
+			if (parsing(&cmd, env, &index))
 			{
 				if (ft_lstsize(cmd) == 1)
 					execution_cmd(cmd, &env);

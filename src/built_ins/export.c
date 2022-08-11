@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/10 21:09:09 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 01:40:02 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	init_var(char *new_var, t_env_var **var, char **env)
 	if (tmp->index == -1)
 		tmp->t_stat = NOT;
 	else if (value_start >= ft_strlen(new_var) && tmp->key != 1)
-			tmp->e_type = NOTHING;
+		tmp->e_type = NOTHING;
 	else if (tmp->key == 2)
 		tmp->e_type = CONCATENATE;
 }
@@ -80,7 +80,7 @@ void	edit_exsited_variable(char ***env, t_env_var *var)
 		if (var->e_type == CONCATENATE)
 		{
 			free(value);
-			if(!ft_strchr(tmp, '='))
+			if (!ft_strchr(tmp, '='))
 				s = "";
 			else
 				s = ft_strchr(tmp, '=') + 1;
@@ -91,8 +91,7 @@ void	edit_exsited_variable(char ***env, t_env_var *var)
 		(*env)[var->index] = ft_strjoin(var->name, "=");
 		tmp = (*env)[var->index];
 		(*env)[var->index] = ft_strjoin((*env)[var->index], value);
-		free(tmp);
-		free(value);
+		free(tmp), free(value);
 	}
 }
 

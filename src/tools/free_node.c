@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:02:54 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/09 23:33:37 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 02:12:50 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	free_node(t_node **head)
 		free(s);
 	}
 }
-
 
 void	free_var(t_env_var *var)
 {

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 01:31:51 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 01:34:43 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	update_pwd(char ***env)
 	}
 }
 
-void	update_oldpwd(char ***env, char *get_cwd,char *cwd_env)
+void	update_oldpwd(char ***env, char *get_cwd, char *cwd_env)
 {
 	int		index;
 	char	*str;
@@ -43,7 +43,7 @@ void	update_oldpwd(char ***env, char *get_cwd,char *cwd_env)
 	{
 		free((*env)[index]);
 		(*env)[index] = ft_strdup("OLDPWD");
-		if(str && !access(g_cwd_saver, F_OK)) /*TAN3AWD NETSTI X_OK*/
+		if (str && !access(cwd_saver, X_OK))
 		{
 			tmp = (*env)[index];
 			(*env)[index] = ft_strjoin((*env)[index], "=");
@@ -61,7 +61,6 @@ void	cd(char *path, char ***env)
 	char	*get_cwd;
 	char	*str;
 
-	
 	ft_setter(0);
 	if (!path)
 		path = getenv("HOME");
@@ -70,18 +69,17 @@ void	cd(char *path, char ***env)
 	if (!(chdir(path) == -1))
 	{
 		update_pwd(env);
-		update_oldpwd(env, get_cwd,cwd_env);
+		update_oldpwd(env, get_cwd, cwd_env);
 	}
 	else
 	{
 		ft_setter(1);
 		str = ": No such file or directory\n";
-		if(!path)
+		if (!path)
 			str = "cd: HOME not set\n";
-		if(!access(path, F_OK) && access(path, X_OK))
-			str  = ": Permission denied\n";
+		if (!access(path, F_OK) && access(path, X_OK))
+			str = ": Permission denied\n";
 		printf_error("minishell: ", path, str);
 	}
-	free (cwd_env);
-	free (get_cwd);
+	free (cwd_env), free (get_cwd);
 }

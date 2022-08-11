@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:23:51 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 18:13:52 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:23:32 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	here_doc(t_redirec *redirc, char **envp)
 	{
 		if (!ft_strchr(redirc->file, '\'')
 			&& !ft_strchr(redirc->file, '"'))
-				str = here_doc_expand(str, envp);
+			str = here_doc_expand(str, envp);
 		write(fd, str, ft_strlen(str));
 		write(fd, "\n", 1);
 		free(str);

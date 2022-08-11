@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 21:27:46 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/05 16:45:31 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 01:36:30 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**my_envp(char **envp)
 	my_envp = (char **)malloc((double_pointer_len(envp) + 1)* sizeof(char *));
 	while (envp[i])
 	{
-		if(!ft_strncmp(envp[i], "OLDPWD", 6))
+		if (!ft_strncmp(envp[i], "OLDPWD", 6))
 			my_envp[i] = ft_strdup("OLDPWD");
 		else
 			my_envp[i] = ft_strdup(envp[i]);
@@ -39,7 +39,7 @@ void	print_env(char **envp, char **after_expand)
 	(void) after_expand;
 	if (double_pointer_len(after_expand) != 1)
 	{
-		printf_error("minishell: ","env: too many ","arguments\n");
+		printf_error("minishell: ", "env: too many ", "arguments\n");
 		ft_setter(1);
 		return ;
 	}

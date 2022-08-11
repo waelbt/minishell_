@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 14:09:15 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 15:37:20 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 02:09:31 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**join_double_pointer(char **str, char **ptr)
 	len[0] = double_pointer_len(str);
 	len[1] = double_pointer_len(ptr);
 	len[2] = len[0] + len[1];
-	join = (char **) ft_calloc((len[2] + 1) ,sizeof(char *));
+	join = (char **) ft_calloc((len[2] + 1), sizeof(char *));
 	if (!join)
 		return (NULL);
 	while (index < len[2])
@@ -63,9 +63,7 @@ char	**join_double_pointer(char **str, char **ptr)
 			join[index] = ptr[j++];
 		index++;
 	}
-	join[index] = NULL;
-	free(str);
-	free(ptr);
+	join[index] = NULL, free(str), free(ptr);
 	return (join);
 }
 
@@ -77,10 +75,10 @@ char 	**ft_strdup_double(char **ptr)
 
 	len = double_pointer_len(ptr);
 	str = (char **)malloc((len + 1) * sizeof(char *));
-	if(!str)
+	if (!str)
 		return (NULL);
 	i = 0;
-	while(i < len)
+	while (i < len)
 	{
 		str[i] = ft_strdup(ptr[i]);
 		i++;
@@ -101,7 +99,7 @@ char	**env_split(char **envp, int i)
 				ft_strlen(envp[i]));
 	}
 	return (line);
-} 
+}
 
 int	get_index_of_double_char(char **envp, char *var)
 {
