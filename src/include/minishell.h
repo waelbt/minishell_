@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 19:06:41 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:08:39 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-typedef struct redirection
+typedef struct s_redirection
 {
 	int		fd;
 	enum
@@ -51,13 +51,13 @@ typedef struct s_node
 	struct s_node	*next;
 }	t_node;
 
-typedef struct args
+typedef struct s_args
 {
 	char	**after_expand;
 	char	*value;
 }	t_args;
 
-typedef struct cmd
+typedef struct s_cmd
 {
 	enum
 	{
@@ -71,7 +71,7 @@ typedef struct cmd
 	t_node		*redrec;
 }	t_cmd;
 
-typedef struct env_var
+typedef struct s_env_var
 {
 	enum
 	{

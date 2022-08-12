@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 21:43:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 15:18:31 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:07:49 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,15 @@ void	save_pwd(char *s)
 	char	*tmp;
 
 	tmp = getcwd(NULL, 0);
-	if (ft_strcmp(s, "pwd") && tmp)
+	if (tmp)
 	{
-		free(g_cwd_saver);
-		g_cwd_saver = tmp;
+		if (ft_strcmp(s, "pwd"))
+		{
+			free(g_cwd_saver);
+			g_cwd_saver = tmp;
+		}
+		else
+			free(tmp);
 	}
 }
 

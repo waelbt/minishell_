@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 20:45:52 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/12 14:41:56 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	parent_work(t_node *head, int *last_fd, int *pipe_fd)
 		close(*last_fd);
 	if (!head->next)
 		close(pipe_fd[0]);
-	if (cmd->output != NULL)
+	if (cmd->output != NULL && cmd->output->fd >= 3)
 		close(cmd->output->fd);
-	if (cmd->input != NULL)
+	if (cmd->input != NULL && cmd->input->fd >= 3)
 		close(cmd->input->fd);
 	close(pipe_fd[1]);
 	*last_fd = pipe_fd[0];
