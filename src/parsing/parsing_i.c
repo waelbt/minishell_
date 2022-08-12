@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 17:03:12 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:55:24 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	child_herdoc(t_node **head, char **envp)
 	exit(0);
 }
 
-void	parent(pid_t id)
+int	parent(pid_t id)
 {
 	int		status;
 
@@ -37,7 +37,9 @@ void	parent(pid_t id)
 	{
 		ft_setter(1);
 		signal(SIGINT, sig_handler);
+		return (1);
 	}
+	return (0);
 }
 
 void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
@@ -58,7 +60,8 @@ void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
 	}
 	else if (!id)
 		child_herdoc(head, envp);
-	parent(id);
+	if(parent(id))
+		return (NULL);
 	return ((void *)1);
 }
 
