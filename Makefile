@@ -6,7 +6,7 @@
 #    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/12 15:51:30 by waboutzo          #+#    #+#              #
-#    Updated: 2022/08/12 15:51:32 by waboutzo         ###   ########.fr        #
+#    Updated: 2022/08/12 15:56:24 by waboutzo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,8 +51,6 @@ all : $(NAME)
 $(NAME): $(OBJ)
 	@$(CC)  $(CFLAGS) $(OBJ) $(INC) main.c -L /Users/${USER}/.brew/opt/readline/lib  -lreadline  -o $(NAME)
 	@stty -echoctl
-# @[ -d $(MYDIR) ] || mkdir -p $(MYDIR)
-# @mv $(OBJ) objects_files
 
 clean :
 	@$(RM) $(OBJ) $(MYDIR)
