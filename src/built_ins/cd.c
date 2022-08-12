@@ -6,13 +6,11 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/10 01:59:10 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/08/11 18:33:21 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-extern char *cwd_saver;
 
 void	update_pwd(char ***env)
 {
@@ -29,7 +27,7 @@ void	update_pwd(char ***env)
 	}
 }
 
-void	update_oldpwd(char ***env, char *get_cwd,char *cwd_env)
+void	update_oldpwd(char ***env, char *get_cwd, char *cwd_env)
 {
 	int		index;
 	char	*str;
@@ -45,7 +43,7 @@ void	update_oldpwd(char ***env, char *get_cwd,char *cwd_env)
 	{
 		free((*env)[index]);
 		(*env)[index] = ft_strdup("OLDPWD");
-		if(str && !access(cwd_saver, X_OK))
+		if (str && !access(g_cwd_saver, X_OK))
 		{
 			tmp = (*env)[index];
 			(*env)[index] = ft_strjoin((*env)[index], "=");
@@ -59,28 +57,34 @@ void	update_oldpwd(char ***env, char *get_cwd,char *cwd_env)
 
 void	cd(char *path, char ***env)
 {
-	char	*cwd_env;
-	char	*get_cwd;
-
+	char	*ptr[3];
 
 	ft_setter(0);
 	if (!path)
-		path = getenv("HOME");
-	get_cwd = getcwd(NULL, 0);
-	cwd_env = getpwd(*env);
+	{
+		path = dollar_value(*env, ft_strdup("HOME"));
+		if (!ft_strcmp(path, "") && get_index_of_double_char(*env, "HOME") == -1)
+			path = NULL;
+	}
+	ptr[1] = getcwd(NULL, 0);
+	ptr[2] = getpwd(*env);
 	if (!(chdir(path) == -1))
 	{
 		update_pwd(env);
-		update_oldpwd(env, get_cwd,cwd_env);
+		update_oldpwd(env, ptr[1], ptr[2]);
 	}
 	else
 	{
 		ft_setter(1);
+		if(!ft_strcmp(path, ""))
+			return ;
+		ptr[0] = ": No such file or directory\n";
 		if (!path)
-			printf_error("minishell: ", NULL, "cd: HOME not set\n");
-		else
-			printf_error("minishell: ", path, ": No such file or directory\n");
+			ptr[0] = "cd: HOME not set\n";
+		if (!access(path, F_OK) && access(path, X_OK))
+			ptr[0] = ": Permission denied\n";
+		printf_error("minishell: ", path, ptr[0]);
 	}
-	free (cwd_env);
-	free (get_cwd);
+	free(ptr[2]);
+	free(ptr[1]);
 }

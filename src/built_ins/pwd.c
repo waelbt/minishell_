@@ -6,13 +6,11 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:59 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/07 19:23:08 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:26:32 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-extern char *cwd_saver;
 
 char	*getpwd(char **env)
 {
@@ -47,7 +45,7 @@ void	pwd(char **env)
 	ptr = getcwd(NULL, 0);
 	ft_setter(0);
 	if (!str && !ptr)
-		printf("%s\n", cwd_saver);
+		printf("%s\n", g_cwd_saver);
 	else if (!str)
 		printf("%s\n", ptr);
 	else

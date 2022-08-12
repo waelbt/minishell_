@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:13:02 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/07 22:18:47 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 19:05:02 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	init_var(char *new_var, t_env_var **var, char **env)
 
 	tmp = *var;
 	index = 0;
-	tmp->t_stat = EXISTED;
-	while (new_var[index] && new_var[index] != '+'
-		&& new_var[index] != '=')
+	tmp->e_stat = EXISTED;
+	while (new_var[index] && new_var[index] != '='
+		&& (new_var[index] != '+' || new_var[index + 1] != '='))
 		index++;
 	tmp->e_type = SET_VALUE;
 	tmp->name = ft_substr(new_var, 0, index);
@@ -59,40 +59,38 @@ void	init_var(char *new_var, t_env_var **var, char **env)
 	value_start = index + tmp->key;
 	tmp->value = ft_substr(new_var, value_start, ft_strlen(new_var));
 	if (tmp->index == -1)
-		tmp->t_stat = NOT;
-	else if (value_start >= ft_strlen(new_var) && tmp->key != 1)
-			tmp->e_type = NOTHING;
+		tmp->e_stat = NOT;
+	else if (tmp->e_stat == EXISTED && tmp->key == 0)
+		tmp->e_type = NOTHING;
 	else if (tmp->key == 2)
 		tmp->e_type = CONCATENATE;
 }
 
 void	edit_exsited_variable(char ***env, t_env_var *var)
 {
-	char	*value;
-	char	*tmp;
-	char	*s;
+	char	*ptr[3];
 
-	tmp = (*env)[var->index];
+	ptr[1] = (*env)[var->index];
 	(*env)[var->index] = ft_strdup(var->name);
 	if (var->key != 0)
 	{
-		value = ft_strdup(var->value);
+		ptr[2] = ft_strdup(var->value);
 		if (var->e_type == CONCATENATE)
 		{
-			free(value);
-			if(!ft_strchr(tmp, '='))
-				s = "";
+			free(ptr[2]);
+			if (!ft_strchr(ptr[1], '='))
+				ptr[0] = "";
 			else
-				s = ft_strchr(tmp, '=') + 1;
-			value = ft_strjoin(s, var->value);
+				ptr[0] = ft_strchr(ptr[1], '=') + 1;
+			ptr[2] = ft_strjoin(ptr[0], var->value);
 		}
-		free(tmp);
+		free(ptr[1]);
 		free((*env)[var->index]);
 		(*env)[var->index] = ft_strjoin(var->name, "=");
-		tmp = (*env)[var->index];
-		(*env)[var->index] = ft_strjoin((*env)[var->index], value);
-		free(tmp);
-		free(value);
+		ptr[1] = (*env)[var->index];
+		(*env)[var->index] = ft_strjoin((*env)[var->index], ptr[2]);
+		free(ptr[1]);
+		free(ptr[2]);
 	}
 }
 
@@ -104,14 +102,14 @@ void	add_var(char ***env, t_env_var *var)
 	int		size;
 
 	len = double_pointer_len(*env);
-	size = (((var->t_stat == NOT) * (len + 1)) + ((var->t_stat != NOT) * len));
-	if (var->t_stat == NOT)
+	size = (((var->e_stat == NOT) * (len + 1)) + ((var->e_stat != NOT) * len));
+	if (var->e_stat == NOT)
 		var->index = len;
 	new_env = (char **) malloc((size + 1) * sizeof(char *));
 	i = -1;
 	while (++i < len)
 		new_env[i] = ft_strdup((*env)[i]);
-	if (var->t_stat == NOT)
+	if (var->e_stat == NOT)
 		new_env[i++] = NULL;
 	new_env[i++] = NULL;
 	edit_exsited_variable(&new_env, var);

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/08 18:57:48 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 03:15:37 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,56 +26,83 @@ void	ft_close(t_node *head)
 
 char	*get_path(char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp && envp[i])
 	{
-		if ((ft_strncmp("PATH",  envp[i], 4)) == 0)
+		if (!ft_strncmp("PATH", envp[i], 4))
 			return (&(envp[i][5]));
 		i++;
 	}
 	return (NULL);
 }
 
+void	procces_paths(char ***paths)
+{
+	int		i;
+	char	*tmp;
 
-char *cmd_with_path(char *cmd, char **envp)
+	i = 0;
+	while ((*paths)[i])
+	{
+		if (!ft_strcmp((*paths)[i], ""))
+		{
+			free((*paths)[i]);
+			(*paths)[i] = ft_strdup("./");
+		}
+		else
+		{
+			tmp = (*paths)[i];
+			(*paths)[i] = ft_strjoin(tmp, "/");
+			free(tmp);
+		}
+		i++;
+	}
+}
+
+char	*cmd_with_path(char *cmd, char **envp)
 {
 	char	**paths;
 	char	*tmp[3];
 	int		i;
 
 	i = -1;
-	tmp[2] = NULL;
 	paths = split_path(get_path(envp), ':');
 	if (!paths)
-		return (cmd);
+		return (NULL);
+	procces_paths(&paths);
 	while (paths[++i])
 	{
 		tmp[0] = paths[i];
-		tmp[1] = ft_strdup(cmd);
-		paths[i] = ft_strjoin(tmp[0], tmp[1]);
-		if (access(paths[i], X_OK) == 0)
-			tmp[2] = ft_strdup(paths[i]);
-		free(paths[i]);
+		paths[i] = ft_strjoin(tmp[0], cmd);
 		free(tmp[0]);
-		free(tmp[1]);
+		if (access(paths[i], X_OK) == 0)
+			return (paths[i]);
+		free(paths[i]);
 	}
 	free(paths);
-	free(cmd);
-	return tmp[2];
+	tmp[2] = ": command not found\n";
+	printf_error("minishell: ", cmd, tmp[2]);
+	exit(127);
+	return (NULL);
 }
 
-void check_cmd(char **cmd, char **envp)
+char	*check_cmd(char *cmd, char **envp)
 {
 	char	*absolute_cmd;
+	char	*tmp;
 
-	absolute_cmd = NULL;
-	if (!ft_strchr(*cmd, '/'))
-		absolute_cmd = cmd_with_path(ft_strjoin("/", *cmd), envp);
-	if (absolute_cmd && ft_strcmp(*cmd, "") && ft_strcmp(*cmd, "/"))
+	if (ft_strchr(cmd, '/'))
+		return (cmd);
+	absolute_cmd = cmd_with_path(cmd, envp);
+	if (absolute_cmd)
+		return (absolute_cmd);
+	else
 	{
-		free(*cmd);
-		*cmd = absolute_cmd;
+		tmp = ft_strjoin("./", cmd);
+		if (!access(tmp, F_OK) && !access(tmp, X_OK))
+			return (tmp);
 	}
+	return (cmd);
 }

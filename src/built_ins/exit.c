@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 14:47:52 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/06 18:42:36 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 01:37:05 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	my_exit(char **str, int flag)
 	int		len;
 
 	len = double_pointer_len(str);
-	if(flag)
+	if (flag)
 		printf_error("exit\n", NULL, NULL);
 	if (len >= 2 && !is_num(str[1]))
 	{

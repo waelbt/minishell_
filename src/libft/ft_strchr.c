@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:07:27 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/30 08:55:34 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 16:08:36 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	double_pointer_len(char **str)
 	int	i;
 
 	i = 0;
-	if(!str)
-		return 0;
+	if (!str)
+		return (0);
 	while (str[i])
 		i++;
 	return (i);

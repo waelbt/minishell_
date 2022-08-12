@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:23:51 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/07 16:26:12 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:23:32 by lchokri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static char *cases(t_lexer *lexer, char **envp)
+static char	*cases(t_lexer *lexer, char **envp)
 {
 	char	*tmp;
 
@@ -20,7 +20,7 @@ static char *cases(t_lexer *lexer, char **envp)
 		return (handle_env_var(lexer, envp));
 	else
 	{
-		tmp =  lexer_get_current_char_as_string(lexer);
+		tmp = lexer_get_current_char_as_string(lexer);
 		lexer_advance(lexer);
 		return (tmp);
 	}
@@ -28,7 +28,7 @@ static char *cases(t_lexer *lexer, char **envp)
 
 char	*here_doc_expand(char *str, char **envp)
 {
-	t_lexer *lexer;
+	t_lexer	*lexer;
 	char	*value;
 	char	*s;
 	char	*tmp;
@@ -46,8 +46,9 @@ char	*here_doc_expand(char *str, char **envp)
 	}
 	free(str);
 	free(lexer);
-	return value;
+	return (value);
 }
+
 void	here_doc(t_redirec *redirc, char **envp)
 {
 	int			fd;
@@ -65,8 +66,8 @@ void	here_doc(t_redirec *redirc, char **envp)
 	{
 		if (!ft_strchr(redirc->file, '\'')
 			&& !ft_strchr(redirc->file, '"'))
-				str = here_doc_expand(str, envp);
-			write(fd, str, ft_strlen(str));
+			str = here_doc_expand(str, envp);
+		write(fd, str, ft_strlen(str));
 		write(fd, "\n", 1);
 		free(str);
 		str = readline("> ");

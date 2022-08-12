@@ -302,8 +302,284 @@ export | grep PWD
              1 (16 bytes) 0x7fb17dc044d0 [16]  length: 1  "p"
           1 (16 bytes) 0x7fb17df00110 [16]  length: 1  "x"
        1 (16 bytes) 0x7fb17df00100 [16]  length: 1  "e"
-	   
-**************************************modifications done on monday i hope it won't break the code:************************
--  if (id == -1) in 3 files under fork
-- else free(tmp) in execution_cmd
-- else if(ft_lstsize(cmd) > 1) in main instead of else 
+
+
+inishell$ export n="echo true | cat "
+minishell$ $m
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==33445==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x000103c1e2c2 bp 0x7ffeebfe4580 sp 0x7ffeebfe4500 T0)
+==33445==The signal is caused by a READ memory access.
+==33445==Hint: address points to the zero page.
+    #0 0x103c1e2c1 in ft_strcmp ft_strcmp.c
+    #1 0x103c1f50a in execution_cmd execute_single_command.c:86
+    #2 0x103c359df in main main.c:97
+    #3 0x7fff7fd493d4 in start (libd
+	
+/
+is director
+check PATH
+perror
+
+
+minishell$ cd l
+minishell$ ../minishell
+minishell: ../minishell: command not found
+
+
+bash-3.2$ cat << "$USER"
+
+close last file_descrp
+
+$ /bin//////////ls
+minishell: /bin//////////ls: command not found
+
+/bin/////////ls
+Makefile        ls              minishell       readme.txt      src
+a.out           main.c          minishell.dSYM  ruin_my_code.c
+
+<< $""
+cd Desktop
+
+
+minishell$ ls
+Makefile        minishell       out             ruin_my_code.c
+main.c          minishell.dSYM  readme.txt      src
+minishell$ echo $"$PATH"
+/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/bin
+minishell$ echo $$"$PATH"
+\$/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/bin
+minishell$ echo $$"$PATH"LL
+$/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/binLL
+minishell$ echo $$"$PATH"ll
+$/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/binll
+minishell$ echo $$"$PATH"$ll
+$/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/bin
+minishell$ echo $$"$PATH"$ll$USER
+$/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/binwaboutzo
+minishell$ cat << $USER
+> $USER
+minishell$ cat << $USER
+> $USE
+> $USER
+
+minishell$ cat << $USER
+> $USE
+> cat << $USER
+minishell$ cat << $USER
+
+echo $"$USER"$$
+
+
+<< <
+<< |
+<<
+
+
+pid_t
+
+
+
+void		error_handler(char *str);
+t_redirec	*init_redirection(t_token **token, t_lexer *lexer);
+void		printf_args(t_node *head);
+void		printf_redrection(t_node *head);
+void		printf_node(t_node *head);
+char		*handle_env_var_case(t_lexer *lexer, char **envp);
+char		*hard_code(t_lexer *lexer, int next_qoutes);
+char		*env_var_inside_qoutes(t_lexer *lexer, char **envp, int c);
+void		*open_file_descriptor(t_node **head);
+void		free_double_char(char **tmp, int t);
+// void		execution(t_cmd *cmd);
+char		*remove_qoutes(char *str, char **envp);
+void		check_acces(char **cmd, char **envp);
+char		*invalid_command_error(char *cmd, char *path, char **paths);
+char		*get_path(char **envp);
+void		ft_close(t_node *head);
+void		rl_replace_line (const char *text, int clear_undo);
+void		rl_replace_line (const char *text, int clear_undo);
+int			execve(const char *path, char *const argv[], char *const envp[]);
+int			get_index_of_double_char(char **envp, char *var);
+lexer_collect_string
+
+*****************************************************************************************************************************
+*****************************************************************************************************************************
+
+void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
+{
+//	t_node	*temporary;
+//	t_cmd	*cmd;
+	pid_t	id;
+	int		status;
+
+//	temporary = *head;
+	if (here_doc_counter(*head) >= 17)
+	{
+	//	printf("test");
+		printf_error("minishell: maximum ",
+			"here-document ", "count exceeded\n");
+		exit(258);
+	}
+	id = fork();
+	if (id == -1)
+	{
+		perror("minishell: fork");
+		ft_setter(1);
+	}
+	else if (!id)
+	{
+		/*while (temporary != NULL)
+		{
+			cmd = (t_cmd *)temporary->content;
+			open_heredoc_in_signle_cmd(&cmd->redrec, envp);
+			temporary = temporary->next;
+		}*/
+		parent(head, envp);
+		exit(0);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(id, &status, 0);
+		if (WIFSIGNALED(status))
+		{
+			ft_setter(1);
+			signal(SIGINT, sig_handler);
+			return (NULL);
+		}
+	}
+	return ((void *)1);
+}
+
+*****************************************************************************************************************************3
+****************************************************************
+
+
+char	*dollar_value(char **envp, char *var)
+{
+	char	*str;
+	char	**tmp;
+
+	if (!(ft_strchr(var, '=')) && *var)
+	{
+		while (*envp)
+		{
+			tmp = ft_split(*envp, '=');
+			if (!ft_strcmp(tmp[0], var))
+			{
+				if (!tmp[1])
+					str = ft_strdup("");
+				else
+				{
+					free(tmp[1]);
+					tmp[1] = ft_substr(*envp,
+							ft_strlen(*tmp) + 1, ft_strlen(*envp));
+					str = ft_strdup(tmp[1]);
+				}
+				free(var);
+				free_double_char(tmp, 0);
+				return (str);
+			}
+			free_double_char(tmp, 0);
+			envp++;
+		}
+	}
+	free(var);
+	return (ft_strdup(""));
+}
+
+
+/Users/waboutzo/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/waboutzo/.brew/bin
+minishell$ export d
+minishell$ echo  $d
+
+minishell$ export adwa
+minishell$ export adwa
+minishell$ nset adwa
+minishell: nset: command not found
+minishell$ unset adwa
+minishell$ echo $dawdaw
+
+minishell$ echo $d
+
+
+export d+
+
+--------------------------------cd ------------------------------------------------------
+minishell$ unset HOME
+minishell$ export HOME=k
+minishell$ cd
+minishell$ pwd
+/Users/lchokri
+minishell$ cd
+minishell$ export HOME=
+minishell$ cd
+minishell$ cd
+minishell$ pwd
+/Users/lchokri
+minishell$ cd Desktop/
+minishell$ cd
+minishell$ pwd
+/Users/lchokri
+minishell$ unset HOME
+minishell$
+minishell$ cd
+minishell$ cd
+minishell$ cd
+minishell$ cd
+minishell$ cd
+minishell$ pwd
+/Users/lchokri
+minishell$
+
+---------------------------------------- cd -----------------------------------------------------------
+
+bash~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+		bash-3.2$ unset HOME
+		bash-3.2$ export HOME=k
+		bash-3.2$ pwd
+		/Users/lchokri/Desktop/finished
+		bash-3.2$ cd
+		bash: cd: k: No such file or directory
+
+minishell~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+		minishell$ unset HOME
+		minishell$ export HOME=k
+		minishell$ pwd
+		/Users/lchokri/Desktop/finished
+		minishell$ cd
+		minishell$ pwd
+		/Users/lchokri
+
+bash~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+		bash-3.2$ unset PATH
+		bash-3.2$ ls
+		WOWOWOWOW
+		bash-3.2$ ./ls
+		WOWOWOWOW
+
+minishell~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+		minishell$ unset PATH
+		minishell$ ls
+		minishell: Exec format error
+		minishell$ ./ls
+		minishell: Exec format error
+
+bash~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+bash-3.2$ export HOME=
+bash-3.2$ pwd
+/Users/lchokri/Desktop/finished
+bash-3.2$ cd
+bash-3.2$ pwd
+/Users/lchokri/Desktop/finished
+
+minishell~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+minishell$ export HOME=
+minishell$ pwd
+/Users/lchokri/Desktop/finished
+minishell$ cd
+minishell$ pwd
+/Users/lchokri
+------------------------------------------------------------------------------------------------------

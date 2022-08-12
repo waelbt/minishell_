@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 11:42:47 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/07/30 09:00:21 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 01:23:53 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,32 @@
 
 void	printf_error(char *p, char *str, char *s)
 {
-	if(p)
+	if (p)
 		write(2, p, ft_strlen(p));
-	if(str)
+	if (str)
 		write(2, str, ft_strlen(str));
-	if(s)
+	if (s)
 		write(2, s, ft_strlen(s));
 }
 
 static int	*exit_code(void)
 {
-	static int c;
+	static int	c;
 
 	return (&c);
 }
 
-int ft_getter(void)
+int	ft_getter(void)
 {
-	int *i;
+	int	*i;
 
 	i = exit_code();
 	return (*i);
 }
 
-void ft_setter(int value)
+void	ft_setter(int value)
 {
-	int *i;
+	int	*i;
 
 	i = exit_code();
 	*i = value;

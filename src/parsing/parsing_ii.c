@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_.c                                         :+:      :+:    :+:   */
+/*   parsing_ii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:21:35 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/02 11:38:30 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/11 16:35:43 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*remove_qoutes(char *str, char **envp)
 	while (lexer->c != '\0')
 	{
 		if (lexer->c == '"' || lexer->c == '\'')
-			s = quotes(lexer, envp,lexer->c);
+			s = quotes(lexer, envp, lexer->c);
 		else
 		{
 			s = lexer_get_current_char_as_string(lexer);
@@ -86,7 +86,7 @@ char	*remove_qoutes(char *str, char **envp)
 
 void	pure_after_expand(char **str, char **envp)
 {
-	int	i;
+	int		i;
 	char	*tmp;
 
 	i = 0;

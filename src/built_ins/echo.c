@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: waboutzo <waboutzo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:02 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/01 14:29:32 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/09 23:33:09 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,9 @@ void	echo(char **after_expand)
 {
 	int		i;
 	int		check;
-	char	*str;
 
 	i = 1;
 	check = 0;
-	str = NULL;
 	ft_setter(0);
 	if (!after_expand[1])
 		printf("\n");
