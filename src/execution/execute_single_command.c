@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 21:43:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/12 15:07:49 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/12 16:05:42 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	execution_cmd(t_node *head, char ***env)
 			dup_norm(cmd->output->fd, 1);
 		if (cmd->input != NULL)
 			dup_norm(cmd->input->fd, 0);
-		if (!execute(cmd->after_expand, env, 1))
+		if (!is_built_ins(cmd->after_expand, env, 1))
 			ft_execve(cmd, env);
 		dup_norm(save_std[0], 0);
 		dup_norm(save_std[1], 1);

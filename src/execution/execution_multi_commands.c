@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/12 14:41:56 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/12 16:05:47 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	child_work(t_node *head, char **env, int *pipe_fd, int last_fd)
 	if (cmd->after_expand && cmd->after_expand[0] && cmd->e_rtype == VALID)
 	{
 		save_pwd(cmd->after_expand[0]);
-		if (!execute(cmd->after_expand, &env, 0))
+		if (!is_built_ins(cmd->after_expand, &env, 0))
 			ft_execve(cmd, env);
 	}
 	else

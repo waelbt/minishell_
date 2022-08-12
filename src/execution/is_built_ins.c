@@ -6,13 +6,13 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 01:25:25 by lchokri           #+#    #+#             */
-/*   Updated: 2022/08/12 14:49:40 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:58:25 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	execute(char **after_expand, char ***env, int flag)
+int	is_built_ins(char **after_expand, char ***env, int flag)
 {
 	if (!(ft_strcmp(after_expand[0], "echo")))
 		echo(after_expand);

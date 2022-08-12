@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:19:13 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/12 15:55:24 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:58:38 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	*open_heredoc_in_all_pipe_lines(t_node **head, char **envp)
 	}
 	else if (!id)
 		child_herdoc(head, envp);
-	if(parent(id))
+	if (parent(id))
 		return (NULL);
 	return ((void *)1);
 }

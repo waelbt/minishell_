@@ -6,7 +6,7 @@
 #    By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/12 15:51:30 by waboutzo          #+#    #+#              #
-#    Updated: 2022/08/12 15:56:24 by waboutzo         ###   ########.fr        #
+#    Updated: 2022/08/12 16:06:41 by waboutzo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ TOOLS		=	advanced_split double_pointer_lib free_node print_function tools\
 				path_split
 
 ECECUTION	=	execute_single_command tools toolsII\
-				execute execution_multi_commands exit_code
+				is_built_ins execution_multi_commands exit_code
 
 LEXER		=	get_tokens lexer lexer2 token
 
