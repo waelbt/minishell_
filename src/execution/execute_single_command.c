@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 21:43:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/12 16:05:42 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/12 19:56:23 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	execution_cmd(t_node *head, char ***env)
 		if (!(cmd->after_expand && cmd->after_expand[0]))
 		{
 			ft_setter(0);
+			close(cmd->output->fd);
+			close(cmd->input->fd);
 			return ;
 		}
 		save_pwd(cmd->after_expand[0]);

@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/12 16:06:27 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/12 19:15:02 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void		printf_error(char *p, char *str, char *s);
 char		**split_path(char *s, char c);
 void		save_pwd(char *s);
 int			ft_getter(void);
-void		fork_failed(int *i, int index);
+void		fork_failed(int *i, int index, int last_fd);
 void		sig_handler(int sig);
 t_cmd		*init_cmd(t_lexer *lexer, t_token **token);
 int			ft_pipe_check(t_token *token, t_token *previous);

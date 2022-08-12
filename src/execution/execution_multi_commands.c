@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:37:23 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/12 16:05:47 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/12 19:55:21 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,13 @@ void	execution_multi_cmds(t_node *head, char **env)
 		id[i] = fork();
 		if (id[i] == -1)
 		{
-			fork_failed(id, i);
+			parent_work(head, &last_fd, pipe_fd);
+			fork_failed(id, i, last_fd);
 			break ;
 		}
 		else if (id[i++] == 0)
 			child_work(head, env, pipe_fd, last_fd);
-		else
-			parent_work(head, &last_fd, pipe_fd);
+		parent_work(head, &last_fd, pipe_fd);
 		head = head->next;
 	}
 	wait_children(id[i - 1]);

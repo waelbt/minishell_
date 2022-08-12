@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 15:15:17 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 18:20:11 by lchokri          ###   ########.fr       */
+/*   Updated: 2022/08/12 19:55:03 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	dup_norm(int fildes1, int fildes2)
 	close(fildes1);
 }
 
-void	fork_failed(int *i, int index)
+void	fork_failed(int *i, int index, int last_fd)
 {
 	ft_setter(1);
 	perror("minishell: fork");
+	close(last_fd);
 	while (--index != -1)
 		kill(i[index], SIGKILL);
 }
