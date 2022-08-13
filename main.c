@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 19:14:21 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/13 16:11:48 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	main(int argc, char **argv, char **envp)
 		free(g_cwd_saver);
 		write(1, "exit\n", 5);
 		free(env);
+		exit(ft_getter());
 	}
 	return (0);
 }
