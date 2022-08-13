@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 15:15:17 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/12 19:55:03 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/13 22:55:14 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	error_handling(char *cmd)
 
 	if (ft_strchr(cmd, '/'))
 	{
-		if (is_directory(cmd))
+		if (is_directory(cmd, 0))
 		{
 			str = ": is a directory\n";
 			printf_error("minishell: ", cmd, str);
@@ -54,13 +54,13 @@ void	error_handling(char *cmd)
 	}
 }
 
-int	is_directory(char *path)
+int	is_directory(char *path, int flag)
 {
 	struct stat	path_stat;
 
 	if (!path)
 		return (0);
-	if (!ft_strchr(path, '/'))
+	if (!ft_strchr(path, '/') && flag == 0)
 		return (0);
 	stat(path, &path_stat);
 	return (S_ISDIR(path_stat.st_mode));

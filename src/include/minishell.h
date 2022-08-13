@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:50:34 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/12 19:15:02 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/13 22:54:33 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void		error_handling(char *cmd);
 char		*check_cmd(char *cmd, char **envp);
 void		dup_norm(int fildes1, int fildes2);
 int			is_built_ins(char **after_expand, char ***env, int flag);
-int			is_directory(char *path);
+int			is_directory(char *path, int flag);
 void		printf_error(char *p, char *str, char *s);
 char		**split_path(char *s, char c);
 void		save_pwd(char *s);

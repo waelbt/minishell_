@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution_tools.c                                  :+:      :+:    :+:   */
+/*   toolsII.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:13:50 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 03:15:37 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/13 22:54:52 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,12 @@ char	*check_cmd(char *cmd, char **envp)
 		return (absolute_cmd);
 	else
 	{
+		if (is_directory(cmd, 1))
+		{
+			tmp = ": is a directory\n";
+			printf_error("minishell: ", cmd, tmp);
+			exit(126);
+		}
 		tmp = ft_strjoin("./", cmd);
 		if (!access(tmp, F_OK) && !access(tmp, X_OK))
 			return (tmp);

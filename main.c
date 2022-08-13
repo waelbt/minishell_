@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:48:37 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/13 18:32:07 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/13 20:16:45 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	minishell(char ***env)
 	{
 		if (ft_lstsize(cmd) == 1)
 			execution_cmd(cmd, env);
-		else if(ft_lstsize(cmd) > 1)
+		else if (ft_lstsize(cmd) > 1)
 			execution_multi_cmds(cmd, *env);
 	}
 	ft_unlik(&index);

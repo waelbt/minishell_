@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 16:28:24 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/13 17:12:59 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/13 23:04:26 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,9 @@ int	here_doc_counter(t_node *head)
 
 int	ft_check_ambiguous(t_redirec *redirc)
 {
+	char	*str;
+
+	str = "minishell: ";
 	if (double_pointer_len(redirc->after_expand) != 1)
 	{
 		ft_setter(1);
@@ -102,7 +105,9 @@ int	ft_check_ambiguous(t_redirec *redirc)
 	if (redirc->fd < 0)
 	{
 		ft_setter(1);
-		perror("minishell");
+		str = ft_strjoin(str, redirc->file);
+		perror(str);
+		free(str);
 		return (1);
 	}
 	return (0);

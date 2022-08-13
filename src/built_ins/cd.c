@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:57:29 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/12 15:07:41 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/13 22:56:12 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ static void	error_handler(char *path, char **ptr)
 	ptr[0] = ": No such file or directory\n";
 	if (!path)
 		ptr[0] = "cd: HOME not set\n";
-	if (!access(path, F_OK) && access(path, X_OK))
+	else if (!is_directory(path, 0))
+			ptr[0] = ": Not a directory\n";
+	else if (!access(path, F_OK) && access(path, R_OK))
 		ptr[0] = ": Permission denied\n";
 	printf_error("minishell: ", path, ptr[0]);
 }
