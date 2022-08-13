@@ -6,7 +6,7 @@
 /*   By: waboutzo <waboutzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:07:27 by waboutzo          #+#    #+#             */
-/*   Updated: 2022/08/11 16:08:36 by waboutzo         ###   ########.fr       */
+/*   Updated: 2022/08/13 16:08:02 by waboutzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,3 @@ char	*ft_strchr(char *s, int c)
 	}
 	return (0);
 }
-/*
-#include <stdio.h>
-#include <string.h>
-int main(void)
-{
-	char s[] = "tripouille";
-	printf("%s \n",ft_strchr(s, 't' + 256));
-	printf("%s",strchr(s, 't' + 256));
-}
-*/
